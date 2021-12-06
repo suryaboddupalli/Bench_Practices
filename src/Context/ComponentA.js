@@ -1,13 +1,12 @@
-import { render } from "@testing-library/react"
 import React from "react"
 import { UserProvider } from "./usecontext"
 import ComponentB from "./ComponentB"
 
 class ComponentA extends Component {
-    render(){
+    render() {
         return (
             <UserProvider value='surya'>
-                <ComponentB  />
+                <ComponentB />
             </UserProvider>
         )
     }

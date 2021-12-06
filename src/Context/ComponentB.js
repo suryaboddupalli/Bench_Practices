@@ -1,6 +1,5 @@
 import React from "react"
-import { UserProvider } from "./usecontext"
-import componentc from "./ComponentC"
+import ComponentC from "./ComponentC"
 
 class ComponentB extends Component {
     render() {

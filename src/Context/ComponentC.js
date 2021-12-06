@@ -1,20 +1,19 @@
 import React from "react"
 import { UserConsumer } from "./usecontext"
-import componentc from "./ComponentC"
 
-class Componentc extends Component {
+class ComponentC extends Component {
     render() {
         return (
-           <UserConsumer>
-               {
-               (admin)=>{ 
-                   return <div>hello {admin} </div>
-               }
+            <UserConsumer>
+                {
+                    (admin) => {
+                        return <div>hello {admin} </div>
+                    }
                 }
-           </UserConsumer>
+            </UserConsumer>
         )
     }
 
 }
 
-export default ComponentB
+export default ComponentC
