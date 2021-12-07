@@ -1,28 +1,22 @@
-import ComponentA from "./Context/componentA";
-import Greetings from "./LifecyclesAndConditionalRendering/ConditionalRendering"
-import Container from "./LifecyclesAndConditionalRendering/lifecycles";
-import ComponentA from "./CodeSpliting/ComponentA"
-import ComponentB from "./ErrorBoundary/ComponentB";
-import Fragment from "./Fragments/Fragments";
-import Counter from "./Hoc/Counter"
-import Hover from "./Hoc/Hover"
-import Greet from "./JsxInDeapth/DotNotation"
-import Refs from "./Refs/Refs";
+import React from "react"
+import Counter from "./RenderingProps/Counter" 
+import Click from "./RenderingProps/Click"
+import Hover from "./RenderingProps/Hover"
 
-function App() {
-  return (
-    <div className="App">
-      <ComponentB />
-      <ComponentA />
-      <Greetings />
-      <Container />
-	  <Fragment />
-	  <Counter/>
-	  <Hover />
-	  <Greet />
-	  <Refs />
-    </div>
-  );
+function App(){
+	return(
+		<div>
+			<Counter>
+				render={(count, incrementCount)=>{
+					<Click count={count} incrementCount={incrementCount} />
+				}}
+			</Counter>
+			<Counter>
+				render={(count, incrementCount)=>{
+					<Hover count={count} incrementCount={incrementCount} />
+				}}
+			</Counter>
+		</div>
+	)
 }
-
-export default App;
+export default App
