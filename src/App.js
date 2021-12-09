@@ -1,21 +1,24 @@
-import React, { StrictMode } from "react" 
-import Greeting from "./PropsTypes/Greetings"
-import Reconciliation from "./Reconciliation/Reconciliation"
-import Controlled from "./UnControlledComponent/Controlled"
-import UnControlled from "./UnControlledComponent/UnControlled"
-import StrictModeExp from "./StrictMode/StrictModeExp"
-import Register from "./RefsAndDom/Register"
-
+import React, { useEffect } from "react" 
+import { context } from "./Demo/Context"
+import Register from "./Hooks/Register"
+import UseContextExm from "./Hooks/UseContext/UseContext"
+import UseEffect from "./Hooks/UseEffect"
+import UseState from "./Hooks/UseState"
+import UseStateWithArray from "./Hooks/UseStateWithArray"
+import UseStateWithObject from "./Hooks/UseStateWithObject"
+import UseStateWithPrev from "./Hooks/UseStateWithPrev"
+import Demo from "./Demo/Context"
 
 const App = ()=>{
 	return(
-		// <Greeting />
-		// <UnControlled />
-		// <Controlled />
-		// <StrictMode>
-		// 	<StrictModeExp />
-		// </StrictMode>
-		<Register />
+		// <Register />
+		// <UseState />
+		// <UseStateWithPrev />
+		// <UseStateWithObject />
+		// <UseStateWithArray />
+		// <UseEffect />
+		// <UseContextExm />
+		<Demo />
 	)
 }
 export default App
