@@ -1,24 +1,25 @@
-import React, { useEffect } from "react" 
-import { context } from "./Demo/Context"
-import Register from "./Hooks/Register"
-import UseContextExm from "./Hooks/UseContext/UseContext"
-import UseEffect from "./Hooks/UseEffect"
-import UseState from "./Hooks/UseState"
-import UseStateWithArray from "./Hooks/UseStateWithArray"
-import UseStateWithObject from "./Hooks/UseStateWithObject"
-import UseStateWithPrev from "./Hooks/UseStateWithPrev"
-import Demo from "./Demo/Context"
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import About from "./Components/About";
+import Dashboard from "./Components/Dashboard";
+import Home from "./Components/Home";
+import Login from "./Components/Login";
+import Register from "./Components/Register";
+import PrivateRoute from './Components/PrivateRoute';
 
-const App = ()=>{
-	return(
-		// <Register />
-		// <UseState />
-		// <UseStateWithPrev />
-		// <UseStateWithObject />
-		// <UseStateWithArray />
-		// <UseEffect />
-		// <UseContextExm />
-		<Demo />
-	)
+function App() {
+	return (
+		<Router>
+			<Switch>
+				<Route path='/login' component={Login} />
+				<Route path='/register' component={Register} />
+				<PrivateRoute path='/dashboard'>
+					<Dashboard />
+				</PrivateRoute>
+				<Route path='/' component={Home} />
+				<Route path='/about' component={About} />
+			</Switch>
+		</Router>
+	);
 }
-export default App
+
+export default App;
