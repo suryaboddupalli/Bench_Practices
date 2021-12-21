@@ -1,10 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './Components/December20/Components/App';
+import App from './App';
+import UseLayoutEffect from './Components/Hooks/UseLayoutEffect';
 
 ReactDOM.render(
 	<div>
-		<App />
+		<App/>
+		{/* <UseLayoutEffect /> */}
 	</div>,
 	document.getElementById('root')
 );
