@@ -2,16 +2,16 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import { Provider } from 'react-redux'
-import Store from './Redux/Store'
-import Navbar from './Components/Navbar';
-
+import store from './Redux/store'
+import { BrowserRouter } from 'react-router-dom/cjs/react-router-dom.min';
 
 ReactDOM.render(
 	<div>
-		<Provider store={Store}>
+		<BrowserRouter >
+		<Provider store={store}>
 			<App />
-			<Navbar />
 		</Provider>
+		</BrowserRouter>
 	</div>,
 	document.getElementById('root')
 );

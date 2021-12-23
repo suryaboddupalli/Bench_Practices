@@ -1,8 +1,10 @@
-import { createStore } from "redux";
+import { applyMiddleware, createStore } from "redux";
 import shopReducer from "./reducers/shopReducer";
 import { combineReducers } from "redux";
+import { composeWithDevTools } from 'redux-devtools-extension';
+
 const rootReducer = combineReducers({shop:shopReducer});
 
-const Store = createStore(rootReducer)
+const store = createStore(rootReducer,composeWithDevTools(applyMiddleware()))
 
-export default Store
+export default store

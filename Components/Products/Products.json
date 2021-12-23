@@ -1,0 +1,93 @@
+[
+    {
+        "id": 1,
+        "Title": "Samsung",
+        "Image" :"https://i.gadgets360cdn.com/products/large/1555507135_635_samsung_galaxy_a60.jpg",
+        "Price": 12999,
+        "Description": "4 GB RAm | 64 GB Storage  4000Mah",
+        "MoreDetails": {
+            "color" : "Blue",
+            "Memory": "4 GB RAm | 64 GB Storage",
+            "Processor": "QualComm snapdargon",
+            "RearCamera": "48MP + 8MP + 2MP",
+            "FrontCamera": "16MP",
+            "Display": "6.7 Inch HD",
+            "Battery": "4000Mah"
+        }
+    },{
+        "id": 2,
+        "Title": "Oppo",
+        "Image" :"https://www.gizmochina.com/wp-content/uploads/2019/10/Oppo-A11-600x600.jpeg",
+        "Price": 15999,
+        "Description": "8 GB RAm | 128 GB Storage  5000Mah",
+        "MoreDetails": {
+            "color" : "White",
+            "Memory": "8 GB RAm | 128 GB Storage",
+            "Processor": "QualComm snapdargon",
+            "RearCamera": "64MP + 8MP + 2MP",
+            "FrontCamera": "16MP",
+            "Display": "6.7 Inch HD",
+            "Battery": "5000Mah"
+        }
+    },{
+        "id": 3,
+        "Title": "Realme",
+        "Image" :"https://5.imimg.com/data5/SELLER/Default/2021/3/ZW/QH/QC/46278852/green-realme-x50-pro-1st-1024x1024-500x500.png",
+        "Price": 10999,
+        "Description": "4 GB RAm | 64 GB Storage  4000Mah",
+        "MoreDetails": {
+            "color" : "Green",
+            "Memory": "4 GB RAm | 64 GB Storage",
+            "Processor": "QualComm snapdargon",
+            "RearCamera": "32MP + 8MP",
+            "FrontCamera": "8MP",
+            "Display": "6.5 Inch HD",
+            "Battery": "4000Mah"
+        }
+    },{
+        "id": 4,
+        "Title": "Redmi",
+        "Image" :"https://i.gadgets360cdn.com/products/large/1527755798_635_xiaomi_mi_8.jpg",
+        "Price": 9999,
+        "Description": "4 GB RAm | 64 GB Storage  4000Mah",
+        "MoreDetails": {
+            "color" : "Black",
+            "Memory": "4 GB RAm | 64 GB Storage",
+            "Processor": "QualComm snapdargon",
+            "RearCamera": "32MP ",
+            "FrontCamera": "8MP",
+            "Display": "6.5 Inch HD",
+            "Battery": "4000Mah"
+        }
+    },{
+        "id": 5,
+        "Title": "Vivo",
+        "Image" :"https://www.godigit.com/content/dam/godigit/directportal/en/contenthm/vivo-y20g.jpg",
+        "Price": 16999,
+        "Description": "6 GB RAm | 128 GB Storage  5000Mah",
+        "MoreDetails": {
+            "color" : "Metal Black",
+            "Memory": "6 GB RAm | 126 GB Storage",
+            "Processor": "QualComm snapdargon",
+            "RearCamera": "64MP + 8MP + 2MP",
+            "FrontCamera": "16MP",
+            "Display": "6.7 Inch HD",
+            "Battery": "5000Mah"
+        }
+    },{
+        "id": 6,
+        "Title": "Poco",
+        "Image" :"https://fdn2.gsmarena.com/vv/pics/xiaomi/xiaomi-poco-x2-1.jpg",
+        "Price": 11999,
+        "Description": "4 GB RAm | 64 GB Storage  4000Mah",
+        "MoreDetails": {
+            "color" : "Pink",
+            "Memory": "4 GB RAm | 64 GB Storage",
+            "Processor": "QualComm snapdargon",
+            "RearCamera": "32MP + 8MP",
+            "FrontCamera": "8MP",
+            "Display": "6.5 Inch HD",
+            "Battery": "4000Mah"
+        }
+    }
+]
