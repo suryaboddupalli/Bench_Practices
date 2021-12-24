@@ -2,21 +2,26 @@ import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
 import CartItems from './CartItems'
 
-function Cart({ cart }) {
-    const [totalPrice,setTotalPrice] =useState(0)
-    const [totalItems,setTotalItems] =useState(0)
 
-    useEffect(()=>{
-        let items =0;
-        let price =0;
-        cart.forEach((item)=>{
+function Cart({ cart }) {
+    const [totalPrice, setTotalPrice] = useState(0)
+    const [totalItems, setTotalItems] = useState(0)
+
+    useEffect(() => {
+        localStorage.setItem('cart', JSON.stringify(cart))
+    },[cart])
+
+    useEffect(() => {
+        let items = 0;
+        let price = 0;
+        cart.forEach((item) => {
             items += item.quantity;
             price += item.quantity * item.Price
         })
 
         setTotalPrice(price);
         setTotalItems(items);
-    },[cart,totalItems,totalPrice,setTotalItems,setTotalPrice])
+    }, [cart, totalItems, totalPrice, setTotalItems, setTotalPrice])
 
     return (
         <div>

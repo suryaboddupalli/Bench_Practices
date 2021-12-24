@@ -13,7 +13,7 @@ function Product({ productData, addToCart, loadCurrentItems }) {
                     <h5 className='card-title'>Rs.{productData.Price}</h5>
                     <p className='card-text'>{productData.Description}</p>
                     <Link to={`/product/${productData.id}`}><button class="btn btn-primary mt-2 me-2" onClick={() => loadCurrentItems(productData)}>Show more</button></Link>
-                    <button class="btn btn-primary mt-2 ms-2 " onClick={() => { addToCart(productData.id); console.log(productData) }} >AddToCart</button>
+                    <button class="btn btn-primary mt-2 ms-2 " onClick={() => { addToCart(productData.id); }} >AddToCart</button>
                 </div>
             </div>
         </div>

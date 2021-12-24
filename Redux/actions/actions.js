@@ -35,3 +35,10 @@ export const loadCurrentItems = (item) => {
         payload: item
     }
 }
+
+export const toggleNavbar = (isLoggedIn)=>{
+    return{
+        type:actionsTypes.TOGGLE_NAVBAR,
+        payload : isLoggedIn
+    }
+}

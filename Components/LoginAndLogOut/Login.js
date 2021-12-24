@@ -1,8 +1,11 @@
 import axios from 'axios';
 import React, { useState } from 'react';
-import {useHistory} from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
+import { connect } from 'react-redux'
 
-function Login() {
+function Login({dispatchData}) {
+    console.log( dispatchData)
+
     const history = useHistory()
     const [data, setData] = useState({
         email: '',
@@ -15,13 +18,15 @@ function Login() {
         e.preventDefault();
         axios.post('http://localhost:8000/user/login', data)
             .then(res => {
-                sessionStorage.setItem('isLoggedIn', res.data.isLoggedIn)
-                history.push('/dashboard')
+                if (res.data) {
+                    sessionStorage.setItem('isLoggedIn', res.data.isLoggedIn)
+                    sessionStorage.setItem('data',dispatchData.payload)
+                    history.push('/dashboard')
+                }
             })
             .catch((err) => {
                 console.log('error')
             })
-
     }
 
     return (
@@ -46,4 +51,12 @@ function Login() {
     )
 }
 
-export default Login
+
+
+const mapdispatchToProps = (dispatch) => {
+    return {
+        dispatchData: dispatch({type:"TOGGLE_NAVBAR",payload:true})
+    }
+}
+
+export default connect(null, mapdispatchToProps)(Login)

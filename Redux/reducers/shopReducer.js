@@ -1,9 +1,10 @@
 import * as actionsTypes from '../actions/action_types'
 import productsData from '../../Components/Products/Products.json'
 
+
 const intialState = {
     products: productsData,
-    cart: [],
+    cart: localStorage.getItem('cart')? JSON.parse(localStorage.getItem('cart')) : [],
     currentItem: null
 }
 
