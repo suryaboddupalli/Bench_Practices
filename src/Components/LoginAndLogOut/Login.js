@@ -19,8 +19,8 @@ function Login({dispatchData}) {
         axios.post('http://localhost:8000/user/login', data)
             .then(res => {
                 if (res.data) {
-                    sessionStorage.setItem('isLoggedIn', res.data.isLoggedIn)
-                    sessionStorage.setItem('isLoggedIn', res.data.admin)
+                    sessionStorage.setItem('isAdmin', res.data.Admin)
+                    sessionStorage.setItem('token', res.data.token)
                     sessionStorage.setItem('data',dispatchData.payload)
                     history.push('/dashboard')
                 }

@@ -2,7 +2,7 @@ import React, { useState,useEffect } from 'react'
 import axios from 'axios'
 import ReactDOM from 'react-dom'
 
-function Products() {
+function EditProduct() {
     const [data, setData] = useState([])
     const [showModel, setShowModel] = useState(false)
 
@@ -54,7 +54,7 @@ function Products() {
                         <td>{product.Battery}</td>
                         <td><button onClick={handleClick}>Edit</button></td>
                         <Model open={showModel} close={handleClick}>
-                            <EditProduct product={product} />
+                            <EditProducts product={product} />
                         </Model>
                     </tr>
                 )}
@@ -63,7 +63,7 @@ function Products() {
     )
 }
 
-function EditProduct(props) {
+function EditProducts(props) {
     return (
         <form >
             <h3>Products Data</h3>
@@ -106,4 +106,4 @@ function Model(props) {
             </div>, document.body) : null)
 }
 
-export default Products
+export default EditProduct

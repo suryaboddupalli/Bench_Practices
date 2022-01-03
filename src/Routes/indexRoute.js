@@ -5,6 +5,10 @@ import Cart from '../Components/Cart/Cart'
 import SingleItem from '../Components/SingleItem/SingleItem'
 import Login from '../Components/LoginAndLogOut/Login'
 import PrivateRoute from '../Routes/PrivateRoute'
+import AddProducts from '../Components/Products/AddProduct'
+import EditProduct from '../Components/Products/EditProduct'
+import UserDetails from '../Components/Users/UserDetails'
+import AdminRoute from '../Routes/AdminRoute'
 
 function IndexRoute() {
     return (
@@ -16,6 +20,9 @@ function IndexRoute() {
                 <PrivateRoute path='/cart' component={Cart} exact />
                 <Route path='/login' component={Login} exact />
                 <Route path='/product/:id' component={SingleItem} />
+                <AdminRoute path='/product/add' component={AddProducts} />
+                <AdminRoute path='/product/edit' component={EditProduct} />
+                <AdminRoute path='/users' component={UserDetails} />
             </Switch>
         </div>
     )

@@ -5,6 +5,7 @@ import './Navbar.css'
 import Profile from '../Profile/UserProfile'
 
 function Rendermenu({ cart ,states }) {
+    console.log(states)
     const [cartCount, setCartCount] = useState()
     useEffect(() => {
         let count = 0;
@@ -27,7 +28,19 @@ function Rendermenu({ cart ,states }) {
         </nav>
             
         )
-    }else {
+    }else if(states == payload.admin){
+        return(
+            <nav >
+            <ul>
+                <li><NavLink to="/">dashboard</NavLink></li>
+                <li ><NavLink to="/product/add">AddProducts</NavLink></li>
+                <li ><NavLink to="/product/edit">EditProducts</NavLink></li>
+                <li><NavLink to='users'>Users</NavLink></li>
+                <li><NavLink to="/login">LogOut</NavLink></li>
+            </ul>
+        </nav>
+        )
+    }else{
         return(
             <nav >
             <ul>
@@ -43,7 +56,6 @@ function Rendermenu({ cart ,states }) {
 }
 
 const mapStateToProps = (state) => {
-    console.log(state.navbar)
     return {
         cart: state.shop.cart,
         states: state.navbar

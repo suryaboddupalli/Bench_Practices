@@ -3,7 +3,7 @@ import axios from 'axios'
 import ReactDOM from 'react-dom'
 
 
-function Profile() {
+function AdminProfile() {
     const [data, setData] = useState([])
     const [showModel, setShowModel] = useState(false)
 
@@ -22,11 +22,11 @@ function Profile() {
 
     return (
         <div>
-            {data.map((user) =>
-                <div key={user.Id}>
-                    <button onClick={handleClick}>{user.firstName + user.lastName}</button>
+            {data.map((admin) =>
+                <div key={admin.Id}>
+                    <button onClick={handleClick}>{admin.firstName + admin.lastName}</button>
                     <Model open={showModel} close={handleClick}>
-                        <EditProfile user={user} />
+                        <EditProfile admin={admin} />
                     </Model>
                 </div>
             )}
@@ -39,11 +39,11 @@ function EditProfile(props) {
         <form >
             <h3>Profile</h3>
             <label>FirstName</label>
-            <input type=' text' name='firstName' value={props.user.firstName} />
+            <input type=' text' name='firstName' value={props.admin.firstName} />
             <label>LastName</label>
-            <input type='text' name='lastName' value={props.user.lastName} />
+            <input type='text' name='lastName' value={props.admin.lastName} />
             <label>Email</label>
-            <input type='text' name='email' value={props.user.email} />
+            <input type='text' name='email' value={props.admin.email} />
             <button>Save</button>
         </form>
 
@@ -59,4 +59,4 @@ function Model(props) {
             </div>, document.body) : null)
 }
 
-export default Profile
+export default AdminProfile
