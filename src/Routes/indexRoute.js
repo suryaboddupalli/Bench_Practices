@@ -9,6 +9,8 @@ import AddProducts from '../Components/Products/AddProduct'
 import EditProduct from '../Components/Products/EditProduct'
 import UserDetails from '../Components/Users/UserDetails'
 import AdminRoute from '../Routes/AdminRoute'
+import Admin from '../Components/Admin/Admin'
+import Profile from '../Components/Profile/Profile'
 
 function IndexRoute() {
     return (
@@ -23,6 +25,8 @@ function IndexRoute() {
                 <AdminRoute path='/product/add' component={AddProducts} />
                 <AdminRoute path='/product/edit' component={EditProduct} />
                 <AdminRoute path='/users' component={UserDetails} />
+                <Route path='/admin' component={Admin} />
+                <Route path='/profile' component={Profile} />
             </Switch>
         </div>
     )

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
 import { NavLink } from 'react-router-dom'
 import './Navbar.css'
-import Profile from '../Profile/UserProfile'
+import Profile from '../Profile/Profile'
 
 function Rendermenu({ cart ,states }) {
     console.log(states)
@@ -27,18 +27,6 @@ function Rendermenu({ cart ,states }) {
             </ul>
         </nav>
             
-        )
-    }else if(states == payload.admin){
-        return(
-            <nav >
-            <ul>
-                <li><NavLink to="/">dashboard</NavLink></li>
-                <li ><NavLink to="/product/add">AddProducts</NavLink></li>
-                <li ><NavLink to="/product/edit">EditProducts</NavLink></li>
-                <li><NavLink to='users'>Users</NavLink></li>
-                <li><NavLink to="/login">LogOut</NavLink></li>
-            </ul>
-        </nav>
         )
     }else{
         return(
