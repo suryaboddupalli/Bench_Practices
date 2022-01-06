@@ -1,0 +1,72 @@
+[
+    {
+        "title": "Read each sentence to find out whether there is any grammatical error in it. The error, if any will be in one part of the sentence. The letter of that part is the answer. If there is no error, the answer is 'D'. (Ignore the errors of punctuation, if any).",
+"option": [
+            "We discussed about the problem so thoroughly ",
+            "on the eve of the examination",
+            "that I found it very easy to work it out.",
+            "No error."
+        ],
+        "answer": "A"
+    },
+    {
+        "title": "'CORPULENT' choose the word which best expresses the meaning of the given word. ",
+        "option": [
+            "Lean",
+            "Gaunt",
+            "Emaciated",
+            "Obese"
+        ],
+        "answer": "D"
+    },
+    {
+        "title": "'ENORMOUS' choose the word which is the exact OPPOSITE of the given words.",
+        "option": [
+            "Soft",
+            "Average",
+            "Tiny",
+            "Weak"
+        ],
+        "answer": "C"
+    },
+    {
+        "title": "Find the correctly spelt words.",
+        "option": [
+            "Efficient",
+            "Treatmeant",
+            "Beterment",
+            "Employd"
+        ],
+        "answer": "A"
+    },
+    {
+        "title": "'BRIEF' choose the word which best expresses the meaning of the given word. ",
+        "option": [
+            "Limited",
+            "Small",
+            "Little",
+            "short"
+        ],
+        "answer": "D"
+    },
+    {
+        "title": "Find the correctly spelt words.",
+        "option": [
+            "Foreign",
+            "Foreine",
+            "Fariegn",
+            "Forein"
+        ],
+        "answer": "A"
+    },
+    {
+        "title": "'COMMISSIONED' choose the word which is the exact OPPOSITE of the given words.",
+        "option": [
+            "Started",
+            "Closed",
+            "Finished",
+            "Terminated"
+        ],
+        "answer": "D"
+    }
+]

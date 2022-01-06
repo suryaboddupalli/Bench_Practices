@@ -1,28 +1,31 @@
 import React, { useState } from 'react'
-import Data from '../TestQuestions.json'
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min'
+import Data from './Questions.json'
 import AptitudeQuestion from './AptitudeQuestion'
 
+
 function AptitudePage() {
-    let tempMarks = []
+    const history = useHistory()
     const [marks, setMarks] = useState([])
+    var tempMarks = []
     const changeHandler = (value, index) => {
-       tempMarks[index] = value
-    //    tempMarks=marks
+        console.log(value)
+        console.log(index)
+        tempMarks[index]=value;
         setMarks(...tempMarks)
-        console.log(...marks)
-        console.log(...tempMarks)
-        console.log((marks.reduce((a,b)=>a+b,0)))
-
-
     }
     return (
         <div>
+            <h1 className='text-center fixed-top bg-success p-2'>Online Assessment</h1><br /><br /><br/>
+
             {Data.map((data, index) =>
             (
                 <AptitudeQuestion data={data} index={index} changeHandler={changeHandler} />
             )
             )}
-            <button onClick={console.log()}>Next</button>
+            <div className='  d-md-flex justify-content-md-end'>
+                <button type="submit" className="btn btn-primary me-5" onClick={() => { history.push('/verbal') }}>Next</button>
+            </div>
         </div>
     )
 }
