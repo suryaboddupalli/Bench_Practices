@@ -22,7 +22,7 @@ function TestSummary() {
                 <div className="card ms-3 me-3">
                     <div className="card-body">
                         <h5 className="card-title bg-info text-center">Technical</h5>
-                        <p className="card-text"> Technical round having 1 question for 45 min</p>
+                        <p className="card-text"> Technical round having 10 questions for 45 min</p>
                     </div>
                 </div>
             </div><br/><br/>

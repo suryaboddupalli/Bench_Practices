@@ -1,24 +1,23 @@
 import React from 'react'
 
-function AptitudeQuestion({ data }) {
+function TechnicalQuestion({nextQuestionHandler,question,quizEnd,currentIndex,userAnswer,options,disabled,QuestionsData,finishHandler,checkAnswer}) {
 
     return (
-        <div class="row">
-            <div class="col-sm-4">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">{data.title}</h5>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-8">
-                <div class="card">
-                    <div class="card-body">
-                        <textarea class="form-control" rows="6"></textarea>
-                    </div>
-                </div>
-            </div>
+        <div>
+            <h2>{question}</h2>
+            <span>{`Question${currentIndex + 1}of${QuestionsData.length}`}</span>
+            {options.map(option =>
+                <p key={option.id} className={`option ${userAnswer === option ? "selected" : null}`}
+                    onClick={(() => { checkAnswer(option) })}> {option}</p>
+            )}
+            {currentIndex < QuestionsData.length - 1 &&
+                <button disabled={disabled} onClick={nextQuestionHandler}>Next</button>}
+
+            {currentIndex === QuestionsData.length - 1 &&
+                <button onClick={finishHandler} disabled={disabled}>Finish</button>}
         </div>
     )
 }
-export default AptitudeQuestion
+export default TechnicalQuestion
+
+{/* <TechnicalQuestion question={question} options={options} userAnswer={userAnswer} currentIndex={currentIndex} quizEnd={quizEnd} nextQuestionHandler={this.nextQuestionHandler} finishHandler={this.finishHandler} QuestionsData={QuestionsData} checkAnswer={this.checkAnswer()}/> */}

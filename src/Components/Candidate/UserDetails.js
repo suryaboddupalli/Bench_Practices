@@ -34,10 +34,11 @@ function UserDetails() {
         if(validate(data)){
         setUserErrors(validate(data))
         }else{
+            history.push('/instructions')
             axios.post("https:localhost:8000/register/add",data)
             .then((res)=>{
                 console.log(res)
-                history.push('/instruction')
+               
             }).catch((err)=>{
                 console.log(err)
             })
