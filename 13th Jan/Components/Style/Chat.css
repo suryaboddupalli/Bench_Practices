@@ -1,0 +1,22 @@
+.chat {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    cursor: pointer;
+    margin-top: 20px;
+  }
+  
+  .chat:hover {
+    background-color: rgb(245, 243, 243);
+  }
+  
+  
+  .chatName {
+    font-weight: 500;
+  }
+  
+  @media screen and (max-width: 768px) {
+    .chatName {
+      display: none;
+    }
+  }
