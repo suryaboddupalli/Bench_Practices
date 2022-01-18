@@ -1,0 +1,33 @@
+
+*{
+    margin-top: 5px;
+}
+
+
+h2{
+    color: rgb(26, 156, 207);
+    padding-top: 50px;
+}
+.labels {
+    color: rgb(98, 136, 218);
+}
+#box{
+    text-align: center;
+    border-style: solid ;
+    border-color: rgba(0, 0, 0, 0.226);
+    margin-top: 100px;
+    margin-left: 400px;
+    margin-right: 400px;
+    background-color: rgb(218, 222, 224);
+    border-radius: 10px;
+    padding-bottom: 50px;
+    
+}
+
+.link{
+    color: rgb(14, 14, 163);
+}
+
+.form-group{
+    padding-top: 5px;
+}

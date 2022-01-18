@@ -1,0 +1,28 @@
+ul {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: rgb(212, 197, 197);
+    
+}
+
+  
+  li {
+    display: inline;
+    margin: 10px;
+    padding: 1px 20px;
+    float: right;
+    color: rgb(219, 111, 3);
+    text-decoration: none;
+    border: 1px solid;    
+    
+  }
+  
+
+  #logo{
+      float: left;
+  }
+
+  
+  
+ 
