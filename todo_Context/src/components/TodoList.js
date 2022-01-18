@@ -1,30 +1,39 @@
-import React,{useContext} from 'react'
-import { ContextData } from '../Context'
+import React, { useContext, useState } from 'react'
+import { StoreContext } from '../Context'
+import TodoItems from './TodoItems'
 
 function TodoList() {
-    const [data] = useContext(ContextData)
+    const [data, setData] = useContext(StoreContext)
+
+const handleUpdate =(editValue,id)=>{
+    const newData = [...data]
+    newData.forEach((data,index)=>{
+        if(index === id){
+            console.log(editValue)
+            console.log(id)
+            data.name = editValue
+        }
+        setData(newData)
+    })
+}
     return (
         <table>
             <thead>
                 <tr>
-                    <th>Sl.No</th>
-                    <th>Title</th>
+                    <th>Name</th>
                     <th colSpan='2'>Actions</th>
                 </tr>
             </thead>
             <tbody>
-               {data.map((list)=>(
-                   <tr>
-                       <td>{list.id}</td>
-                       <td>{list.name}</td>
-                       <td><button>Edit</button></td>
-                       <td><button>Delete</button></td>
-                   </tr>
-               ))}
-                
+                {data.map((list,index) => (
+                    console.log(index),
+                    <TodoItems id={index} list={list} handleUpdateData={handleUpdate}  />
+                ))}
+
             </tbody>
         </table>
     )
+
 }
 
 

@@ -1,14 +1,25 @@
-import React,{useState} from 'react'
+import React, { useState, createContext, useEffect } from "react";
 
-export const ContextData = React.createContext()
+export const StoreContext = createContext();
 
-const Data = {id:1,name:'surya'}
+export const ContextProvider = ({ children }) => {
+    const [data, setData] = useState([])
 
-export const ContextProvider = ({children})=>{
-    const[data,setData]=useState(Data)
-    return(
-        <ContextData.Provider value='hi'>
+    useEffect(() => {
+        const LStoreData = JSON.parse(localStorage.getItem('dataStore'))
+        if (LStoreData) {
+            setData(LStoreData)
+        }
+    },[])
+
+    useEffect(() => {
+        localStorage.setItem('dataStore', JSON.stringify(data))
+    }, [data])
+
+
+    return (
+        <StoreContext.Provider value={[data, setData]}>
             {children}
-        </ContextData.Provider>
+        </StoreContext.Provider>
     )
 }
