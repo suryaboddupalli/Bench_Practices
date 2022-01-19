@@ -1,6 +1,9 @@
 import React, {useState} from 'react';
+import { useDispatch } from 'react-redux';
+import { fetchRegisterUser } from '../../Redux/Reducers/UserReducer';
 
 const Register = () => {
+	const dispatch = useDispatch()
     const [data,setData] = useState({
         Name : '',
         email : '',
@@ -9,10 +12,12 @@ const Register = () => {
     })
     const changeHandler = e =>{
         setData({...data,[e.target.name]:e.target.value})
+
     }
     const handleSubmit = e =>{
         e.preventDefault();
-		
+		dispatch(fetchRegisterUser(data))
+		console.log(data)
     }
 
 	return(
