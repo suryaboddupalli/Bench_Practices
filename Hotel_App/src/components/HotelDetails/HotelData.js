@@ -1,24 +1,49 @@
 import React from 'react'
+import { connect } from 'react-redux'
+import { fetchData } from '../../Redux/Reducers/HotelReducer'
+import {loadCurrentItems} from '../../Redux/Actions/HotelAction'
+import {Link} from 'react-router-dom'
 
-function HotelData() {
+
+function HotelData({ data ,loadCurrentItems}) {
+    console.log(data)
     return (
-        <div className='row'>
-            <div className='col-8'>
-                <div className='card' id='hotelcard'>
-                    <h3>HotelName</h3>
-                    <p><img id='img' src='https://cf.bstatic.com/xdata/images/hotel/max1024x768/207500258.jpg?k=3eb0181753e9f40e67f34d28f86ebb344cb165990afb11e51531c7da5d8ba5a5&o=&hp=1' alt='hotelImage' />
-                        Plus - Very good hotel in Nellore. Courteous, friendly and helpful staff in the front office. Room service is good. Rooms are spacious. Breakfast is OK. Minus - The staff in the breakfast lounge need to improve. Instead of taking care of guests they keep chatting around. Lobby areas are stuffy with minimal airflow. Overall, will recommend this hotel</p>
+        <div >
+            {data.map((hotel) => (
+                <div className='row'>
+                    <div className='col-8'>
+                        <div className='card' id='hotelcard'>
+                            <h3>{hotel.hotelName}</h3>
+                            <p><img id='img' src={hotel.hotelImg} alt='hotelImage' />{hotel.hotelDescription}</p>
+                        </div>
+                    </div>
+                    <div className='col-4'>
+                        <div className='card' id='costcard'>
+                            <h5>Cost</h5>
+                            <h6>{hotel.singleRoomPrice}</h6>
+                            <Link to={`hotel/${hotel.id}`}><button className='btn btn-primary' onClick={()=>loadCurrentItems(hotel)}>Open</button></Link>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div className='col-4'>
-                <div className='card' id='costcard'>
-                    <h5>Cost</h5>
-                    <h6>Rs.999</h6>
-                    <button className='btn btn-primary'>Open</button>
-                </div>
-            </div>
+
+            ))}
+
         </div>
     )
 }
 
-export default HotelData
+const mapStateToProps = (state) => {
+    return {
+        data: state.hotel.hotelDetails
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        fetch: dispatch(fetchData()),
+        loadCurrentItems: (hotel) => dispatch(loadCurrentItems(hotel))
+    }
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(HotelData)

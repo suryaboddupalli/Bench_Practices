@@ -9,7 +9,7 @@ const rootReducer = combineReducers({
     login: loginReducer,
     register:registerReducer,
     hotel: hotelReducer,
-    nav : navReducer
+    nav : navReducer,
 })
 
 export const Store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk)))

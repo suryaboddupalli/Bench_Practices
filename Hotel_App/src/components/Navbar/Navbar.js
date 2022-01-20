@@ -9,7 +9,7 @@ function Navbar({ data }) {
             <nav >
                 <ul>
                     <li id='logo'><NavLink ClassName='navlink' to="/">LOGO</NavLink></li>
-                    <li><NavLink ClassName='navlink' to="/">LogOut</NavLink></li>
+                    <li><NavLink ClassName='navlink' to="/login">LogOut</NavLink></li>
                     <li ><NavLink ClassName='navlink' to="/">Hotels</NavLink></li>
                 </ul>
             </nav>
@@ -19,8 +19,8 @@ function Navbar({ data }) {
             <nav >
                 <ul>
                     <li id='logo'><NavLink ClassName='navlink' to="/">LOGO</NavLink></li>
-                    <li><NavLink ClassName='navlink' to="/">SignIn</NavLink></li>
-                    <li><NavLink ClassName='navlink' to="/">Register</NavLink></li>
+                    <li><NavLink ClassName='navlink' to="/login">SignIn</NavLink></li>
+                    <li><NavLink ClassName='navlink' to="/register">Register</NavLink></li>
                     <li ><NavLink ClassName='navlink' to="/">Hotels</NavLink></li>
 
                 </ul>

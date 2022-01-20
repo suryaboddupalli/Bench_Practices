@@ -9,7 +9,7 @@ p{
     font-size: smaller;
 }
 h3{
-    text-align: right;
+    text-align: center;
     padding-right: 150px;
 }
 #cardcontainer{
@@ -17,7 +17,12 @@ h3{
 }
 
 #costcard{
-    padding: 80px;
+    padding: 70px;
     margin-right: 20px;
+}
+
+image{
+    width: 1000px;
+    height: 300px;
 }
 

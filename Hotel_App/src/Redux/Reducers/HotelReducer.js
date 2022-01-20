@@ -1,17 +1,23 @@
 import axios from 'axios'
-import { FETCH_DATA_FAILURE, FETCH_DATA_SUCCESS, fetchDataFailure, fetchDataSuccess } from '../Actions/HotelAction'
+import { FETCH_DATA_FAILURE, FETCH_DATA_SUCCESS,LOAD_CURRENT_ITEM, fetchDataFailure, fetchDataSuccess } from '../Actions/HotelAction'
 
 const initialState = {
     hotelDetails: [],
-    error: ''
+    error: '',
+    currentItem :null
 }
 
 export const hotelReducer = (state = initialState, action) => {
     switch (action.type) {
         case FETCH_DATA_SUCCESS:
-            return { hotelDetails: action.payload }
+            return console.log(action.payload), { hotelDetails: action.payload }
         case FETCH_DATA_FAILURE:
             return { error: action.payload }
+        case LOAD_CURRENT_ITEM:
+            return {
+                ...state,
+                currentItem: action.payload
+            }
         default:
             return state
     }
@@ -20,14 +26,16 @@ export const hotelReducer = (state = initialState, action) => {
 
 export const fetchData = () => {
     return (function (dispatch) {
-        axios.get('http://jsonplaceholder.typicode.com/users')
+        axios.get('http://localhost:8000/hotel')
             .then((res) => {
-                console.log(res)
-                const data = res.data.map(item=>item.id)
+                console.log(res.data)
+                const data = res.data.map(item => item)
+                console.log(data)
                 dispatch(fetchDataSuccess(data))
             }).catch((error) => {
                 dispatch(fetchDataFailure(error))
             })
     })
 }
+
 

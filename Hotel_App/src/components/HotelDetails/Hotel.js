@@ -1,56 +1,74 @@
 import React from 'react';
+import { connect } from 'react-redux'
 
-function Hotel() {
+function Hotel({ currentItem }) {
+    console.log(currentItem)
     return (
         <div>
-            <div className='row'>
-                <div className='col-8'>
-                    <div className='card' id='hotelcard'>
-                        <h3>HotelName</h3>
-                        <p><img id='img' src='https://cf.bstatic.com/xdata/images/hotel/max1024x768/207500258.jpg?k=3eb0181753e9f40e67f34d28f86ebb344cb165990afb11e51531c7da5d8ba5a5&o=&hp=1' alt='hotelImage' /></p>
-                    </div>
-                </div>
-                <div className='col-4'>
-                    <div className='card' id='costcard'>
-                        <h5>Cost</h5>
-                        <h6>Rs.999</h6>
-                        <button className='btn btn-primary'>Open</button>
-                    </div>
+            <div className='col-12'>
+                <div className='card' id='hotelcard'>
+                    <h3>{currentItem.hotelName}</h3>
+                    <p><img id='image' src={currentItem.hotelImg} alt='hotelImage' /></p>
                 </div>
             </div>
+
             <div>
                 <div>
                     <h2>About</h2>
-                    <ul>
-                        <li>The hotel features both an indoor and outdoor swimming pool.  </li>
-                        <li>Guests can relax and unwind in the hotel's spa. </li>
-                        <li>The hotel has a conference room that can be used for business meetings and events.</li>
-                    </ul>
+                    <p>{currentItem.Description}</p>
                 </div>
                 <div>
                     <h2>Room</h2>
                     <div>
-                        <div className='card col-4' id='hotelcard'>
-                            <h3>Single Room</h3>
-                            <p><img id='img' src='https://cf.bstatic.com/xdata/images/hotel/max1024x768/207500258.jpg?k=3eb0181753e9f40e67f34d28f86ebb344cb165990afb11e51531c7da5d8ba5a5&o=&hp=1' alt='hotelImage' /></p>
+                        <div className='row'>
+                            <div className='card col-8' id='hotelcard'>
+                                <h3>Single Room</h3>
+                                <p><img id='img' src={currentItem.singleRoomImg} alt='singleRoomImage' />{currentItem.singleRoomDetails}</p>
+                            </div>
+                            <div className='col-4'>
+                                <div className='card' id='costcard'>
+                                    <h5>Cost</h5>
+                                    <h6>{currentItem.singleRoomPrice}</h6>
+                                    <button className='btn btn-primary'>Book</button>
+                                </div>
+                            </div>
                         </div>
-                        <div className='card col-4' id='hotelcard'>
-                            <h3>Single Room</h3>
-                            <p><img id='img' src='https://cf.bstatic.com/xdata/images/hotel/max1024x768/207500258.jpg?k=3eb0181753e9f40e67f34d28f86ebb344cb165990afb11e51531c7da5d8ba5a5&o=&hp=1' alt='hotelImage' /></p>
+                        <div className='row'>
+                            <div className='card col-8' id='hotelcard'>
+                                <h3>Double Room</h3>
+                                <p><img id='img' src={currentItem.doubleRoomImg} alt='DoubleRoomImage' />{currentItem.doubleRoomDetails}</p>
+                            </div>
+                            <div className='col-4'>
+                                <div className='card' id='costcard'>
+                                    <h5>Cost</h5>
+                                    <h6>{currentItem.doubleRoomPrice}</h6>
+                                    <button className='btn btn-primary'>Book</button>
+                                </div>
+                            </div>
                         </div>
-                        <div className='card col-4' id='hotelcard'>
-                            <h3>Halls</h3>
-                            <p><img id='img' src='https://cf.bstatic.com/xdata/images/hotel/max1024x768/207500258.jpg?k=3eb0181753e9f40e67f34d28f86ebb344cb165990afb11e51531c7da5d8ba5a5&o=&hp=1' alt='hotelImage' /></p>
+                        <div className='row'>
+                            <div className='card col-8' id='hotelcard'>
+                                <h3>Halls</h3>
+                                <p><img id='img' src={currentItem.hallImg} alt='hallImage' />{currentItem.hallDetails}</p>
+                            </div>
+                            <div className='col-4'>
+                                <div className='card' id='costcard'>
+                                    <h5>Cost</h5>
+                                    <h6>{currentItem.hallPrice}</h6>
+                                    <button className='btn btn-primary'>Book</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div>
                     <h2>Location</h2>
-                    <ul>
-                        <li>Street Name,Land Mark</li>
-                        <li>Discrict</li>
-                        <li>state and pincode</li>
-                    </ul>
+                    <h6>{currentItem.hotelLocation}</h6>
+                </div>
+                <div>
+                    <h2>Facility</h2>
+                    <h6>{currentItem.Facility}</h6>
+
                 </div>
 
 
@@ -61,4 +79,12 @@ function Hotel() {
 
 }
 
-export default Hotel;
+const mapStateToProps = (state) => {
+    return {
+        currentItem: state.hotel.currentItem
+    }
+}
+
+
+export default connect(mapStateToProps)(Hotel)
+
