@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import { useDispatch } from 'react-redux';
 import { fetchRegisterUser } from '../../Redux/Reducers/UserReducer';
+import RegisterValidations from '../../Validations/RegisterValidation'
 
 const Register = () => {
 	const dispatch = useDispatch()
@@ -10,13 +11,19 @@ const Register = () => {
         phone : '',
         password : '' ,
     })
+	const [clientError,setClientError] =useState()
     const changeHandler = e =>{
         setData({...data,[e.target.name]:e.target.value})
 
     }
     const handleSubmit = e =>{
         e.preventDefault();
-		dispatch(fetchRegisterUser(data))
+		if (RegisterValidations(data)) {
+            setClientError(RegisterValidations(data))
+        } else {
+			dispatch(fetchRegisterUser(data))
+
+        }
 		console.log(data)
     }
 
@@ -24,6 +31,7 @@ const Register = () => {
         <div className='page'>
 			<div className='form-container' id='box'>
 				<h2>Register </h2>
+                {clientError ? <span style={{ color: 'red' }}>{clientError}</span> : null}
 				<form onSubmit={handleSubmit}>
 					<div className='form-group'>
 					    <label className='labels'>Name</label><br/>

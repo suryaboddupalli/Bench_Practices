@@ -1,7 +1,7 @@
 import axios from "axios";
 import { loginfailure, loginsuccess, LOGIN_FAILURE, LOGIN_SUCCESS } from "../Actions/UserAction";
 import { USER_REGISTER_FAILURE, USER_REGISTER_SUCCESS } from "../Actions/UserAction";
-import { userRegisterSuccess,userRegisterFail } from "../Actions/UserAction";
+import { userRegisterSuccess, userRegisterFail } from "../Actions/UserAction";
 
 const initialState = {
     user: [],
@@ -11,9 +11,9 @@ const initialState = {
 export const loginReducer = (state = initialState, action) => {
     switch (action.type) {
         case LOGIN_SUCCESS:
-            return { user: action.payload }
+            return { user: action.payload, error: '' }
         case LOGIN_FAILURE:
-            return {error: action.payload }
+            return { user: [], error: action.payload }
         default:
             return state;
     }
@@ -26,7 +26,7 @@ export const registerReducer = (state = initialState, action) => {
         case USER_REGISTER_FAILURE:
             return { error: action.payload }
         default:
-           return state;
+            return state;
     }
 }
 

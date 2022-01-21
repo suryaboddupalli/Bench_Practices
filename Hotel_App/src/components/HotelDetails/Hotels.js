@@ -1,11 +1,15 @@
 import React from 'react'
 import './Hotel.css'
 import HotelData from './HotelData'
+import SearchBar from '../SearchBar/SearchBar'
 
 function Hotels() {
     return (
-        <div className='card' id='cardcontainer'>
-            <HotelData />
+        <div>
+            <SearchBar />
+            <div className='card' id='cardcontainer'>
+                <HotelData />
+            </div>
         </div>
     )
 }

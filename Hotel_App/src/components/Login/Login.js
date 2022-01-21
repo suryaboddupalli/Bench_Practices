@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './Login.css'
 import { useDispatch } from 'react-redux';
 import { fetchLoginUser } from '../../Redux/Reducers/UserReducer';
+import LoginValidations from '../../Validations/LoginValidation';
 
 const Login = () => {
     const dispatch = useDispatch()
@@ -9,18 +10,24 @@ const Login = () => {
         email: '',
         password: ''
     })
+    const [clientError, setClientError] = useState()
     const changeHandler = e => {
-        setData({...data, [e.target.name]: e.target.value })
+        setData({ ...data, [e.target.name]: e.target.value })
     }
     const handleSubmit = e => {
         e.preventDefault();
-        dispatch(fetchLoginUser(data))
+        if (LoginValidations(data)) {
+            setClientError(LoginValidations(data))
+        } else {
+            dispatch(fetchLoginUser(data))
+        }
     }
 
     return (
         <div className='page'>
-            <div className= 'form-container' id='box'>
+            <div className='form-container' id='box'>
                 <h2>Login</h2>
+                {clientError ? <span style={{ color: 'red' }}>{clientError}</span> : null}
                 <form onSubmit={handleSubmit}>
                     <div className='form-group'>
                         <label className='labels'>Email</label> <br />

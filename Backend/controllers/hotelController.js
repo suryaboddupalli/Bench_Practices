@@ -14,7 +14,7 @@ const addHotel = async (req, res) => {
             Facility
         } = req.body
         const newHotel = new Hotel({
-            hotelName,
+            hotelName,  
             hotelLocation,
             hotelDescription,
             hotelImg, hallImg,
