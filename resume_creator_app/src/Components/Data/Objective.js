@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
+import { objectiveDataSuccess } from '../../Redux/actions/Action';
+import { connect } from 'react-redux';
 
-function Objective() {
+function Objective({ addObjective }) {
     const [data, setData] = useState()
     const changeHandler = e => {
         setData([e.target.name] = e.target.value)
@@ -8,7 +10,7 @@ function Objective() {
     }
     const handleSubmit = e => {
         e.preventDefault();
-        console.log(data)
+        addObjective(data)
     }
 
     return (
@@ -26,4 +28,12 @@ function Objective() {
     )
 }
 
-export default Objective;
+
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        addObjective: (data) => dispatch(objectiveDataSuccess(data))
+    }
+}
+
+export default connect(null, mapDispatchToProps)(Objective)

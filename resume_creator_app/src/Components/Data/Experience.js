@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
+import { connect } from 'react-redux';
+import { experienceDataSuccess } from '../../Redux/actions/Action';
 
-function Experience() {
+function Experience({ addExperience }) {
     const [data, setData] = useState({
         name: '',
         jobRole: '',
@@ -15,7 +17,7 @@ function Experience() {
     }
     const handleSubmit = e => {
         e.preventDefault();
-        console.log(data)
+        addExperience(data)
     }
 
     return (
@@ -51,4 +53,16 @@ function Experience() {
     )
 }
 
-export default Experience;
+const mapStateToProps = (state) => {
+    return {
+        experience: state.experience
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        addExperience: (data) => dispatch(experienceDataSuccess(data))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Experience)

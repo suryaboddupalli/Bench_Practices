@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
+import { projectDataSuccess } from '../../Redux/actions/Action';
+import { connect } from 'react-redux';
 
-const Projects = () => {
+const Projects = ({ project, addProjects }) => {
     const [data, setData] = useState({
         title: '',
         description: ''
@@ -12,7 +14,7 @@ const Projects = () => {
     }
     const handleSubmit = e => {
         e.preventDefault();
-        console.log(data.title)
+        addProjects(data)
 
     }
 
@@ -35,4 +37,17 @@ const Projects = () => {
     )
 }
 
-export default Projects
+const mapStateToProps = (state) => {
+    return {
+        project: state.project
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        addProjects: (data) => dispatch(projectDataSuccess(data))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Projects)
+

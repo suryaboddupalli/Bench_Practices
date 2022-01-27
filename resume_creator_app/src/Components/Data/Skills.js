@@ -1,7 +1,9 @@
 import React, { useState, useRef } from 'react';
+import { connect } from 'react-redux';
+import { skillDataSuccess } from '../../Redux/actions/Action';
 
 
-function Skills() {
+function Skills({ skills, skillsAdd }) {
     const level = useRef()
     const [data, setData] = useState({
         skills: '',
@@ -12,7 +14,8 @@ function Skills() {
     }
     const handleSubmit = e => {
         e.preventDefault();
-        console.log(data)
+        skillsAdd(data)
+        console.log(skillsAdd(data));
     }
 
     return (
@@ -41,4 +44,16 @@ function Skills() {
     )
 }
 
-export default Skills;
+const mapStateToProps = (state) => {
+    return {
+        skill: state.skills.skills
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        skillsAdd: (data) => dispatch(skillDataSuccess(data))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Skills)

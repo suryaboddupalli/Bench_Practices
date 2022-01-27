@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
+import { personalDataSuccess } from '../../Redux/actions/Action';
+import { connect } from 'react-redux';
 
-const Personal_Details = () => {
+const Personal_Details = ({ addPersonalData }) => {
     const [data, setData] = useState({
         name: '',
         email: '',
@@ -14,7 +16,7 @@ const Personal_Details = () => {
     }
     const handleSubmit = e => {
         e.preventDefault();
-        console.log(data)
+        addPersonalData(data)
 
     }
 
@@ -45,4 +47,11 @@ const Personal_Details = () => {
     )
 }
 
-export default Personal_Details
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        addPersonalData: (data) => dispatch(personalDataSuccess(data))
+    }
+}
+
+export default connect(null, mapDispatchToProps)(Personal_Details)
