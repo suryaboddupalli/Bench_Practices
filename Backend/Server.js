@@ -4,8 +4,9 @@ const url = "mongodb://localhost:27017/local"
 const app = express();
 const cors = require('cors')
 const userRouter = require('./Routes/UserRoute')
-const hotelRouter= require('./Routes/hotelRoute')
+const hotelRouter = require('./Routes/hotelRoute')
 const bookRouter = require('./Routes/bookRoute')
+const bankRouter = require('./Routes/BankRoutes')
 
 mongoose.connect(url, { useNewUrlParser: true }, { useUnifiedTopology: true }).then(() => {
     console.log('connected')
@@ -15,9 +16,12 @@ app.use(cors())
 
 app.use('/user', userRouter)
 
-app.use('/hotel',hotelRouter)
+app.use('/hotel', hotelRouter)
 
-app.use('/booking',bookRouter)
+app.use('/booking', bookRouter)
+
+app.use('/bank', bankRouter)
+
 
 app.listen(8000, () => {
     console.log('server connected')
