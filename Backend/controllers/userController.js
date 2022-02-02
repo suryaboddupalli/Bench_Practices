@@ -1,5 +1,6 @@
 const User = require('../models/userSchema')
 
+
 const register = async (req, res) => {
     try {
         const { firstName, lastName, email, password } = req.body;

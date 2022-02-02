@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { fetchLoginUser } from '../Redux/Actions/AuthActions'
 import { useDispatch } from 'react-redux';
+import { fetchLoginUser } from '../Redux/Actions/EmpAuthAction';
 
 const Login = () => {
     const dispatch = useDispatch()
@@ -13,7 +13,8 @@ const Login = () => {
     }
     const handleSubmit = e => {
         e.preventDefault();
-        dispatch(fetchLoginUser())
+        console.log(data);
+        dispatch(fetchLoginUser(data))
     }
 
     return (

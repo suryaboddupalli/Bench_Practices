@@ -1,47 +1,14 @@
-import React, { useState } from 'react';
-import Profile from './Profile';
+import React from 'react';
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 
-
-function Dashboard() {
-    const [profile, setProfile] = useState(false)
-
-    const handleChange = () => {
-        setProfile(true)
-    }
+function DashBoard() {
+    const history = useHistory()
     return (
         <div>
-            <div className='row mt-5' >
-                <div className='col-sm-4'>
-                    <div className='card' style={{ "width": "18em " }}>
-                        <button className='btn btn-secondary  p-5 fs-5' onClick={handleChange} >Personal Details</button>
-                        {profile ? <Profile /> : null}
-                    </div>
-                </div>
-                <div className='col-sm-4'>
-                    <div className='card' style={{ "width": "18em " }}>
-                        <button className='btn btn-secondary p-5 fs-5' >Account Details</button>
-                    </div>
-                </div>
-                <div className='col-sm-4'>
-                    <div className='card' style={{ "width": "18em " }}>
-                        <button className='btn btn-secondary p-5 fs-5' >Balance Check</button>
-                    </div>
-                </div>
-            </div>
-            <div className='row mt-5' >
-                <div className='col-sm-4'>
-                    <div className='card' style={{ "width": "18em " }}>
-                        <button className='btn btn-secondary p-5 fs-5'>Transfer</button>
-                    </div>
-                </div>
-                <div className='col-sm-4'>
-                    <div className='card' style={{ "width": "18em " }}>
-                        <button className='btn btn-secondary p-5 fs-5' >Card Details</button>
-                    </div>
-                </div>
-            </div>
+            <button onClick={() => history.push('/create_account')}>Create New-Account</button>
+            <button onClick={() => history.push('/deposit_withdrawal')}>Deposit/WithDrawal</button>
         </div>
     )
 }
 
-export default Dashboard;
+export default DashBoard;
