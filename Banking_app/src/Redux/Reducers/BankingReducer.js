@@ -1,19 +1,24 @@
-import { BALANCE_CHECK, DEPOSIT, WITHDRAWAL } from "../Actions/BankingAction";
+import { BALANCE, DEPOSIT, WITHDRAWAL } from "../Actions/BankingAction";
+import axios from 'axios'
 
 const initialState = {
     balance: 0
 }
 
-console.log(initialState)
 
 export const bankReducer = (state = initialState, action) => {
-    console.log(state.balance);
     switch (action.type) {
-        case DEPOSIT:
+        case BALANCE:
             return { ...state, balance: state.balance + action.payload }
+        case DEPOSIT:
+            return console.log(state.balance), console.log(action.payload), { ...state, balance: state.balance + action.payload }
         case WITHDRAWAL:
-            return { ...state, balance: state.balance - action.payload }
+            return console.log(state.balance), { ...state, balance: state.balance - action.payload }
         default:
             return state
     }
 }
+
+
+
+

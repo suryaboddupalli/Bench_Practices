@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { withdrawal } from '../Redux/Actions/BankActions';
+import { updateBal, withdrawal } from '../Redux/Actions/BankingAction';
 
 function Withdrawal() {
     const [amount, setAmount] = useState()
@@ -13,7 +13,6 @@ function Withdrawal() {
     const handleClick = () => {
         dispatch(withdrawal(amount))
         console.log(amount);
-        console.log(dispatch(withdrawal(amount)));
     }
     return (
         <div>

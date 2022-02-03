@@ -20,7 +20,9 @@ const customerSchema = new mongoose.Schema({
         type: String
     },
     Balance: {
-        type: String
+        type: String,
+        default: 1000,
+        require: 1000
     }
 }, { timestamps: true }
 )

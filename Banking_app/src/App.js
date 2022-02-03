@@ -1,5 +1,6 @@
 import React from 'react';
 import { Route } from 'react-router-dom'
+import Deposit from './Components/Deposit';
 import IndexRoute from './Routes/IndexRoute';
 
 function App() {

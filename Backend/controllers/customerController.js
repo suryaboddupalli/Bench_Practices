@@ -41,7 +41,6 @@ const customerUpdate = async (req, res) => {
         customer.Address = req.body.Address;
         customer.Address_Proof = req.body.Address_Proof;
         customer.Pan_Card = req.body.Pan_Card;
-        customer.Balance = req.body.Balance;
         const update = customer.save()
         console.log(update);
         res.send('Updated Successfully')
@@ -64,6 +63,19 @@ const customerDelete = async (req, res) => {
     }
 }
 
+const balanceUpdate = async (req, res) => {
+    try {
+        const customer = await Customer.findByIdAndUpdate(req.params.id)
+        customer.Balance = req.body.Balance;
+        const update = customer.save()
+        console.log(update);
+        res.send('Transaction Successfull')
+    }
+    catch (error) {
+        console.log(error);
+    }
+}
 
 
-module.exports = { customerAdding, customerDetails, customer, customerUpdate, customerDelete }
+
+module.exports = { customerAdding, customerDetails, customer, customerUpdate, customerDelete, balanceUpdate }

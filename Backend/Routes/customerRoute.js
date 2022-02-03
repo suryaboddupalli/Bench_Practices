@@ -12,5 +12,7 @@ Router.put('/update/:id', customerController.customerUpdate)
 
 Router.delete('/delete/:id', customerController.customerDelete)
 
+Router.put('/balUpdate/:id', customerController.balanceUpdate)
+
 
 module.exports = Router
