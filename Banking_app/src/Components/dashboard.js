@@ -7,6 +7,8 @@ function DashBoard() {
         <div>
             <button onClick={() => history.push('/create_account')}>Create New-Account</button>
             <button onClick={() => history.push('/deposit_withdrawal')}>Deposit/WithDrawal</button>
+            <button onClick={() => history.push('/customers')}>Update/Delete Account</button>
+            <button onClick={() => history.push('/transfer')}>Transfer</button>
         </div>
     )
 }

@@ -1,19 +1,16 @@
-import { ACCOUNT_DETAILS_FAIL, ACCOUNT_DETAILS_SUCCESS, FETCH_USER } from "../Actions/AccountAction";
+import { ACCOUNT_DETAILS, FETCH_USER } from "../Actions/AccountAction";
 
 const initialStates = {
-    Accounts: [],
-    error: '',
-    User: []
+    Users: [],
+    User: {}
 }
 
 export const AccountReducer = (state = initialStates, action) => {
     switch (action.type) {
-        case ACCOUNT_DETAILS_SUCCESS:
-            return { Accounts: action.payload, error: '' }
-        case ACCOUNT_DETAILS_FAIL:
-            return { Accounts: [], error: action.payload }
+        case ACCOUNT_DETAILS:
+            return { ...state, Users: action.payload, User: '' }
         case FETCH_USER:
-            return console.log(initialStates.User), { User: action.payload }
+            return { ...state, Users: '', User: action.payload }
         default:
             return state;
     }

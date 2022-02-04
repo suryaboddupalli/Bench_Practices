@@ -1,10 +1,7 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { addAccount } from '../Redux/Actions/AccountAction';
-
+import axios from 'axios'
 
 const CreateAccount = () => {
-    const dispatch = useDispatch()
     const [data, setData] = useState({
         Name: '',
         Account_Number: '',
@@ -20,7 +17,12 @@ const CreateAccount = () => {
     const handleSubmit = e => {
         e.preventDefault();
         console.log(data)
-        dispatch(addAccount(data))
+        axios.post('http://localhost:8000/customer/add', data)
+            .then((res) => {
+                console.log(res.data)
+            }).catch((err) => {
+                console.log(err)
+            })
     }
 
     return (
@@ -46,11 +48,11 @@ const CreateAccount = () => {
                     </div><br />
                     <div className='form-group'>
                         <label className='labels'>Address Proof</label><br />
-                        <input type='password' name='Address_Proof' onChange={changeHandler} /><br />
+                        <input type='text' name='Address_Proof' onChange={changeHandler} /><br />
                     </div><br />
                     <div className='form-group'>
                         <label className='labels'>Pan Card</label><br />
-                        <input type='password' name='Pan_Card' onChange={changeHandler} /><br />
+                        <input type='text' name='Pan_Card' onChange={changeHandler} /><br />
                     </div><br />
                     <div>
                         <button className='btn btn-primary'>Create</button>

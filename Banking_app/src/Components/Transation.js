@@ -1,29 +1,18 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
-import { getAccountDetails, fetchUser } from '../Redux/Actions/AccountAction'
+import { getAccountDetails } from '../Redux/Actions/AccountAction'
 
 
 function Transaction() {
     const history = useHistory()
     const dispatch = useDispatch()
-    const data = useSelector((state) => state.Account.Accounts)
+    const data = useSelector((state) => (state.Accounts.Users))
 
     useEffect(() => {
         dispatch(getAccountDetails())
     }, [])
 
-    const deposit = (id) => {
-        dispatch(fetchUser(id))
-        console.log(id)
-        history.push('/deposit')
-    }
-
-    const withdrawal = (id) => {
-        dispatch(fetchUser(id))
-        console.log(id)
-        history.push('/withdrawal')
-    }
     return (
         <table className='table'>
             <thead>
@@ -40,8 +29,8 @@ function Transaction() {
                         <td>{customer.Account_Number}</td>
                         <td>{customer.Name}</td>
                         <td>{customer.Balance}</td>
-                        <td><button onClick={() => deposit(customer._id)}>Deposit</button></td>
-                        <td><button onClick={() => withdrawal(customer._id)}>Withdrawal</button></td>
+                        <td><button onClick={() => history.push(`/deposit/${customer._id}`)}>Deposit</button></td>
+                        <td><button onClick={() => history.push(`/withdrawal/${customer._id}`)}>Withdrawal</button></td>
                     </tr>
                 ))}
 
