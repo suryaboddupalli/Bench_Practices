@@ -1,11 +1,14 @@
 import React from 'react';
 import { Route } from 'react-router-dom'
-import Deposit from './Components/Deposit';
+import Navbar from './Components/Navbar';
 import IndexRoute from './Routes/IndexRoute';
 
 function App() {
     return (
-        <Route path='/' component={IndexRoute} />
+        <div>
+            <Navbar />
+            <Route path='/' component={IndexRoute} />
+        </div>
     )
 }
 

@@ -8,7 +8,7 @@ const customerAdding = async (req, res) => {
             Name, Phone, Address, Address_Proof, Pan_Card, Account_Number, Balance
         })
         newCustomer.save()
-        res.send(newCustomer)
+        res.send('Account Added Successfully')
     }
     catch (error) {
         res.send(error)
@@ -41,6 +41,7 @@ const customerUpdate = async (req, res) => {
         customer.Address = req.body.Address;
         customer.Address_Proof = req.body.Address_Proof;
         customer.Pan_Card = req.body.Pan_Card;
+        customer.Balance = req.body.Balance;
         const update = customer.save()
         console.log(update);
         res.send('Updated Successfully')

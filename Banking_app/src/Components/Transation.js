@@ -14,28 +14,31 @@ function Transaction() {
     }, [])
 
     return (
-        <table className='table'>
-            <thead>
-                <tr>
-                    <th>Account Number</th>
-                    <th>Name</th>
-                    <th>Balance</th>
-                    <th colSpan={2} className='text-center'>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                {data.map((customer) => (
-                    <tr key={customer._id}>
-                        <td>{customer.Account_Number}</td>
-                        <td>{customer.Name}</td>
-                        <td>{customer.Balance}</td>
-                        <td><button onClick={() => history.push(`/deposit/${customer._id}`)}>Deposit</button></td>
-                        <td><button onClick={() => history.push(`/withdrawal/${customer._id}`)}>Withdrawal</button></td>
+        <div>
+            <table className='table'>
+                <thead>
+                    <tr>
+                        <th>Account Number</th>
+                        <th>Name</th>
+                        <th>Balance</th>
+                        <th colSpan={2} className='text-center'>Actions</th>
                     </tr>
-                ))}
+                </thead>
+                <tbody>
+                    {data.map((customer) => (
+                        <tr key={customer._id}>
+                            <td>{customer.Account_Number}</td>
+                            <td>{customer.Name}</td>
+                            <td>{customer.Balance}</td>
+                            <td><button className='btn btn-primary' onClick={() => history.push(`/deposit/${customer._id}`)}>Deposit</button></td>
+                            <td><button className='btn btn-primary' onClick={() => history.push(`/withdrawal/${customer._id}`)}>Withdrawal</button></td>
+                        </tr>
+                    ))}
 
-            </tbody>
-        </table>
+                </tbody>
+            </table>
+            <button className='btn-secondary' onClick={() => history.push('/dashboard')}> Back</button>
+        </div>
     )
 }
 

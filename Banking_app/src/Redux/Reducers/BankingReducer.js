@@ -7,7 +7,7 @@ const initialState = {
 
 export const bankReducer = (state = initialState, action) => {
     switch (action.type) {
-        case BALANCE:
+        case UPDATE_BALANCE:
             return { ...state, balance: action.payload }
         default:
             return state

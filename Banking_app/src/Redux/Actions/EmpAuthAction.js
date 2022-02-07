@@ -22,10 +22,12 @@ export const fetchLoginUser = (postData) => {
     return function (dispatch) {
         axios.post('http://localhost:8000/employees/login', postData)
             .then((res) => {
-                console.log(res.data)
-                dispatch(loginSuccess(res.data))
-            }).catch((err) => {
-                dispatch(loginFail(err))
+                console.log(res.data.Token)
+                localStorage.setItem('token', res.data.Token)
+                dispatch(loginSuccess(res.data.Token))
+            }).catch((error) => {
+                console.log(error.response.data.error);
+                dispatch(loginFail(error.response.data.error))
             })
     }
 }

@@ -1,35 +1,36 @@
-import { ADD_RECEIVER, ADD_SENDER } from '../Actions/TransferActions'
-const TRANSFER_SUCCESS = 'TRANSFER_SUCCESS'
-const TRANSFER_COMPLETE = 'TRANSFER_COMPLETE'
+import { ADD_RECEIVER, ADD_SENDER } from '../Actions/TransferAction';
 
 const initialState = {
     sender: {
         id: "",
-        username: "",
-        email: "",
-        mobileNumber: "",
+        Username: "",
+        Account_Number: "",
         currentBalance: ""
     },
     receiver: {
         id: "",
-        username: "",
-        email: "",
-        mobileNumber: "",
+        Username: "",
+        Account_Number: "",
         currentBalance: ""
-    },
-    transfer: false
+    }
 }
 
-export const transferReducer = (state = initialState, action) => {
+const updateObject = (oldObject, updatedProperties) => {
+    return {
+        ...oldObject,
+        ...updatedProperties
+    };
+};
+
+export const TransferReducer = (state = initialState, action) => {
     switch (action.type) {
         case ADD_SENDER:
             return updateObject(state, {
                 sender: {
                     id: action.data.id,
-                    username: action.data.username,
-                    email: action.data.email,
-                    mobileNumber: action.data.mobileNumber,
-                    currentBalance: action.data.currentBalance
+                    Username: action.data.Username,
+                    Account_Number: action.data.Account_Number,
+                    Balance: action.data.Balance
                 }
             });
         case ADD_RECEIVER:
@@ -37,27 +38,11 @@ export const transferReducer = (state = initialState, action) => {
                 receiver: {
                     id: action.data.id,
                     username: action.data.username,
-                    email: action.data.email,
-                    mobileNumber: action.data.mobileNumber,
-                    currentBalance: action.data.currentBalance
+                    Account_Number: action.data.Account_Number,
+                    Balance: action.data.Balance
                 }
-            });
-        case TRANSFER_SUCCESS:
-            return updateObject(state, {
-                transfer: true
-            });
-        case TRANSFER_COMPLETE:
-            return updateObject(state, {
-                transfer: false
             });
         default:
             return state;
     }
 }
-
-export const updateObject = (oldObject, updatedProperties) => {
-    return {
-        ...oldObject,
-        ...updatedProperties
-    };
-};

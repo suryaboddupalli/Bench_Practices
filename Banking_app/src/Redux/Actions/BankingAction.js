@@ -14,6 +14,7 @@ export const updateBalance = (balance, id) => {
         axios.put(`http://localhost:8000/customer/balUpdate/${id}`, balance)
             .then((res) => {
                 console.log(res);
+                dispatch(updateBal(res.data))
             }).catch((err) => {
                 console.log(err)
             })

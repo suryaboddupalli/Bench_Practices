@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import axios from 'axios'
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 
 const CreateAccount = () => {
+    const history = useHistory()
     const [data, setData] = useState({
         Name: '',
         Account_Number: '',
@@ -10,6 +12,7 @@ const CreateAccount = () => {
         Address_Proof: '',
         Pan_Card: ''
     })
+    const [response, setResponse] = useState()
     const changeHandler = e => {
         setData({ ...data, [e.target.name]: e.target.value })
 
@@ -19,10 +22,12 @@ const CreateAccount = () => {
         console.log(data)
         axios.post('http://localhost:8000/customer/add', data)
             .then((res) => {
-                console.log(res.data)
+                setResponse(res.data)
             }).catch((err) => {
                 console.log(err)
             })
+
+        setData('')
     }
 
     return (
@@ -57,6 +62,8 @@ const CreateAccount = () => {
                     <div>
                         <button className='btn btn-primary'>Create</button>
                     </div><br />
+                    <button className='btn btn-secondary' onClick={() => history.push('/customers')}>Back</button>
+                    {response && <div className='text-success'>{response}</div>}
                 </form>
             </div>
         </div>

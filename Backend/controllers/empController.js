@@ -34,10 +34,11 @@ const empLogin = async (req, res) => {
                 id: employee.id
             }
             const Token = jwt.sign(payload, 'sceret')
-            res.json({ Token })
+            res.send({ Token })
         } else {
-            res.status(http.BAD_REQUEST)
-            res.json('Invalid Credentials')
+            res.status(400).json({
+                error: "Invalid Credentials"
+            })
         }
     }
     catch (error) {

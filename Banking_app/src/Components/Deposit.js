@@ -6,6 +6,7 @@ import { updateBalance } from '../Redux/Actions/BankingAction';
 
 
 function Deposit() {
+    const res = useSelector((state) => state.Balance.balance)
     const history = useHistory()
     const dispatch = useDispatch()
     const [initialAmount, setInitialAmount] = useState()
@@ -42,12 +43,13 @@ function Deposit() {
         dispatch(updateBalance(update, id))
     }
     return (
-        <div>
+        <div className='mt-5 text-center'>
+            <div className='text-success'>{res}</div>
             <form onSubmit={handleSubmit}>
                 <input type='text' name='deposit' onChange={handleChange} />
-                <button >Deposit</button>
-            </form>
-            <button onClick={() => history.push('/deposit_withdrawal')}>back</button>
+                <button className='btn btn-primary'>Deposit</button>
+            </form><br />
+            <button className='btn-secondary' onClick={() => history.push('/deposit_withdrawal')}>back</button>
         </div>
     )
 }
