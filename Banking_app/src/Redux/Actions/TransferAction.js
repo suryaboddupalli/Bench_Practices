@@ -3,14 +3,14 @@ export const ADD_RECEIVER = 'ADD_RECEIVER'
 export const ADD_SENDER = 'ADD_SENDER'
 
 export const addSender = (data) => {
-    return {
+    return console.log(data), {
         type: ADD_SENDER,
         data: data
     }
 }
 
 export const addReceiver = (data) => {
-    return {
+    return console.log(data), {
         type: ADD_RECEIVER,
         data: data
     }

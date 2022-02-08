@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom/cjs/react-router-dom.min';
 import { getAccount } from '../Redux/Actions/AccountAction';
 import { updateBalance } from '../Redux/Actions/BankingAction';
+import { addTransaction } from '../Redux/Actions/TransactionAction'
 
 
 function Deposit() {
@@ -41,6 +42,16 @@ function Deposit() {
         e.preventDefault()
         console.log(update);
         dispatch(updateBalance(update, id))
+
+        const depositData = {
+            Name: user.data.Name,
+            Status: 'Success',
+            Sender: '',
+            Receiver: '',
+            TransactionType: 'deposit',
+            Amount: deposit
+        }
+        dispatch(addTransaction(depositData))
     }
     return (
         <div className='mt-5 text-center'>

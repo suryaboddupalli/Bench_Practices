@@ -11,6 +11,9 @@ import Customer_List from '../Components/CustmerList';
 import Update_Details from '../Components/Update';
 import Transfer from '../Components/Transfer';
 import PrivateRoute from './PrivateRoute';
+import Sender from '../Components/Sender';
+import Receiver from '../Components/Receiver';
+import TransactionHistory from '../Components/TransactionHistory';
 
 function IndexRoute() {
     return (
@@ -24,8 +27,10 @@ function IndexRoute() {
             <PrivateRoute path='/withdrawal/:id' exact component={Withdrawal} />
             <PrivateRoute path='/customers' exact component={Customer_List} />
             <PrivateRoute path='/update/:id' exact component={Update_Details} />
-            <Route path='/transfer' exact component={Transfer} />
-
+            <PrivateRoute path='/transfer' exact component={Transfer} />
+            <PrivateRoute path='/sender' exact component={Sender} />
+            <PrivateRoute path='/receiver' exact component={Receiver} />
+            <PrivateRoute path='/transaction' exacct component={TransactionHistory} />
         </Switch>
     )
 }

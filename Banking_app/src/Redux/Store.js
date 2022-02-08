@@ -5,12 +5,14 @@ import { LoginReducer } from './Reducers/EmpReducer'
 import { AccountReducer } from "./Reducers/AccountReducer";
 import { bankReducer } from "./Reducers/BankingReducer";
 import { TransferReducer } from "./Reducers/TransferReducer";
+import { transactionReducer } from "./Reducers/TransactionReducer";
 
 const RootReducer = combineReducers({
     LoginData: LoginReducer,
     Accounts: AccountReducer,
     Balance: bankReducer,
-    Transfer: TransferReducer
+    Transfer: TransferReducer,
+    Transaction: transactionReducer
 
 })
 

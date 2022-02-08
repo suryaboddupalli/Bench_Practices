@@ -1,9 +1,8 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 
 function Navbar() {
-    const token = useSelector((state) => state.LoginData.user)
+    const token = localStorage.getItem('token')
     console.log(token);
     if (token) {
         return (
