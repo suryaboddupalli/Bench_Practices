@@ -1,0 +1,28 @@
+* {
+  padding: 0;
+  margin: 0;
+}
+
+.history {
+  margin: 50px;
+}
+
+.status {
+  color: green;
+  padding-left: 1000px;
+  font-size: larger;
+}
+
+.transfer {
+  padding-left: 500px;
+}
+
+.time {
+  padding-left: 400px;
+}
+.card {
+  padding-top: 10px;
+  margin-bottom: 20px;
+  border: 2px solid rgba(156, 156, 233, 0.781);
+  background-color: rgba(156, 156, 233, 0.781);
+}

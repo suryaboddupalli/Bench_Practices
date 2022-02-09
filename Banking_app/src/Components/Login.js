@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import { fetchLoginUser } from '../Redux/Actions/EmpAuthAction';
 import EmpLoginValidation from '../Validations/LoginValidation';
+import Navbar from './Navbar/Navbar'
 
 const Login = () => {
     const errorFetch = useSelector((state) => state.LoginData.error)
@@ -19,7 +20,6 @@ const Login = () => {
     }
     const handleSubmit = e => {
         e.preventDefault();
-        console.log(data);
         if (EmpLoginValidation(data)) {
             setUserError(EmpLoginValidation(data))
         } else {
@@ -30,6 +30,7 @@ const Login = () => {
 
     return (
         <div className='page'>
+            <Navbar />
             <div className='form-container text-center mt-5'>
                 <h2>Login</h2>
                 {userError && <div className='text-danger'>{userError}</div>}

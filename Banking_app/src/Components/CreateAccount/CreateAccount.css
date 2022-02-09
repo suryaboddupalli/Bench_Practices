@@ -1,0 +1,21 @@
+* {
+  padding: 0;
+  margin: 0;
+}
+
+#box {
+  text-align: center;
+  background-color: rgba(181, 181, 238, 0.781);
+  margin-left: 300px;
+  margin-right: 300px;
+  margin-top: 25px;
+  padding: 50px;
+}
+
+.text-box {
+  border: 2px rgb(199, 199, 207) solid;
+}
+
+.labels {
+  color: rgba(15, 15, 160, 0.856);
+}

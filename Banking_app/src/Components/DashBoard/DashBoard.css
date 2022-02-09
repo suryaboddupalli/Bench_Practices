@@ -1,0 +1,13 @@
+* {
+  padding: 0;
+  margin: 0;
+}
+
+.button {
+  width: 500px;
+  height: 100px;
+  font-size: 25px;
+  border: solid 3px rgb(55, 55, 179);
+  background-color: rgba(156, 156, 233, 0.781);
+  color: rgba(15, 15, 160, 0.856);
+}

@@ -1,0 +1,10 @@
+* {
+  padding: 0;
+  margin: 0;
+}
+#text {
+  color: rgba(38, 64, 209, 0.795);
+  font-size: large;
+  padding-top: 150px;
+  font-weight: 600;
+}

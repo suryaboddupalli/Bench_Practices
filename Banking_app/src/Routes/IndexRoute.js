@@ -1,19 +1,19 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom'
-import Home from '../Components/Home';
+import Home from '../Components/Home/Home';
 import Login from '../Components/Login'
-import DashBoard from '../Components/DashBoard';
-import CreateAccount from '../Components/CreateAccount';
-import Transaction from '../Components/Transation';
-import Deposit from '../Components/Deposit'
-import Withdrawal from '../Components/Withdrawal';
-import Customer_List from '../Components/CustmerList';
-import Update_Details from '../Components/Update';
-import Transfer from '../Components/Transfer';
+import DashBoard from '../Components/DashBoard/DashBoard';
+import CreateAccount from '../Components/CreateAccount/CreateAccount';
+import Transaction from '../Components/Deposit_Withdrawal/Transation';
+import Deposit from '../Components/Deposit_Withdrawal/Deposit'
+import Withdrawal from '../Components/Deposit_Withdrawal/Withdrawal';
+import Customer_List from '../Components/Update_delete/CustmerList';
+import Update_Details from '../Components/Update_delete/Update';
+import Transfer from '../Components/Transfer/Transfer';
 import PrivateRoute from './PrivateRoute';
-import Sender from '../Components/Sender';
-import Receiver from '../Components/Receiver';
-import TransactionHistory from '../Components/TransactionHistory';
+import Sender from '../Components/Transfer/Sender';
+import Receiver from '../Components/Transfer/Receiver';
+import TransactionHistory from '../Components/Transaction/TransactionHistory';
 
 function IndexRoute() {
     return (

@@ -1,0 +1,30 @@
+* {
+  padding: 0;
+  margin: 0px;
+}
+
+.page-box {
+  background-color: rgba(156, 156, 233, 0.781);
+}
+
+.customer {
+  text-align: center;
+  border: 2px solid rgb(140, 140, 187);
+}
+.heading {
+  color: rgba(93, 93, 182, 0.781);
+}
+#transfer {
+  margin-top: 20px;
+  margin-left: 150px;
+  margin-right: 150px;
+}
+
+.amount {
+  margin-left: 300px;
+  width: 400px;
+}
+
+#btn {
+  margin-left: 400px;
+}
