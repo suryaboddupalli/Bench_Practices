@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import axios, { AxiosResponse } from "axios";
 import { data } from "../types";
+import { useHistory } from "react-router-dom";
 
 function Data() {
+  const history = useHistory();
   const [data, setData] = useState<any>([]);
 
   useEffect(() => {
@@ -19,15 +21,15 @@ function Data() {
   const deleteData = (id: string) => {
     axios
       .delete(`http://localhost:8000/todo/delete/${id}`)
-      .then((res) => {
+      .then((res: AxiosResponse) => {
         console.log(res);
       })
       .catch((error) => {
         console.log(error);
       });
   };
-
   console.log(data);
+
   return (
     <table>
       <thead>
@@ -44,7 +46,9 @@ function Data() {
               <td>{data.Name}</td>
               <td>{data.Age}</td>
               <td>
-                <button onClick={() => updateData(data._id)}>Update</button>
+                <button onClick={() => history.push(`/update/${data._id}`)}>
+                  Update
+                </button>
               </td>
               <td>
                 <button onClick={() => deleteData(data._id)}>Delete</button>
