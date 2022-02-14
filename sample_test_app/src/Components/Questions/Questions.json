@@ -1,0 +1,163 @@
+[
+    {
+        "title": "A train running at the speed of 60 km/hr crosses a pole in 9 seconds. What is the length of the train?",
+        "option": [
+            120 ,
+            180 ,
+            324 ,
+            150 
+        ],
+        "answer": "D"
+    },
+    {
+        "title": "Two ships are sailing in the sea on the two sides of a lighthouse. The angle of elevation of the top of the lighthouse is observed from the ships are 30° and 45° respectively. If the lighthouse is 100 m high, the distance between the two ships is:",
+        "option": [
+            173,
+            200,
+            273,
+            300
+        ],
+        "answer": "C"
+    },
+    {
+        "title": "A person crosses a 600 m long street in 5 minutes. What is his speed in km per hour",
+        "option": [
+            3.6,
+            7.2,
+            8.4,
+            10
+        ],
+        "answer": "B"
+    },
+    {
+        "title": "A sum of money at simple interest amounts to Rs. 815 in 3 years and to Rs. 854 in 4 years. The sum is:",
+        "option": [
+            650,
+            690,
+            698,
+            700
+        ],
+        "answer": "C"
+    },
+    {
+        "title": "A fruit seller had some apples. He sells 40% apples and still has 420 apples. Originally, he had:",	
+"option": [
+            588,
+            600,
+            672,
+            700
+        ],
+        "answer": "D"
+    },
+    {
+        "title": "The sum of ages of 5 children born at the intervals of 3 years each is 50 years. What is the age of the youngest child?",
+        "option": [
+            4,
+            8,
+            10,
+            3
+        ],
+        "answer": "A"
+    },
+    {
+        "title": "The ratio between the length and the breadth of a rectangular park is 3 : 2. If a man cycling along the boundary of the park at the speed of 12 km/hr completes one round in 8 minutes, then the area of the park (in sq. m) is:",
+        "option": [
+            15360,
+            153600,
+            30720,
+            307200
+        ],
+        "answer": "B"
+    },
+    {
+        "title": "3 pumps, working 8 hours a day, can empty a tank in 2 days. How many hours a day must 4 pumps work to empty the tank in 1 day?",
+        "option": [
+            9,
+            10,
+            11,
+            12
+        ],
+        "answer": "D"
+    },
+    {
+        "title": "In the first 10 overs of a cricket game, the run rate was only 3.2. What should be the run rate in the remaining 40 overs to reach the target of 282 runs?",
+        "option": [
+            6.25,
+            6.5,
+            6.75,
+            7
+        ],
+        "answer": "A"
+    },
+    {
+        "title": "What least number must be added to 1056, so that the sum is completely divisible by 23 ?",
+        "option": [
+            2,
+            3,
+            28,
+            21
+        ],
+        "answer": "A"
+    },
+    {
+        "title": "A sum of money is to be distributed among A, B, C, D in the proportion of 5 : 2 : 4 : 3. If C gets Rs. 1000 more than D, what is B's share?",
+        "option": [
+            500,
+            1000,
+            1500,
+            2000
+        ],
+        "answer": "C"
+    },
+    {
+        "title": "A hall is 15 m long and 12 m broad. If the sum of the areas of the floor and the ceiling is equal to the sum of the areas of four walls, the volume of the hall is:",
+        "option": [
+            720,
+            900,
+            1200,
+            1800
+        ],
+        "answer": "C"
+    },
+    {
+        "title": "Running at the same constant rate, 6 identical machines can produce a total of 270 bottles per minute. At this rate, how many bottles could 10 such machines produce in 4 minutes?",
+        "option": [
+            648,
+            1800,
+            2700,
+            10800
+        ],
+        "answer": "B"
+    },
+    {
+        "title": "An accurate clock shows 8 o'clock in the morning. Through how may degrees will the hour hand rotate when the clock shows 2 o'clock in the afternoon?",
+        "option": [
+            144,
+            150,
+            168,
+            180
+        ],
+        "answer": "D"
+    },
+    {
+        "title": "66 cubic centimetres of silver is drawn into a wire 1 mm in diameter. The length of the wire in metres will be:",
+        "option": [
+            84,
+            90,
+            168,
+            336
+        ],
+        "answer": "A"
+    },
+    {
+        "title": "A train running at the speed of 60 km/hr crosses a pole in 9 seconds. What is the length of the train?",
+        "option": [
+            120 ,
+            180 ,
+            324 ,
+            150 
+        ],
+        "answer": "A"
+    }
+    
+]
