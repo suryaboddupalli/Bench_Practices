@@ -28,6 +28,7 @@ export type user = {
   Address_Proof: number;
   Pan_Card: number;
   Balance: number;
+  _id: string;
 };
 
 export type fetchusers = {
@@ -40,4 +41,15 @@ export type fetchuser = {
   payload: user;
 };
 
-export type FetchAction = fetchuser | fetchusers;
+export enum bankingConstant {
+  UPDATE_BALANCE = "UPDATE_BALANCE",
+}
+
+export type newAmount = {
+  Balance: number;
+};
+
+export type balance = {
+  type: bankingConstant.UPDATE_BALANCE;
+  payload: newAmount;
+};

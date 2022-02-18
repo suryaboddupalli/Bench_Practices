@@ -1,17 +1,12 @@
 import axios, { AxiosResponse } from "axios";
-import { fetchAccount, fetchuser, fetchusers, user } from "./ActionTypes";
+import { fetchuser, fetchusers, user } from "./ActionTypes";
 import { Dispatch } from "react";
 
-export const accountDetails = (type: string, data: user[]) => {
-  return {
-    type: fetchAccount.FETCH_USERS,
-    payload: data,
-  };
-};
+const FETCH_USERS = "FETCH_USERS";
 
-export const fetchUser = (type: string, data: user) => {
+export const accountDetails: any = (data: user[]) => {
   return {
-    type: fetchAccount.FETCH_USER,
+    type: FETCH_USERS,
     payload: data,
   };
 };
@@ -21,23 +16,10 @@ export const getAccountDetails = () => {
     axios
       .get("http://localhost:8000/customer/")
       .then((res: AxiosResponse) => {
-        const Data = res.data;
-        dispatch(accountDetails(Data));
-        console.log(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-};
-
-export const getAccount = (id: number) => {
-  return function (dispatch: Dispatch<fetchuser>) {
-    axios
-      .get(`http://localhost:8000/customer/${id}`)
-      .then((res) => {
-        dispatch(fetchUser(res.data));
-        console.log(res.data);
+        if (res) {
+          dispatch(accountDetails(res.data));
+          console.log(res.data);
+        }
       })
       .catch((err) => {
         console.log(err);

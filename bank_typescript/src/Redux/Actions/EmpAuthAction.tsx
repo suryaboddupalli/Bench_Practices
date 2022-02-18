@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 import { Dispatch } from "react";
 import { logintypes, Action } from "./ActionTypes";
 import { loginType } from "../../Types";
@@ -22,7 +22,7 @@ export const fetchLoginUser = (postData: loginType) => {
     console.log(postData);
     axios
       .post("http://localhost:8000/employees/login", postData)
-      .then((res) => {
+      .then((res: AxiosResponse) => {
         console.log(res.data.Token);
         localStorage.setItem("token", res.data.Token);
         dispatch(loginSuccess(res.data.Token));

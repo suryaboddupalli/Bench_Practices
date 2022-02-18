@@ -8,10 +8,7 @@ const Login = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const postData = useSelector((state) => console.log(state));
-  const [data, setData] = useState<loginType>({
-    Username: "",
-    Password: "",
-  });
+  const [data, setData] = useState<loginType>({} as loginType);
   const changeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     setData({ ...data, [e.target.name]: e.target.value });
   };
