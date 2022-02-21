@@ -27,29 +27,30 @@ function Transaction() {
           </tr>
         </thead>
         <tbody>
-          {data.map((customer: any) => (
-            <tr key={customer._id}>
-              <td className="cols">{customer.Account_Number}</td>
-              <td className="cols">{customer.Name}</td>
-              <td className="cols">{customer.Balance}</td>
-              <td className="cols">
-                <button
-                  className="btn btn-primary"
-                  onClick={() => history.push(`/deposit/${customer._id}`)}
-                >
-                  Deposit
-                </button>
-              </td>
-              <td className="cols">
-                <button
-                  className="btn btn-primary"
-                  onClick={() => history.push(`/withdrawal/${customer._id}`)}
-                >
-                  Withdrawal
-                </button>
-              </td>
-            </tr>
-          ))}
+          {data &&
+            data.map((customer: any) => (
+              <tr key={customer._id}>
+                <td className="cols">{customer.Account_Number}</td>
+                <td className="cols">{customer.Name}</td>
+                <td className="cols">{customer.Balance}</td>
+                <td className="cols">
+                  <button
+                    className="btn btn-primary"
+                    onClick={() => history.push(`/deposit/${customer._id}`)}
+                  >
+                    Deposit
+                  </button>
+                </td>
+                <td className="cols">
+                  <button
+                    className="btn btn-primary"
+                    onClick={() => history.push(`/withdrawal/${customer._id}`)}
+                  >
+                    Withdrawal
+                  </button>
+                </td>
+              </tr>
+            ))}
         </tbody>
       </table>
       <button id="button" onClick={() => history.push("/dashboard")}>

@@ -1,23 +1,24 @@
-import { ADD_RECEIVER, ADD_SENDER } from "../Actions/TransferAction";
+import { tranferConstants, initialData } from "../Actions/ActionTypes";
+import { AnyAction } from "redux";
 
-const initialState = {
+const initialState: initialData = {
   sender: {
     id: "",
     Name: "",
-    Account_Number: "",
-    currentBalance: "",
+    Account_Number: parseInt(""),
+    Balance: parseInt(""),
   },
   receiver: {
     id: "",
     Name: "",
-    Account_Number: "",
-    currentBalance: "",
+    Account_Number: parseInt(""),
+    Balance: parseInt(""),
   },
 };
 
-export const TransferReducer = (state = initialState, action) => {
+export const TransferReducer = (state = initialState, action: AnyAction) => {
   switch (action.type) {
-    case ADD_SENDER:
+    case tranferConstants.ADD_SENDER:
       return {
         ...state,
         sender: {
@@ -27,7 +28,7 @@ export const TransferReducer = (state = initialState, action) => {
           Balance: action.data.Balance,
         },
       };
-    case ADD_RECEIVER:
+    case tranferConstants.ADD_RECEIVER:
       return {
         ...state,
         receiver: {

@@ -4,21 +4,23 @@ import { useHistory, useParams } from "react-router-dom";
 import { getAccount } from "../../Redux/Actions/FetchCustomerAction";
 import { updateBalance } from "../../Redux/Actions/BankingAction";
 import { RootState } from "../../Redux/Store";
+import { addTransaction } from "../../Redux/Actions/TransactionAction";
 
 type updateBal = {
   Balance: number;
-  id: string;
 };
 
 function Deposit() {
   const history = useHistory();
   const dispatch = useDispatch();
-  const [initialAmount, setInitialAmount] = useState<number>();
+  const [initialAmount, setInitialAmount] = useState<string>("");
   const [amount, setAmount] = useState<any>();
-  const [deposit, setDeposit] = useState<number>();
+  const [deposit, setDeposit] = useState<number>(0);
   const [update, setUpdate] = useState<updateBal>({} as updateBal);
   const { id } = useParams<{ id: string }>();
-  const user = useSelector((state: RootState) => state.Fetchcustomer.User);
+  const userdetails = useSelector(
+    (state: RootState) => state.Fetchcustomer.User
+  );
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setDeposit(parseInt(e.target.value));
   };
@@ -28,27 +30,35 @@ function Deposit() {
   }, []);
 
   useEffect(() => {
-    const add = (a?: number, b?: number) => {
-      return a + b;
-    };
-    const total = add(deposit, initialAmount);
-    setAmount(total);
+    setAmount(parseInt(initialAmount) + deposit);
   }, [deposit]);
 
   useEffect(() => {
-    setUpdate(amount);
+    setUpdate({ Balance: amount });
   }, [amount]);
 
   useEffect(() => {
-    console.log(user.Balance);
-    setInitialAmount(user.Balance);
-  }, [user]);
+    console.log(userdetails.Balance);
+    setInitialAmount(userdetails.Balance.toString());
+  }, [userdetails.Balance]);
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log(deposit);
-    // console.log(update);
-    // dispatch(updateBalance(update, id));
+    // console.log(id);
+    console.log(update);
+    dispatch(updateBalance(update, id));
+    const depositData = {
+      Name: userdetails.Name,
+      Status: "Success",
+      Sender: "",
+      Receiver: "",
+      TransactionType: "deposit",
+      Amount: deposit,
+      _id: "",
+      createdAt: "",
+    };
+    dispatch(addTransaction(depositData));
   };
   return (
     <div className="mt-5 text-center">

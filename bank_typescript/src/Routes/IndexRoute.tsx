@@ -10,6 +10,10 @@ import Withdrawal from "../Components/DepositAndWithdrawal/Withdrawal";
 import Practice from "../Components/DepositAndWithdrawal/Practice";
 import Customers from "../Components/UpdateAndDelete/Customers";
 import Update from "../Components/UpdateAndDelete/Update";
+import Transfer from "../Components/Transfer/Transfer";
+import Sender from "../Components/Transfer/Sender";
+import Receiver from "../Components/Transfer/Receiver";
+import TransactionHistory from "../Components/Transaction/Transaction";
 
 function IndexRoute() {
   return (
@@ -24,6 +28,10 @@ function IndexRoute() {
       <Route path="/practice" component={Practice} />
       <Route path="/customers" component={Customers} />
       <Route path="/customer/update/:id" component={Update} />
+      <Route path="/sender" component={Sender} />
+      <Route path="/receiver" component={Receiver} />
+      <Route path="/transfer" component={Transfer} />
+      <Route path="/transaction" component={TransactionHistory} />
     </Switch>
   );
 }

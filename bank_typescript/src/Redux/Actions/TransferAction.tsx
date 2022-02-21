@@ -1,35 +1,43 @@
 import axios from "axios";
-export const ADD_RECEIVER = "ADD_RECEIVER";
-export const ADD_SENDER = "ADD_SENDER";
+import {
+  tranferConstants,
+  details,
+  receiverDetails,
+} from "../Actions/ActionTypes";
+import { Dispatch } from "react";
+import { initialData } from "../Actions/ActionTypes";
 
-export const addSender = (data) => {
+const initialState: initialData = {} as initialData;
+
+export const addSender: any = (data: details) => {
   return (
+    console.log(initialState),
     console.log(data),
     {
-      type: ADD_SENDER,
+      type: tranferConstants.ADD_SENDER,
       data: data,
     }
   );
 };
 
-export const addReceiver = (data) => {
+export const addReceiver: any = (data: details) => {
   return (
     console.log(data),
     {
-      type: ADD_RECEIVER,
+      type: tranferConstants.ADD_RECEIVER,
       data: data,
     }
   );
 };
 
-const updateReceiver = (reciverData) => {
-  return (dispatch) => {
+const updateReceiver: any = (receiverData: details) => {
+  return (dispatch: Dispatch<details>) => {
     axios
       .put(
-        `http://localhost:8000/customer/update/${reciverData.id}`,
-        reciverData
+        `http://localhost:8000/customer/update/${receiverData.id}`,
+        receiverData
       )
-      .then((response) => {
+      .then((res) => {
         console.log("Transfer Succesful");
       })
       .catch((error) => {
@@ -38,11 +46,12 @@ const updateReceiver = (reciverData) => {
   };
 };
 
-export const updateBalances = (senderData, reciverData) => {
-  return (dispatch) => {
+export const updateBalances = (senderData: details, reciverData: details) => {
+  return (dispatch: Dispatch<details>) => {
     axios
       .put(`http://localhost:8000/customer/update/${senderData.id}`, senderData)
-      .then((response) => {
+      .then((res) => {
+        console.log(res);
         dispatch(updateReceiver(reciverData));
       })
       .catch((error) => {
