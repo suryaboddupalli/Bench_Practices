@@ -9,7 +9,7 @@ function IndexRoute() {
     <Switch>
       <Route path="/" exact component={Login} />
       <Route path="/products" exact component={Products} />
-      <Route path="/products/:id" component={Product} />
+      <Route path="/product" component={Product} />
     </Switch>
   );
 }

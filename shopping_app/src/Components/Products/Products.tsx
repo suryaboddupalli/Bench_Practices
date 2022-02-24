@@ -3,6 +3,7 @@ import ProductList, { product } from "./ProductList";
 import { connect, useDispatch, useSelector } from "react-redux";
 import { fetchProducts } from "../../Redux/Actions/ProductFetchAction";
 import { RootState } from "../../Redux/Store";
+import Navbar from "../Navbar/Navbar";
 
 function Products({ products }: any) {
   const data = useSelector((state: RootState) => state.ProductData);
@@ -14,6 +15,7 @@ function Products({ products }: any) {
   }, []);
   return (
     <section className="container">
+      <Navbar />
       <div className="row ">
         {products &&
           products.map((product: product) => (

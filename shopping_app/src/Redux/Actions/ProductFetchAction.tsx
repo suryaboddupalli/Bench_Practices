@@ -6,6 +6,7 @@ import {
   product,
   FetchSuccess,
 } from "./ActionTypes";
+import { FetchProduct } from "../Actions/CartAction";
 
 export type loginType = {
   Username?: string;
@@ -41,6 +42,7 @@ export const fetchProducts = () => {
       .get("http://localhost:8000/items")
       .then((res) => {
         dispatch(FetchProductSuccess(res.data));
+        dispatch(FetchProduct(res.data));
         console.log(res.data);
       })
       .catch((err) => {

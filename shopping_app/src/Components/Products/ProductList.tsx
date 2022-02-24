@@ -1,9 +1,11 @@
 import React from "react";
-import { connect } from "react-redux";
+import { connect, useDispatch } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
+import { addToCart } from "../../Redux/Actions/CartAction";
+import { fetchProduct } from "../../Redux/Actions/ProductFetchAction";
 
 export type product = {
-  _id?: string;
+  _id: string;
   Title?: string;
   Image?: string;
   Price?: number;
@@ -22,6 +24,7 @@ type props = {
 };
 
 function ProductList(props: props) {
+  const dispatch = useDispatch();
   const history = useHistory();
   console.log(props);
   return (
@@ -35,17 +38,20 @@ function ProductList(props: props) {
         <div className="card-body text-center">
           <h5 className="card-title">{props.productData.Title}</h5>
           <h5 className="card-title">Rs.{props.productData.Price}</h5>
-          <p className="card-text">
-            {props.productData.Description}
-            {props.productData._id}
-          </p>
+          <p className="card-text">{props.productData.Description}</p>
           <button
             className="btn btn-primary mt-2 me-2"
-            onClick={() => history.push(`/products/${props.productData._id}`)}
+            onClick={() => dispatch(fetchProduct(props.productData._id))}
           >
             Show more
           </button>
-          <button className="btn btn-primary mt-2 ms-2 " onClick={() => {}}>
+          <button
+            className="btn btn-primary mt-2 ms-2 "
+            onClick={() =>
+              dispatch(addToCart(props.productData._id)) &&
+              history.push("/product")
+            }
+          >
             AddToCart
           </button>
         </div>
