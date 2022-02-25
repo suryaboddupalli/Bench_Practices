@@ -21,9 +21,8 @@ export const loginFail = (error: string) => {
   };
 };
 
-export const fetchLoginUser = (postData: loginType) => {
+export const FetchLoginUser = (postData: loginType) => {
   return function (dispatch: Dispatch<Action>) {
-    console.log(postData);
     axios
       .post("http://localhost:8000/employees/login", postData)
       .then((res: AxiosResponse) => {

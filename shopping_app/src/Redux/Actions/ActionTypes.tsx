@@ -16,14 +16,12 @@ interface fail {
 export type Action = success | fail;
 
 export enum FetchProductConst {
-  FETCH_PRODUCT_SUCCESS = "FETCH_PRODUCT_SUCCESS",
-  FETCH_PRODUCT_FAIL = "FETCH_PRODUCT_FAIL",
-  PRODUCT_SUCCESS = "PRODUCT_SUCCESS",
   FETCH_PRODUCT = "FETCH_PRODUCT",
+  FETCH_PRODUCTS = "FETCH_PRODUCTS",
 }
 
 export type product = {
-  id?: string;
+  _id: string;
   Title: string;
   Image: string;
   Price: number;
@@ -35,33 +33,57 @@ export type product = {
   FrontCamera: string;
   Display: string;
   Battery: string;
+  Quantity?: number;
 };
 
-export interface productFetchSuccess {
-  type: FetchProductConst.FETCH_PRODUCT_SUCCESS;
+export type FetchProducts = {
+  type: FetchProductConst.FETCH_PRODUCTS;
   payload: product[];
-}
-export type productFetch = {
+};
+
+export type cart = {
+  _id?: string;
+  Title?: string;
+  Image?: string;
+  Price?: number;
+  Description?: string;
+  color?: string;
+  Memory?: string;
+  Processor?: string;
+  RearCamera?: string;
+  FrontCamera?: string;
+  Display?: string;
+  Battery?: string;
+  Quantity?: number;
+};
+
+export type FetchProduct = {
   type: FetchProductConst.FETCH_PRODUCT;
-  payload: product[];
+  payload: product;
 };
 
-export interface productFetchFail {
-  type: FetchProductConst.FETCH_PRODUCT_FAIL;
-  payload: string;
-}
+export type CartFetchProduct = {
+  type: cartConst.FETCH_PRODUCT;
+  payload: cart[];
+};
 
-export type FetchProductAction = productFetchFail | productFetchSuccess;
+export type productsState = {
+  data: product[];
+};
 
-export interface FetchSuccess {
-  type: FetchProductConst.PRODUCT_SUCCESS;
-  payload: product;
-}
+export type productState = {
+  data: product;
+};
 
 export enum cartConst {
   ADD_TO_CART = "ADD_TO_CART",
   REMOVE_FROM_CART = "REMOVE_FROM_CART",
+  FETCH_PRODUCT = "FETCH_PRODUCT",
 }
+export type cartData = {
+  product: product[];
+  quantity: string;
+};
 
 interface addToCart {
   type: cartConst.ADD_TO_CART;
@@ -73,13 +95,19 @@ export type removeCart = {
   payload: string;
 };
 
-export type cartProduct = {
-  ProductId: string;
-  Productquantity: number;
+export type FetchCartProduct = {
+  type: cartConst.FETCH_PRODUCT;
+  payload: product[];
 };
 
-export interface cart {
-  cart: string;
-}
+// type cartActions = {
+//   addAndRemove: addToCart | removeCart;
+//   fetch: FetchCartProduct;
+// };
 
-export type cartAction = addToCart | removeCart;
+export type cartAction = addToCart | removeCart | FetchCartProduct;
+
+export type states = {
+  cart: product[];
+  Product: product[];
+};

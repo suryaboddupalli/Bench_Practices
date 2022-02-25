@@ -1,19 +1,15 @@
 import { applyMiddleware, combineReducers, createStore } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension";
-import { LoginReducer } from "./Reducers/AuthReducer";
 import thunk from "redux-thunk";
-import {
-  ProductsReducer,
-  ProductReducer,
-} from "./Reducers/FetchProductReducer";
-import { cartReducer, itemReducer } from "./Reducers/CartReducer";
+import { LoginReducer } from "./Reducer/AuthReducer";
+import { ProductReducer, ProductsReducer } from "./Reducer/ProductReducer";
+import { cartReducer } from "./Reducer/CartReducer";
 
 const RootReducer = combineReducers({
-  LoginData: LoginReducer,
-  ProductData: ProductsReducer,
-  product: ProductReducer,
+  Login: LoginReducer,
+  Products: ProductsReducer,
+  Product: ProductReducer,
   cart: cartReducer,
-  item: itemReducer,
 });
 
 export type RootState = ReturnType<typeof RootReducer>;

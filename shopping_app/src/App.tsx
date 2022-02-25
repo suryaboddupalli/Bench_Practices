@@ -1,5 +1,5 @@
 import { BrowserRouter, Route } from "react-router-dom";
-import IndexRoute from "./Routes/IndexRoute";
+import IndexRoute from "./Routes/IndexRoutes";
 
 function App() {
   return (
