@@ -11,26 +11,26 @@ export const cartReducer = (state = initialState, action: cartAction) => {
         (product) => product._id === action.payload
       );
       console.log(item);
-      // const inCart = state.cart.find((item: any) =>
-      //   item.id === action.payload ? true : false
-      // );
+      const cartData = state.cart;
+      const inCart = cartData.find((item: any) =>
+        item.id === action.payload ? true : false
+      );
+      console.log(inCart);
       return console.log({
         ...state,
-        cart: item,
-        // cart: inCart
-        //   ? state.cart.map((item) =>
-        //       item.id === action.payload
-        //         ? { ...item, quantity: item.quantity + 1 }
-        //         : item
-        //     )
-        //   : [...state.cart, { ...item, quantity: 1 }],
+        cart: inCart
+          ? state.cart.map((item) =>
+              item._id === action.payload
+                ? { ...item, quantity: item.Quantity + 1 }
+                : item
+            )
+          : [...state.cart, { ...item, quantity: 1 }],
       });
     case cartConst.REMOVE_FROM_CART:
-      return;
-    //  {
-    //     ...state,
-    //     cart: state.cart.filter((item) => item.id !== action.payload),
-    //   };
+      return {
+        ...state,
+        cart: state.cart.filter((item) => item._id !== action.payload),
+      };
 
     default:
       return state;

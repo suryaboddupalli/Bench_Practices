@@ -33,7 +33,7 @@ export type product = {
   FrontCamera: string;
   Display: string;
   Battery: string;
-  Quantity?: number;
+  Quantity: number;
 };
 
 export type FetchProducts = {

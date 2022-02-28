@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from "react";
-import { connect } from "react-redux";
-import CartItems, { CartData } from "./CartItems";
+import { connect, useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../Redux/Store";
-import Navbar from "../Navbar/Navbar";
+import { removeFromCart } from "../../Redux/Actions/CartActions";
 
-function Cart({ cart }: any) {
-  const [totalPrice, setTotalPrice] = useState<number>(0);
-  const [totalItems, setTotalItems] = useState<number>(0);
+function Cart({ cart }) {
+  const [totalPrice, setTotalPrice] = useState(0);
+  const [totalItems, setTotalItems] = useState(0);
+  const data = useSelector((state: RootState) => state.cart);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     let items = 0;
     let price = 0;
-    cart.forEach((item: any) => {
+    cart.forEach((item) => {
       items += item.quantity;
       price += item.quantity * item.Price;
     });
@@ -22,10 +23,29 @@ function Cart({ cart }: any) {
 
   return (
     <div>
-      <Navbar />
-      {cart.map((items: CartData) => (
-        <CartItems key={items.id} itemData={items} />
-      ))}
+      <div className="card">
+        <div className="ms-5">
+          <img
+            src={data.Image}
+            alt={"img"}
+            className="img-fluid"
+            style={{ width: 500, height: 300 }}
+          />
+        </div>
+        <div className="ms-3">
+          <h5>{data.Title}</h5>
+          <span>Rs.{data.Price}</span>
+          <p>{data.Description}</p>
+          <p>Quantity:{data.quantity}</p>
+          <button
+            onClick={() => {
+              dispatch(removeFromCart(data._id));
+            }}
+          >
+            Remove
+          </button>
+        </div>
+      </div>
       <div className="card">
         <h2>Summary</h2>
         <span>TotalItems : {totalItems}</span>
@@ -35,9 +55,4 @@ function Cart({ cart }: any) {
   );
 }
 
-const mapStateToProps = (state: RootState) => {
-  return {
-    cart: state.cart.cart,
-  };
-};
-export default connect(mapStateToProps)(Cart);
+export default Cart;
