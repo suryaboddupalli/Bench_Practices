@@ -8,7 +8,8 @@ const empRouter = require('./Routes/empRoutes')
 const customerRoute = require('./Routes/customerRoute')
 const transactionRoute = require('./Routes/transactionRoute')
 const todoRoute = require('./Routes/todoRoute')
-const itemsRoute = require('./Routes/ItemsRoute')
+const itemsRoute = require('./Routes/ItemsRoute');
+const RegisterUserRoute = require('./Routes/RegisterUserRoute')
 
 mongoose.connect(url, { useNewUrlParser: true }, { useUnifiedTopology: true }).then(() => {
     console.log('connected')
@@ -28,6 +29,7 @@ app.use('/todo', todoRoute)
 
 app.use('/items', itemsRoute)
 
+app.use('/users', RegisterUserRoute)
 
 app.listen(8000, () => {
     console.log('server connected')
