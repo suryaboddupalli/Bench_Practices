@@ -24,3 +24,14 @@ const RegisterValidation = (userdata) => {
 
 }
 export default RegisterValidation
+
+export const LoginValidation = (userData) => {
+    if (!userData.Email) {
+        userErrors.Email = 'please enter the Email'
+    } else if (!(emailregex.test(userData.Email))) {
+        userErrors.Email = 'Please enter the valid Email'
+    } else if (userData.Password > PASSWORD_LENGTH) {
+        userErrors.Password = 'Please enter min 8 characters '
+    }
+}
+
