@@ -4,7 +4,6 @@ const ForgotPassword = () => {
     const [data, setData] = useState({
         otp: "",
         Password: '',
-        Conform_Password: '',
     })
     const changeHandler = e => {
         setData({ ...data, [e.target.name]: e.target.value })

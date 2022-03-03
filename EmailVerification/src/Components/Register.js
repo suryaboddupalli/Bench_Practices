@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import RegisterValidation from "../Validation"
+import axios from "axios"
+import { useHistory } from 'react-router-dom';
 
 const Register = () => {
+    const history = useHistory()
     const [data, setData] = useState({
         Name: '',
         Email: '',
@@ -16,15 +19,16 @@ const Register = () => {
     }
     const handleSubmit = e => {
         e.preventDefault();
-        if (RegisterValidation(data)) {
-            setUserError(RegisterValidation(data))
-        } else {
-            console.log(data)
-        }
-
-        console.log(userError)
+        // if (RegisterValidation(data)) {
+        //     setUserError(RegisterValidation(data))
+        // } else {
+        axios.post('http://localhost:8000/user/signup', data)
+            .then((res) => {
+                console.log(res.data)
+                history.push(`/register/${res.data}`)
+            })
     }
-    console.log(userError)
+    // }
 
 
     return (
