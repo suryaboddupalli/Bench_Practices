@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Web Socket</title>
+    </head>
+    <body>
+        <script>
+            const ws = new WebSocket("ws://localhost:8000")
+            ws.addEventListener("open",()=>{
+                console.log("connected backend")
+                ws.send("heelo surya")
+            })
+            ws.addEventListener("message",(e)=>{
+                console.log(e.data)
+            })
+        </script>
+    </body>
+</html>
