@@ -1,0 +1,109 @@
+.conversation {
+  padding: 10px;
+}
+
+.conversation:hover {
+  background-color: gray;
+}
+
+.conversationImg {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 20px;
+}
+
+.conversationName {
+  font-weight: 600;
+}
+
+.message {
+  display: flex;
+  flex-direction: column;
+}
+
+.messageText {
+  background-color: antiquewhite;
+  color: brown;
+  padding: 10px;
+  max-width: 250px;
+  border-radius: 10px;
+}
+.message.own {
+  align-items: flex-end;
+}
+.messageImg {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+}
+
+.message.own .messageText {
+  background-color: rgba(240, 236, 236, 0.959);
+  color: black;
+  padding: 10px;
+}
+
+.chat-input {
+  width: 80%;
+  height: 100px;
+}
+
+.btn {
+  float: right;
+  border: 1px solid green;
+  margin-top: 60px;
+}
+
+.btn:hover {
+  background-color: green;
+}
+
+.chat-box {
+  flex: 3;
+}
+
+.chat-box-top {
+  height: 100%;
+  overflow-y: scroll;
+}
+
+.chat-box-bottom {
+  display: flex;
+  margin-top: 5px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.chatOnlineFriend {
+  display: flex;
+  align-items: center;
+  font-weight: 500;
+  margin-top: 10px;
+}
+
+.chatOnlineImgContainer {
+  position: relative;
+  margin-right: 10px;
+}
+
+.chatOnlineImg {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid white;
+}
+
+.chatOnlineBadge {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: limegreen;
+  position: absolute;
+  top: 2px;
+  right: 2px;
+}
+
+h3 {
+  text-align: center;
+}
