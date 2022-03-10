@@ -2,28 +2,31 @@ import React, { useEffect, useState } from 'react'
 import "./Messenger.css"
 import axios from "axios"
 
-function Conversation({ conversation, currentUser }) {
-    const [user, setUser] = useState()
-    console.log(conversation)
+function Conversation({ conversationData, currentUser }) {
+    const [user, setUser] = useState([])
     useEffect(() => {
-        console.log(conversation)
-        const friendId = conversation.members.find((m) => m !== currentUser)
+        const friendId = conversationData.members.find((m) => m !== currentUser)
         const getUser = async () => {
             try {
-                const res = await axios("/users?userId=" + friendId);
+                const res = await axios("http://localhost:9000/auth/friends/" + friendId);
                 setUser(res.data);
             } catch (err) {
                 console.log(err);
             }
         };
         getUser();
-    }, [conversation, currentUser])
+    }, [conversationData, currentUser])
 
     return (
-        <div className='conversation'>
-            <img className='conversationImg' src='https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg' alt="img" />
-            <span className='conversationName'>Surya</span>
-        </div>
+        <>
+            {user && user.map((data) => (
+                < div key={data._id} className='conversation' >
+                    <img className='conversationImg' src='https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg' alt="img" />
+                    <span className='conversationName'>{data._id}{data.Name}</span>
+                </div>
+            ))}
+        </>
+
     )
 }
 

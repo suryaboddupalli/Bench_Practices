@@ -107,3 +107,15 @@
 h3 {
   text-align: center;
 }
+
+.startChat {
+  position: absolute;
+  color: rgb(158, 159, 160);
+  font-size: 50px;
+  margin-top: 250px;
+  margin-left: 250px;
+}
+
+.col {
+  border-left: 1px solid;
+}

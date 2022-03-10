@@ -1,14 +1,19 @@
 import React from 'react'
 import "./Messenger.css"
+import { format } from "timeago.js"
 
-function Message({ own }) {
+function Message({ message, own }) {
     return (
-        <div className={own ? "message own" : "message"}>
-            <div>
-                <img className='messageImg' src="https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg" alt="IMAGE" />
-                <p className='messageText'>Hello this is surya</p>
-            </div>
-        </div >
+        <>
+            {message &&
+                <div className={own ? "message own" : "message"}>
+                    <div>
+                        <img className='messageImg' src="" alt="IMAGE" />
+                        <p className='messageText'>{message.text}</p>
+                    </div>
+                    <div>{format(message.createdAt)}</div>
+                </div >}
+        </>
     )
 }
 

@@ -4,7 +4,7 @@ const MessageController = require("../Controllers/MessageController")
 
 
 router.post("/", MessageController.PostMessage)
-router.post("/:id", MessageController.GetMessage)
+router.get("/:id", MessageController.GetMessage)
 
 
 module.exports = router 

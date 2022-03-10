@@ -3,6 +3,7 @@ const Conversation = require("../Model/ConversationSchema");
 
 
 const PostConversation = async (req, res) => {
+    console.log(req.body)
     const newConversation = new Conversation({
         members: [req.body.senderId, req.body.receiverId],
     });
@@ -17,6 +18,7 @@ const PostConversation = async (req, res) => {
 
 
 const GetConversation = async (req, res) => {
+    console.log(req.params.userId)
     try {
         const conversation = await Conversation.find({
             members: { $in: [req.params.userId] },

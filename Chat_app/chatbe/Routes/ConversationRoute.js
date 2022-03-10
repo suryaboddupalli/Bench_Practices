@@ -4,7 +4,7 @@ const ConversationController = require("../Controllers/ConversationController")
 
 
 router.post("/", ConversationController.PostConversation)
-router.post("/:id", ConversationController.GetConversation)
+router.get("/:userId", ConversationController.GetConversation)
 
 
 module.exports = router 
