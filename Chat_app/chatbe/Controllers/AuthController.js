@@ -114,7 +114,20 @@ const follow = async (req, res) => {
     }
 }
 
+const updateProfile = async (req, res) => {
+    try {
+        const data = await Friends.findByIdAndUpdate(req.params.id)
+        data.Profile = req.body.Profile
+        const update = data.save()
+        console.log(update)
+        res.send("updated successfully")
+    }
+    catch (error) {
+        console.log(error);
+    }
+}
+
 
 module.exports = {
-    register, login, userDetail, getUsers, getFriends, follow
+    register, login, userDetail, getUsers, getFriends, follow, updateProfile
 }

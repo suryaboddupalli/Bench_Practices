@@ -8,6 +8,8 @@ router.get('/get', AuthController.userDetail)
 router.get('/', AuthController.getUsers)
 router.get("/friends/:userId", AuthController.getFriends)
 router.put("/:id/follow", AuthController.follow)
+router.put("/profileUpdate/:id", AuthController.updateProfile)
+
 
 
 module.exports = router

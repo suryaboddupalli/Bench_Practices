@@ -20,11 +20,13 @@ function Conversation({ conversationData, currentUser }) {
     return (
         <>
             {user && user.map((data) => (
+
                 < div key={data._id} className='conversation' >
-                    <img className='conversationImg' src='https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg' alt="img" />
+                    <img className='conversationImg' src={data.Profile} alt="img" />
                     <span className='conversationName'>{data._id}{data.Name}</span>
                 </div>
-            ))}
+            ))
+            }
         </>
 
     )

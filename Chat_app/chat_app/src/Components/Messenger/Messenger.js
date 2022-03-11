@@ -1,15 +1,17 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState, useRef } from 'react'
 import Message from './Message'
 import Conversation from './Conversation'
 import "./Messenger.css"
 import ChatOnline from './ChatOnline'
 import { AuthContext } from '../../Context/AuthContext'
 import axios from "axios"
+import { io } from "socket.io-client";
+
 
 function Messenger() {
     // const { user } = useContext(AuthContext)
     const [conversation, setConversation] = useState([])
-    const [currentUser, setCurrentUser] = useState()
+    const [currentUser, setCurrentUser] = useState([])
     const [message, setMessage] = useState()
     const [currentMessage, setCurrentMessage] = useState()
     const [newMessage, setNewMessage] = useState()
@@ -18,30 +20,35 @@ function Messenger() {
     const socket = useRef();
 
     useEffect(() => {
-        socket.current = io("ws://localhost:8900");
-        socket.current.on("getMessage", (data) => {
-            setArrivalMessage({
-                sender: data.senderId,
-                text: data.text,
-                createdAt: Date.now(),
-            });
-        });
+        socket.current = io("ws://localhost:8900")
+        // socket.current.on("getMessage", (data) => {
+        //     setArrivalMessage({
+        //         createdAt: Date.now(),
+        //         sender: data.senderId,
+        //         text: data.text,
+        //     });
+        // });
     }, []);
 
-    useEffect(() => {
-        arrivalMessage &&
-            currentChat?.members.includes(arrivalMessage.sender) &&
-            setMessage((prev) => [...prev, arrivalMessage]);
-    }, [arrivalMessage, currentChat]);
+
+    // useEffect(() => {
+    //     arrivalMessage &&
+    //         currentMessage?.members.includes(arrivalMessage.sender) &&
+    //         setMessage((prev) => [...prev, arrivalMessage]);
+    // }, [arrivalMessage, currentMessage]);
 
     useEffect(() => {
-        socket.current.emit("addUser", user._id);
+        socket.current.emit("addUser", currentUser._id);
         socket.current.on("getUsers", (users) => {
-            setOnlineUsers(
-                currentUser.followings.filter((find) => users.some((user) => user.userId === find))
-            );
+            // const exap = users.some((user) => console.log(user.userId))
+            // console.log(currentUser.Following?.filter((f) => f))
+            // setOnlineUsers(
+            //     currentUser.Following?.filter((find) => users.some((user) => user.userId === find))
+            // );
         });
-    }, [user]);
+    }, [currentUser]);
+
+    console.log(onlineUsers)
 
     useEffect(() => {
         const user = JSON.parse(localStorage.getItem("user"))
@@ -71,25 +78,24 @@ function Messenger() {
         getMessage()
     }, [currentMessage])
 
+
     const handleSubmit = async (e) => {
         e.preventDefault()
         const messageSend = {
             sender: currentUser._id,
             text: newMessage,
-            conversationId: currentMessage._id
+            chatId: currentMessage._id
         }
 
         try {
             const res = await axios.post("http://localhost:9000/message", messageSend)
             setMessage([...message, res.data])
-            console.log([...message, res.data])
         }
         catch (error) {
             console.log(error)
         }
 
     }
-    console.log(newMessage)
 
     return (
         <div className="container">
@@ -124,7 +130,9 @@ function Messenger() {
                 </div>
                 <div className="col">
                     <h3>Chat Online</h3>
-                    <ChatOnline />
+                    <ChatOnline onlineUsers={onlineUsers}
+                        currentId={currentUser._id}
+                        setCurrentMessage={setCurrentMessage} />
                 </div>
             </div>
         </div >
