@@ -1,10 +1,22 @@
 const Friends = require('../Model/FriendsSchema')
+const UserVerify = require('../Model/VerifySchema')
 const jwt = require('jsonwebtoken')
+
+
+const nodemailer = require('nodemailer');
+
+const transporter = nodemailer.createTransport({
+    host: 'smtp-mail.outlook.com',
+    port: 587,
+    auth: {
+        user: "asdfg.lkjh12@outlook.com",
+        pass: "Asjh12"
+    }
+})
 
 const register = async (req, res) => {
     try {
         const { Name, Email, Phone, Password } = req.body;
-        console.log(req.body.Email)
         if (await Friends.findOne({ Email: Email })) {
             res.send('User already exist')
             console.log(Email)
@@ -13,8 +25,15 @@ const register = async (req, res) => {
             const newuser = new Friends({
                 Name, Email, Phone, Password
             })
-            newuser.save();
-            res.send('User Registered Successfully')
+            newuser.save()
+                .then((result) => {
+                    console.log(result)
+                    res.send(result)
+                    sendVerificationEmail(result, res)
+                })
+                .catch((error) => {
+                    console.log("error" + error)
+                })
         }
     }
     catch (error) {
@@ -22,15 +41,143 @@ const register = async (req, res) => {
     }
 }
 
-const userDetail = async (req, res) => {
+
+
+const sendVerificationEmail = async ({ Email, _id }, res) => {
+    console.log({ Email, _id })
     try {
-        const user = await Friends.find()
-        res.json(user)
-        console.log(user)
+        const otp = `${Math.floor(1000 + Math.random() * 9000)}`
+        console.log(otp)
+
+        const mailOptions = {
+            from: "asdfg.lkjh12@outlook.com",
+            to: Email,
+            subject: "verify Otp",
+            text: `${otp} verify your email account. Expires in 2 Min`
+        }
+        console.log(mailOptions)
+
+        const newOtp = new UserVerify({
+            userId: _id,
+            otp: otp,
+            createdAt: Date.now(),
+            expiresAt: Date.now() + 120000
+        })
+        console.log(newOtp)
+        await newOtp.save()
+        await transporter.sendMail(mailOptions)
+        res.json({
+            status: "pending",
+            message: "verification Otp sent",
+            data: {
+                userId: _id,
+                Email
+            }
+        })
+
+    } catch (error) {
+        res.json({
+            status: "Failed"
+        })
+    }
+}
+
+const reSendVerificationEmail = async (req, res) => {
+    try {
+
+        const otp = `${Math.floor(1000 + Math.random() * 9000)}`
+        console.log(otp)
+
+        const { Email, id } = req.body;
+
+        console.log(Email, id)
+
+        const mailOptions = {
+            from: "asdfg.lkjh12@outlook.com",
+            to: Email,
+            subject: "verify Otp",
+            text: `${otp} verify your email account. Expires in 2 Min`
+        }
+        console.log(mailOptions)
+
+        const newOtp = new UserVerify({
+            userId: id,
+            otp: otp,
+            createdAt: Date.now(),
+            expiresAt: Date.now() + 120000
+        })
+        console.log(newOtp)
+        await newOtp.save()
+        await transporter.sendMail(mailOptions)
+        res.json({
+            status: "pending",
+            message: "verification Otp sent",
+            data: {
+                userId: id,
+                Email
+            }
+        })
+
+    } catch (error) {
+        res.json({
+            status: "Failed"
+        })
+    }
+}
+
+
+const verifyOtp = async (req, res) => {
+    try {
+        const { userId, otp } = req.body
+        console.log(userId, otp)
+        if (!userId || !otp) {
+            res.send("Please enter the required fields")
+        } else {
+            const userEnteredOtpverification = await UserVerify.find({ userId })
+            console.log(userEnteredOtpverification)
+            if (userEnteredOtpverification.length <= 0) {
+                res.send("Otp Expired")
+            } else {
+                const { expiresAt } = userEnteredOtpverification[0]
+                console.log(expiresAt)
+                console.log(Date.now())
+                if (expiresAt < Date.now()) {
+                    await UserVerify.deleteMany({ userId })
+                    res.send("code Expired. Please Request again")
+                } else {
+                    await UserVerify.find({ otp })
+                        .then((data) => {
+                            if (data.otp !== otp) {
+                                res.send("Invalid code")
+                            } else {
+                                UserData.updateOne({ _id: userId }, { verify: true })
+                                UserVerify.deleteMany({ userId })
+                                res.json({
+                                    status: "verifed",
+                                    message: "User Register Successfully"
+                                })
+                            }
+                        })
+                }
+            }
+        }
+
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+const getOtp = async (req, res) => {
+    try {
+        const otpData = await UserVerify.find()
+        res.json(otpData)
+        console.log(otpData)
     } catch (error) {
         res.send("Internal Server Error")
     }
 }
+
+
 
 
 const login = async (req, res) => {
@@ -56,78 +203,37 @@ const login = async (req, res) => {
     }
 }
 
-const getUsers = async (req, res) => {
-    const userId = req.query.userId;
-    const Email = req.query.Email;
-    try {
-        const user = userId
-            ? await Friends.findById(userId)
-            : await Friends.findOne({ Email: Email });
-        const { password, updatedAt, ...other } = user._doc;
-        res.json(other);
-    } catch (err) {
-        res.json(err);
-    }
-}
-
-const getFriends = async (req, res) => {
-    try {
-        const user = await Friends.findById(req.params.userId);
-        const friends = await Promise.all(
-            user.Following.map((friendId) => {
-                return Friends.findById(friendId)
-            })
-        );
-        console.log(friends)
-        let friendList = []
-        friends.map((friend) => {
-            const { _id, Name, Profile } = friend;
-            friendList.push({ _id, Name, Profile });
-        });
-        res.json(friendList)
-    } catch (err) {
-        res.json(err);
-    }
-};
-
-const follow = async (req, res) => {
-    console.log(req.body)
-    if (req.body.userId !== req.params.id) {
-        try {
-            const user = await Friends.findById(req.params.id);
-            console.log(user.Followers)
-            const currentUser = await Friends.findById(req.body.userId);
-            console.log(currentUser)
-            if (!user.Followers.includes(req.body.userId)) {
-                console.log("true")
-                await user.updateOne({ $push: { Followers: req.body.userId } });
-                await currentUser.updateOne({ $push: { Following: req.params.id } });
-                res.json("user has been followed");
-            } else {
-                res.json("you allready follow this user");
-            }
-        } catch (err) {
-            res.json(err);
-        }
+const emailCheck = async (req, res) => {
+    const { Email } = req.body
+    const user = await Friends.findOne({ Email: Email })
+    console.log(user)
+    if (user) {
+        console.log(user)
+        res.send(user)
+        sendVerificationEmail(user, res)
     } else {
-        res.json("you cant follow yourself");
+        console.log("Invalid Email")
     }
 }
 
-const updateProfile = async (req, res) => {
+const forgotpassword = async (req, res) => {
     try {
-        const data = await Friends.findByIdAndUpdate(req.params.id)
-        data.Profile = req.body.Profile
-        const update = data.save()
-        console.log(update)
-        res.send("updated successfully")
+        const { otp, password, id } = req.body
+
+        await UserVerification.find({ otp })
+            .then((data) => {
+                if (data.otp === otp) {
+                    UserData.updateOne({ _id: id }, { password: password })
+                }
+            })
     }
     catch (error) {
-        console.log(error);
+        console.log(error)
     }
 }
+
 
 
 module.exports = {
-    register, login, userDetail, getUsers, getFriends, follow, updateProfile
+    register, login, verifyOtp, getOtp, reSendVerificationEmail, emailCheck, forgotpassword
 }

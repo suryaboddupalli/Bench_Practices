@@ -2,9 +2,11 @@ import React, { useState, useContext } from 'react';
 import axios from 'axios'
 import { AuthContext } from '../../Context/AuthContext';
 import { LOGIN_FAILURE, LOGIN_SUCCESS } from '../../Context/AuthActions';
+import { useHistory } from 'react-router-dom';
 
 
 const Login = () => {
+    const history = useHistory()
     const { dispatch } = useContext(AuthContext);
     const [data, setData] = useState({
         Email: '',
@@ -14,6 +16,7 @@ const Login = () => {
         setData({ ...data, [e.target.name]: e.target.value })
 
     }
+
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log(data)
@@ -48,9 +51,13 @@ const Login = () => {
                     <label className='labels'>Password</label><br />
                     <input type='password' name='Password' onChange={changeHandler} /><br />
                 </div><br />
+                <a href='/register'>SignUp</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                <button onClick={() => history.push('/forgotPassword')}><a >forgot Password</a></button>
                 <div>
                     <button className='btn btn-primary'>login</button>
+                    <button className='btn btn-secondary' onClick={() => history.push('/')}>back</button>
                 </div><br />
+
             </form>
         </div>
     )

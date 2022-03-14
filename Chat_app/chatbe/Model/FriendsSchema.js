@@ -25,6 +25,9 @@ const friendsSchema = new mongoose.Schema({
     },
     Following: {
         type: Array
+    },
+    Verify: {
+        type: Boolean
     }
 
 }, { timestamps: true }

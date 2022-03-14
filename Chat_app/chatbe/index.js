@@ -6,7 +6,7 @@ const cors = require('cors')
 const AuthRouter = require('./Routes/AuthRoutes')
 const ConversationRouter = require('./Routes/ConversationRoute')
 const MessageRouter = require('./Routes/MessageRoute')
-
+const CustomerRouter = require('./Routes/UserRoute')
 
 mongoose.connect(url, { useNewUrlParser: true }, { useUnifiedTopology: true }).then(() => {
     console.log('connected')
@@ -17,7 +17,7 @@ app.use(cors())
 app.use('/auth', AuthRouter)
 app.use('/conversation', ConversationRouter)
 app.use('/message', MessageRouter)
-
+app.use('/customer', CustomerRouter)
 
 
 app.listen(9000, () => {

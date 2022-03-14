@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import axios from 'axios'
+import { useHistory } from 'react-router-dom';
 
 const Register = () => {
+    const history = useHistory()
     const [data, setData] = useState({
         Name: '',
         Email: '',
@@ -15,10 +17,14 @@ const Register = () => {
     }
     const handleSubmit = e => {
         e.preventDefault();
-        console.log(data)
-        axios.post('http://localhost:8000/auth/signup', data)
+        axios.post('http://localhost:9000/auth/signup', data)
             .then((res) => {
-                console.log(res.data)
+                if (res.data._id) {
+                    history.push(`/emailVerify/${res.data}`)
+                }
+                else {
+                    console.log(res.data)
+                }
             }).catch((err) => {
                 console.log(err)
             })
@@ -49,8 +55,10 @@ const Register = () => {
                     <label className='labels'>Conform-Password</label><br />
                     <input type='password' name='Conform_Password' onChange={changeHandler} /><br />
                 </div><br />
+                <p>Already user &nbsp;<a href='/login'>Sign In </a></p>
                 <div>
                     <button className='btn btn-primary'>Create</button>
+                    <button className='btn btn-secondary' onClick={() => history.push('/')}>back</button>
                 </div><br />
             </form>
         </div>
