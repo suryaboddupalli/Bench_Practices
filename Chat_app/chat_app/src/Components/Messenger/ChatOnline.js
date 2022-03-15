@@ -31,17 +31,17 @@ function ChatOnline({ onlineUsers, currentId, setCurrentChat }) {
 
     return (
         <div className="chatOnline">
-            {onlineFriends.map((o) => (
-                <div className="chatOnlineFriend" onClick={() => handleClick(o)}>
+            {onlineFriends.map((online) => (
+                <div className="chatOnlineFriend" onClick={() => handleClick(online)}>
                     <div className="chatOnlineImgContainer">
                         <img
                             className="chatOnlineImg"
-                            src=""
-                            alt=""
+                            src={online.Profile}
+                            alt="Image"
                         />
                         <div className="chatOnlineBadge"></div>
                     </div>
-                    <span className="chatOnlineName">{o?.username}</span>
+                    <span className="chatOnlineName">{online?.username}</span>
                 </div>
             ))}
         </div>

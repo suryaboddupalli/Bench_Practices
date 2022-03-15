@@ -1,0 +1,26 @@
+.message {
+  display: flex;
+  flex-direction: column;
+}
+
+.messageText {
+  background-color: antiquewhite;
+  color: brown;
+  padding: 10px;
+  max-width: 250px;
+  border-radius: 10px;
+}
+.message.own {
+  align-items: flex-end;
+}
+.messageImg {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+}
+
+.message.own .messageText {
+  background-color: rgba(240, 236, 236, 0.959);
+  color: black;
+  padding: 10px;
+}

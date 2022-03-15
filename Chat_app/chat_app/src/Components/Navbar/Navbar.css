@@ -1,0 +1,27 @@
+li a {
+  display: block;
+  text-align: center;
+  padding: 15px 16px;
+  text-decoration: none;
+}
+
+li a:hover {
+  background-color: rgb(160, 155, 155);
+}
+
+.right-link {
+  color: black;
+  float: right;
+}
+
+#log {
+  color: rgba(15, 15, 160, 0.856);
+  margin-left: 100px;
+  font-size: small;
+  font-weight: 100;
+  font-family: inherit;
+}
+
+.navbar {
+  background-color: rgba(156, 156, 233, 0.781);
+}

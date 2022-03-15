@@ -12,10 +12,7 @@ const ForgotPassword = () => {
         setData({ [e.target.name]: e.target.value })
 
     }
-    const handleClick = () => {
-        const res = axios.post("http://localhost:9000/auth/emailcheck", data)
-        console.log(res.data)
-    }
+
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -38,8 +35,8 @@ const ForgotPassword = () => {
                     <input type='text' name='Email' onChange={changeHandler} /><br />
                 </div>
                 <div>
+                    <button className='btn btn-secondary back' onClick={() => history.push('/')}>back</button>
                     <button className='btn btn-primary'>send</button>
-                    <button className='btn btn-secondary' onClick={() => history.push('/')}>back</button>
                 </div><br />
 
             </form>

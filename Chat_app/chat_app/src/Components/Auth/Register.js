@@ -57,8 +57,8 @@ const Register = () => {
                 </div><br />
                 <p>Already user &nbsp;<a href='/login'>Sign In </a></p>
                 <div>
+                    <button className='btn btn-secondary back' onClick={() => history.push('/')}>back</button>
                     <button className='btn btn-primary'>Create</button>
-                    <button className='btn btn-secondary' onClick={() => history.push('/')}>back</button>
                 </div><br />
             </form>
         </div>

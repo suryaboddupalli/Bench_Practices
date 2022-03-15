@@ -54,8 +54,8 @@ const EmailVerification = () => {
                 </div>
                 <button onClick={handleClick}>Resend</button>
                 <div>
+                    <button className='btn btn-secondary back' onClick={() => history.push('/')}>back</button>
                     <button className='btn btn-primary'>Submit</button>
-                    <button className='btn btn-secondary' onClick={() => history.push('/')}>back</button>
                 </div><br />
 
             </form>

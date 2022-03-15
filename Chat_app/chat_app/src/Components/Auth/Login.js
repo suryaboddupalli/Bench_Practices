@@ -3,6 +3,7 @@ import axios from 'axios'
 import { AuthContext } from '../../Context/AuthContext';
 import { LOGIN_FAILURE, LOGIN_SUCCESS } from '../../Context/AuthActions';
 import { useHistory } from 'react-router-dom';
+import "./Auth.css"
 
 
 const Login = () => {
@@ -52,10 +53,10 @@ const Login = () => {
                     <input type='password' name='Password' onChange={changeHandler} /><br />
                 </div><br />
                 <a href='/register'>SignUp</a>&nbsp;&nbsp;&nbsp;&nbsp;
-                <button onClick={() => history.push('/forgotPassword')}><a >forgot Password</a></button>
+                <button className='forgot' onClick={() => history.push('/forgotPassword')}>forgot Password</button>
                 <div>
+                    <button className='btn btn-secondary back' onClick={() => history.push('/')}>back</button>
                     <button className='btn btn-primary'>login</button>
-                    <button className='btn btn-secondary' onClick={() => history.push('/')}>back</button>
                 </div><br />
 
             </form>

@@ -1,8 +1,6 @@
 const router = require("express")
 const Message = require("../Model/MessageSchema");
 
-//add
-
 const PostMessage = async (req, res) => {
     const newMessage = new Message(req.body);
 
@@ -13,8 +11,6 @@ const PostMessage = async (req, res) => {
         res.status(500).json(err);
     }
 };
-
-//get
 
 const GetMessage = async (req, res) => {
     try {

@@ -20,7 +20,6 @@ function Conversation({ conversationData, currentUser }) {
     return (
         <>
             {user && user.map((data) => (
-
                 < div key={data._id} className='conversation' >
                     <img className='conversationImg' src={data.Profile} alt="img" />
                     <span className='conversationName'>{data._id}{data.Name}</span>

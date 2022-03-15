@@ -1,4 +1,4 @@
-const Friends = require('../Model/FriendsSchema')
+const Customers = require('../Model/CustomerSchema')
 const UserVerify = require('../Model/VerifySchema')
 const jwt = require('jsonwebtoken')
 
@@ -10,23 +10,24 @@ const transporter = nodemailer.createTransport({
     port: 587,
     auth: {
         user: "asdfg.lkjh12@outlook.com",
-        pass: "Asjh12"
+        pass: "Asdflkjh12"
     }
 })
 
 const register = async (req, res) => {
     try {
         const { Name, Email, Phone, Password } = req.body;
-        if (await Friends.findOne({ Email: Email })) {
+        if (await Customers.findOne({ Email: Email })) {
             res.send('User already exist')
             console.log(Email)
         }
         else {
-            const newuser = new Friends({
+            const newuser = new Customers({
                 Name, Email, Phone, Password
             })
             newuser.save()
                 .then((result) => {
+
                     console.log(result)
                     res.send(result)
                     sendVerificationEmail(result, res)
@@ -40,7 +41,6 @@ const register = async (req, res) => {
         res.send('Internal Server Error')
     }
 }
-
 
 
 const sendVerificationEmail = async ({ Email, _id }, res) => {
@@ -84,34 +84,25 @@ const sendVerificationEmail = async ({ Email, _id }, res) => {
 
 const reSendVerificationEmail = async (req, res) => {
     try {
-
         const otp = `${Math.floor(1000 + Math.random() * 9000)}`
-        console.log(otp)
-
         const { Email, id } = req.body;
-
-        console.log(Email, id)
-
         const mailOptions = {
             from: "asdfg.lkjh12@outlook.com",
             to: Email,
             subject: "verify Otp",
             text: `${otp} verify your email account. Expires in 2 Min`
         }
-        console.log(mailOptions)
-
         const newOtp = new UserVerify({
             userId: id,
             otp: otp,
             createdAt: Date.now(),
             expiresAt: Date.now() + 120000
         })
-        console.log(newOtp)
         await newOtp.save()
         await transporter.sendMail(mailOptions)
         res.json({
             status: "pending",
-            message: "verification Otp sent",
+            message: "Otp sent",
             data: {
                 userId: id,
                 Email
@@ -184,7 +175,7 @@ const login = async (req, res) => {
     console.log(req.body)
     try {
         const { Email, Password } = req.body;
-        const user = await Friends.findOne({ Email: Email, Password: Password })
+        const user = await Customers.findOne({ Email: Email, Password: Password })
         if (user) {
             const payload = {
                 id: user.id
@@ -205,7 +196,7 @@ const login = async (req, res) => {
 
 const emailCheck = async (req, res) => {
     const { Email } = req.body
-    const user = await Friends.findOne({ Email: Email })
+    const user = await Customers.findOne({ Email: Email })
     console.log(user)
     if (user) {
         console.log(user)

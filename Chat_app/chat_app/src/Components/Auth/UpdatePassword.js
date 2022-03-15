@@ -47,8 +47,8 @@ const UpdatePassword = () => {
                 </div><br />
                 <button onClick={handleClick}><a >resend</a></button>
                 <div>
+                    <button className='btn btn-secondary back' onClick={() => history.push('/')}>back</button>
                     <button className='btn btn-primary'>Change</button>
-                    <button className='btn btn-secondary' onClick={() => history.push('/')}>back</button>
                 </div><br />
 
             </form>

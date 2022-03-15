@@ -1,9 +1,9 @@
-const Friends = require('../Model/FriendsSchema')
+const Customers = require('../Model/CustomerSchema')
 
 
 const userDetail = async (req, res) => {
     try {
-        const user = await Friends.find()
+        const user = await Customers.find()
         res.json(user)
         console.log(user)
     } catch (error) {
@@ -16,8 +16,8 @@ const getUsers = async (req, res) => {
     const Email = req.query.Email;
     try {
         const user = userId
-            ? await Friends.findById(userId)
-            : await Friends.findOne({ Email: Email });
+            ? await Customers.findById(userId)
+            : await Customers.findOne({ Email: Email });
         const { password, updatedAt, ...other } = user._doc;
         res.json(other);
     } catch (err) {
@@ -27,15 +27,15 @@ const getUsers = async (req, res) => {
 
 const getFriends = async (req, res) => {
     try {
-        const user = await Friends.findById(req.params.userId);
-        const friends = await Promise.all(
+        const user = await Customers.findById(req.params.userId);
+        const Customers = await Promise.all(
             user.Following.map((friendId) => {
-                return Friends.findById(friendId)
+                return Customers.findById(friendId)
             })
         );
-        console.log(friends)
+        console.log(Customers)
         let friendList = []
-        friends.map((friend) => {
+        Customers.map((friend) => {
             const { _id, Name, Profile } = friend;
             friendList.push({ _id, Name, Profile });
         });
@@ -49,9 +49,9 @@ const follow = async (req, res) => {
     console.log(req.body)
     if (req.body.userId !== req.params.id) {
         try {
-            const user = await Friends.findById(req.params.id);
+            const user = await Customers.findById(req.params.id);
             console.log(user.Followers)
-            const currentUser = await Friends.findById(req.body.userId);
+            const currentUser = await Customers.findById(req.body.userId);
             console.log(currentUser)
             if (!user.Followers.includes(req.body.userId)) {
                 console.log("true")
@@ -71,7 +71,7 @@ const follow = async (req, res) => {
 
 const updateProfile = async (req, res) => {
     try {
-        const data = await Friends.findByIdAndUpdate(req.params.id)
+        const data = await Customers.findByIdAndUpdate(req.params.id)
         data.Profile = req.body.Profile
         const update = data.save()
         console.log(update)

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
+import "./Navbar.css"
 
 function Navbar() {
     const [token, setToken] = useState()
@@ -36,10 +37,10 @@ function Navbar() {
                                 <NavLink className="nav-link fs-5 fw-bold text-black  " to="/" >Banking App</NavLink>
                             </li>
                             <li className="nav-item ">
-                                <NavLink id='log' className="nav-link " to="/register" >Sign up</NavLink>
+                                <NavLink id='log' className="nav-link right-link " to="/register" >Sign up</NavLink>
                             </li>
                             <li className="nav-item ">
-                                <NavLink id='log' className="nav-link " to="/login" >Sign In</NavLink>
+                                <NavLink id='log' className="nav-link right-link " to="/login" >Sign In</NavLink>
                             </li>
                         </ul>
                     </div>

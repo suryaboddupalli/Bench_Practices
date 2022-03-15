@@ -5,7 +5,7 @@ const UserController = require('../Controllers/UserController')
 
 router.get('/get', UserController.userDetail)
 router.get('/', UserController.getUsers)
-router.get("/friends/:userId", UserController.getFriends)
+// router.get("/friends/:userId", UserController.getFriends)
 router.put("/:id/follow", UserController.follow)
 router.put("/profileUpdate/:id", UserController.updateProfile)
 

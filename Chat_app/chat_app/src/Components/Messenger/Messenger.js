@@ -21,34 +21,33 @@ function Messenger() {
 
     useEffect(() => {
         socket.current = io("ws://localhost:8900")
-        // socket.current.on("getMessage", (data) => {
-        //     setArrivalMessage({
-        //         createdAt: Date.now(),
-        //         sender: data.senderId,
-        //         text: data.text,
-        //     });
-        // });
+        socket.current.on("getMessage", (data) => {
+            setArrivalMessage({
+                createdAt: Date.now(),
+                sender: data.senderId,
+                text: data.text,
+            });
+        });
     }, []);
 
 
-    // useEffect(() => {
-    //     arrivalMessage &&
-    //         currentMessage?.members.includes(arrivalMessage.sender) &&
-    //         setMessage((prev) => [...prev, arrivalMessage]);
-    // }, [arrivalMessage, currentMessage]);
+    useEffect(() => {
+        arrivalMessage &&
+            currentMessage?.members.includes(arrivalMessage.sender) &&
+            setMessage((prev) => [...prev, arrivalMessage]);
+    }, [arrivalMessage, currentMessage]);
 
     useEffect(() => {
         socket.current.emit("addUser", currentUser._id);
         socket.current.on("getUsers", (users) => {
-            // const exap = users.some((user) => console.log(user.userId))
-            // console.log(currentUser.Following?.filter((f) => f))
-            // setOnlineUsers(
-            //     currentUser.Following?.filter((find) => users.some((user) => user.userId === find))
-            // );
+            const exap = users.some((user) => console.log(user.userId))
+            console.log(currentUser.Following?.filter((f) => f))
+            setOnlineUsers(
+                currentUser.Following?.filter((find) => users.some((user) => user.userId === find))
+            );
         });
     }, [currentUser]);
 
-    console.log(onlineUsers)
 
     useEffect(() => {
         const user = JSON.parse(localStorage.getItem("user"))
@@ -115,12 +114,8 @@ function Messenger() {
                         <>
                             <div className='chat-box-top'>
                                 {message && message.map(messageData => (
-                                    // console.log(m)
-                                    // console.log(currentUser._id)
                                     < Message message={messageData} own={messageData.sender === currentUser._id} />
                                 ))}
-
-                                <Message own={true} />
                             </div>
                             <div className='chat-box-bottom'>
                                 <textarea className="chat-input" placeholder="message..." onChange={(e) => setNewMessage(e.target.value)} value={newMessage} />
