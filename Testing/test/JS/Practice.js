@@ -10,7 +10,7 @@ const Practice = {
 
     FetchUser: () => axios.get('https://jsonplaceholder.typicode.com/users/1')
         .then(res => res.data)
-        .catch(error => "error")
+        .catch(error => "error"),
 
 }
 
