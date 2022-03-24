@@ -1,23 +1,16 @@
-import { useState } from "react";
+import React from 'react'
+import Product from './Components/Products/Product'
 
-function App({ name }) {
-  const [count, setCount] = useState(0)
+
+
+
+function App() {
   return (
-    <div className="App">
-      <a
-        className="App-link"
-        href="https://reactjs.org"
-      >
-        Learn React
-      </a>
-      <h1>hello</h1>
-      <p>surya</p>
-      <div className="welcome">welcome{name}</div>
-      <div className="counter">{count}</div>
-      <button className="decrement" onClick={() => setCount(count - 1)}>decrement</button>
-      <button className="increment" onClick={() => setCount(count + 1)}>increment</button>
+    <div>
+      <h1>User Details</h1>
+      <Product />
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
