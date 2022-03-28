@@ -1,0 +1,28 @@
+{
+    "Users": [
+        {
+            "id": 1,
+            "Name": "surya",
+            "Age": 22,
+            "Active": true
+        }, {
+            "id": 2,
+            "Name": "Naveen",
+            "Age": 21,
+            "Active": true
+        },
+        {
+            "id": 3,
+            "Name": "Revanth",
+            "Age": 22,
+            "Active": false
+        },
+        {
+            "id": 4,
+            "Name": "Karthik",
+            "Age": 22,
+            "Active": true
+        }
+
+    ]
+}
