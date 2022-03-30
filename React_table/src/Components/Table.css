@@ -1,0 +1,18 @@
+table,
+th,
+td {
+  border: 0.1px solid black;
+  text-align: center;
+}
+
+tfoot td {
+  font-weight: 1000;
+  background-color: #a25dcad0;
+}
+
+th {
+  background-color: #a25dcad0;
+}
+td {
+  background-color: #b897c5;
+}
