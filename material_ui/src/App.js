@@ -1,20 +1,24 @@
-import React from 'react';
-import Login from './Templates/Login';
-import Register from './Templates/Register';
-import Navbar from './Templates/Navbar';
-import LoginNavbar from './Templates/LoginNavbar';
-import Cal from './SampleCalculator/Cal';
+import React from 'react'
+import MuiButtons from './Components/MuiButtons'
+import MuiCheckBox from './Components/MuiCheckBox'
+import MuiForms from './Components/MuiForms'
+import MuiRadio from './Components/MuiRadio'
+import MuiSelect from './Components/MuiSelect'
+import Register from './Components/Register'
+import MuiTypography from './Components/Typography'
 
 function App() {
   return (
     <div>
-      {/* <Login /> */}
-      {/* <Register /> */}
-      {/* <Navbar /> */}
-      {/* <LoginNavbar /> */}
-      <Cal />
+      {/* <MuiTypography /> */}
+      {/* <MuiButtons /> */}
+      {/* <MuiForms /> */}
+      {/* <MuiSelect /> */}
+      {/* <MuiRadio /> */}
+      {/* <MuiCheckBox /> */}
+      <Register />
     </div>
   )
 }
 
-export default App;
+export default App
