@@ -66,7 +66,6 @@ function Register() {
                     <Button variant='contained' color='primary' >Register</Button>
                 </Stack>
             </form>
-
         </Stack>
     )
 }
