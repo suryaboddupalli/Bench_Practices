@@ -1,15 +1,15 @@
-import { songReducer } from "./Reducer";
 import { applyMiddleware, combineReducers, createStore } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension";
 import thunk from "redux-thunk";
+import { songReducer } from "./Reducer";
 
-const rootReducer = combineReducers({
-  SongsReducer: songReducer,
+const RootReducer = combineReducers({
+  songReducer: songReducer,
 });
 
-export type RootState = ReturnType<typeof rootReducer>;
+export type RootState = ReturnType<typeof RootReducer>;
 
 export const Store = createStore(
-  rootReducer,
+  RootReducer,
   composeWithDevTools(applyMiddleware(thunk))
 );

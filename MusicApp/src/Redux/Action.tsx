@@ -1,15 +1,15 @@
-export const GET_DATA = "GET_DATA";
+export const CURRENT_DATA = "CURRENT_DATA";
 
-export type Data = {
-  title: String;
-  song_name: String;
-  song: String;
-  img: String;
+export type details = {
+  title: string;
+  song_name: string;
+  song: string;
+  img: string;
 };
 
-export const getData = (data: Data[]) => {
+export const currSong: any = (data: details) => {
   return {
-    action: GET_DATA,
+    type: CURRENT_DATA,
     payload: data,
   };
 };

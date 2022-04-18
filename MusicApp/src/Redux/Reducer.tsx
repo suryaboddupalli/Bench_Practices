@@ -1,14 +1,20 @@
-import { Data } from "./Action";
-import { GET_DATA } from "./Action";
-import { actionData } from "./ActionTypes";
+import { CURRENT_DATA } from "./Action";
+import { details } from "./Action";
 
 const initialState = {
-  song: [],
+  Current_Song: {},
 };
 
-export const songReducer = (state = initialState, action: actionData) => {
+export type song = {
+  type: "CURRENT_DATA";
+  payload: details;
+};
+
+export const songReducer = (state = initialState, action: song) => {
   switch (action.type) {
-    case GET_DATA:
-      return { song: action.payload };
+    case CURRENT_DATA:
+      return { Current_Song: action.payload };
+    default:
+      return state;
   }
 };
