@@ -7,7 +7,6 @@ import {
   Typography,
   IconButton,
   Slider,
-  Tooltip,
 } from "@mui/material";
 import SkipPreviousIcon from "@mui/icons-material/SkipPrevious";
 import { Box, fontSize } from "@mui/system";
@@ -16,28 +15,29 @@ import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import React, { useEffect, useRef, useState } from "react";
 import PauseIcon from "@mui/icons-material/Pause";
 import VolumeUpIcon from "@mui/icons-material/VolumeUp";
-import { useSelector } from "react-redux";
-import { RootState } from "../Redux/Store";
 
 function FooterPlayer(props: any) {
-  const data = useSelector(
-    (state: RootState) => state.songReducer.Current_Song
-  );
-  const [currSong, setCurrSong] = useState<any>();
   const [play, setPlay] = useState<boolean>(false);
   const [volume, setVolume] = useState<number>(30);
   const [audioOpen, setAudioOpen] = useState<boolean>(false);
   const audioElement = useRef<HTMLAudioElement | null>(null);
 
-  useEffect(() => {
-    setCurrSong(data);
-  }, [data]);
-
-  console.log(currSong);
+  const currentSong = JSON.parse(localStorage.getItem("currSong") || "{}");
 
   const handleAudioChange = (event: Event, newValue: number | number[]) => {
     setVolume(newValue as number);
   };
+
+  useEffect(() => {
+    play
+      ? audioElement?.current
+          .play()
+          .then(() => {})
+          .catch((e) => {
+            audioElement?.current.pause();
+          })
+      : audioElement.current.pause();
+  });
 
   return (
     <Stack
@@ -53,18 +53,18 @@ function FooterPlayer(props: any) {
       <Card sx={{ display: "flex" }}>
         <Button onClick={() => props.setIsOpen(true)}>
           <CardMedia
-            image={currSong?.img}
+            image={currentSong?.img}
             component="img"
             sx={{ width: 110, borderRadius: "5px" }}
           />
         </Button>
         <Box>
           <CardContent>
-            <Typography variant="h5">{currSong?.title}</Typography>
-            <Typography variant="h6">{currSong?.song_name}</Typography>
+            <Typography variant="h5">{currentSong?.title}</Typography>
+            <Typography variant="h6">{currentSong?.song_name}</Typography>
           </CardContent>
         </Box>
-        <audio ref={audioElement} src={currSong?.song} />
+        <audio ref={audioElement} src={currentSong?.song} />
         <Box sx={{ marginTop: "20px", marginLeft: "50px", display: "flex" }}>
           <IconButton>
             <SkipPreviousIcon fontSize="large" />

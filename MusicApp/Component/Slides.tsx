@@ -9,10 +9,6 @@ function Slides() {
   const [indexData, setIndexData] = useState<number>(0);
   const [opacityValue, setOpacityValue] = useState<number>();
 
-  console.log(opacityValue);
-  console.log(indexData);
-
-  console.log(opacityValue);
   useEffect(() => {
     if (slide === indexData + 1) {
       setOpacityValue(0.9);
