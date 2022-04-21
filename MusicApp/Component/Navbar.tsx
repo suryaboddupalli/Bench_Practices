@@ -13,19 +13,24 @@ import {
   Select,
   SelectChangeEvent,
   Stack,
+  TextField,
 } from "@mui/material";
-import React, { useState } from "react";
+import React, { ChangeEvent, useState } from "react";
+import { useDispatch } from "react-redux";
+import { musicLang } from "../Redux/Action";
 
 export default function Navbar() {
+  const dispatch = useDispatch();
   const [lang, setLang] = useState<string>();
   const navigate = useNavigate();
 
-  const langHandler = (e: SelectChangeEvent) => {
+  const langHandler = (e: ChangeEvent<HTMLInputElement>) => {
     setLang(e.target.value);
+    dispatch(musicLang(e.target.value));
   };
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <Box sx={{ flexGrow: 1, borderRadius: "5px" }}>
       <AppBar position="static" color="inherit">
         <Toolbar>
           <IconButton
@@ -59,13 +64,18 @@ export default function Navbar() {
             color="secondary"
             sx={{ m: 1, minWidth: 120 }}
           >
-            <InputLabel>Language</InputLabel>
-            <Select value={lang} onChange={langHandler} label="lang">
+            <TextField
+              label="Langauge"
+              fullWidth
+              select
+              value={lang}
+              onChange={langHandler}
+            >
               <MenuItem value="">Language</MenuItem>
               <MenuItem value="Telugu">Telugu</MenuItem>
               <MenuItem value="Tamil">Tamil</MenuItem>
               <MenuItem value="Hindi">Hindi</MenuItem>
-            </Select>
+            </TextField>
           </FormControl>
         </Toolbar>
       </AppBar>

@@ -1,7 +1,11 @@
 import {
   Stack,
   TextField,
+  Card,
+  Button,
+  CardContent,
   Typography,
+  CardMedia,
   AppBar,
   Toolbar,
   IconButton,
@@ -10,9 +14,9 @@ import SearchIcon from "@mui/icons-material/Search";
 import { ChangeEvent, useState } from "react";
 import { Data } from "../db";
 import { useDispatch } from "react-redux";
+import { currSong } from "./../Redux/Action";
 import LibraryMusicOutlinedIcon from "@mui/icons-material/LibraryMusicOutlined";
 import { Box } from "@mui/system";
-import { searchData } from "../Redux/Action";
 import { useNavigate } from "react-router-dom";
 
 function SearchBar() {
@@ -67,15 +71,37 @@ function SearchBar() {
             if (search == "") {
               return val;
             } else if (
-              val?.title.toLowerCase().includes(search?.toLowerCase())
+              val.song_name?.toLowerCase().includes(search?.toLowerCase())
             ) {
               return val;
             } else if (
-              val?.song_name.toLowerCase().includes(search?.toLowerCase())
+              val.title?.toLowerCase().includes(search?.toLowerCase())
+            ) {
+              return val;
+            } else if (
+              val.lang?.toLowerCase().includes(search?.toLowerCase())
             ) {
               return val;
             }
-          }).map((song, index) => dispatch(searchData(song)))}
+          }).map((song, index) => {
+            return (
+              <Button onClick={() => dispatch(currSong(song))}>
+                <Card sx={{ width: 270, height: 300 }}>
+                  <CardMedia
+                    height="250"
+                    component="img"
+                    src={song.img}
+                    alt="img"
+                  />
+                  <CardContent>
+                    <Typography variant="h6">
+                      {song.title}-{song.song_name}
+                    </Typography>
+                  </CardContent>
+                </Card>
+              </Button>
+            );
+          })}
       </div>
     </Stack>
   );

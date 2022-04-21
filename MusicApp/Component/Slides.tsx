@@ -45,6 +45,7 @@ function Slides() {
         setIndexData(index);
         return (
           <Stack
+            key={index}
             sx={{
               width: "100%",
               height: "100% ",

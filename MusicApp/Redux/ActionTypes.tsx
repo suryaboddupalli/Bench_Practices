@@ -18,6 +18,7 @@ export type songsData = {
   song_name: string;
   song: string;
   img: string;
+  lang: string;
 };
 
 export type curr_search = {
@@ -48,4 +49,9 @@ export type played = {
 export type lang = {
   type: "MUSIC_LANG";
   payload: string;
+};
+
+export type banner = {
+  type: "SONG_BANNER";
+  payload: boolean;
 };

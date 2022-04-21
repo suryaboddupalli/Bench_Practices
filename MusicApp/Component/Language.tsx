@@ -13,7 +13,7 @@ import Navbar from "../Component/NavBar";
 import { RootState } from "../Redux/Store";
 import { currSong } from "./../Redux/Action";
 
-function MoreSongs() {
+function Language() {
   const data = useSelector((state: RootState) => state.songReducer.playlists);
   const lang = useSelector((state: RootState) => state.songReducer.language);
   const dispatch = useDispatch();
@@ -55,4 +55,4 @@ function MoreSongs() {
   );
 }
 
-export default MoreSongs;
+export default Language;

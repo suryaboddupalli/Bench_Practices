@@ -9,34 +9,60 @@ import {
   Slider,
 } from "@mui/material";
 import SkipPreviousIcon from "@mui/icons-material/SkipPrevious";
-import { Box, fontSize } from "@mui/system";
+import { Box } from "@mui/system";
 import SkipNextIcon from "@mui/icons-material/SkipNext";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import React, { useEffect, useRef, useState } from "react";
 import PauseIcon from "@mui/icons-material/Pause";
 import VolumeUpIcon from "@mui/icons-material/VolumeUp";
+import { useDispatch, useSelector } from "react-redux";
+import { SongBanner } from "../Redux/Action";
+import { RootState } from "../Redux/Store";
+import { songsData } from "../Redux/ActionTypes";
 
-function FooterPlayer(props: any) {
+function FooterPlayer() {
+  const dispatch = useDispatch();
+  const storeBanner = useSelector(
+    (state: RootState) => state.songReducer.banner
+  );
+  const currentSong = useSelector(
+    (state: RootState) => state.songReducer.currSong
+  );
+  const [curr, setCurr] = useState<songsData>();
   const [play, setPlay] = useState<boolean>(false);
   const [volume, setVolume] = useState<number>(30);
   const [audioOpen, setAudioOpen] = useState<boolean>(false);
+  const [banner, setBanner] = useState<boolean>();
   const audioElement = useRef<HTMLAudioElement | null>(null);
 
-  const currentSong = JSON.parse(localStorage.getItem("currSong") || "{}");
+  const currSong = JSON.parse(localStorage.getItem("currSong") || "{}");
 
   const handleAudioChange = (event: Event, newValue: number | number[]) => {
     setVolume(newValue as number);
   };
 
   useEffect(() => {
+    setBanner(storeBanner);
+  }, []);
+
+  useEffect(() => {
+    if (currentSong) {
+      setCurr(currentSong);
+      setPlay(true);
+    } else {
+      setCurr(currSong);
+    }
+  }, [currSong, currentSong]);
+
+  useEffect(() => {
     play
-      ? audioElement?.current
-          .play()
+      ? audioElement.current
+          ?.play()
           .then(() => {})
-          .catch((e) => {
-            audioElement?.current.pause();
+          .catch(() => {
+            audioElement.current?.pause();
           })
-      : audioElement.current.pause();
+      : audioElement.current?.pause();
   });
 
   return (
@@ -51,20 +77,20 @@ function FooterPlayer(props: any) {
       }}
     >
       <Card sx={{ display: "flex" }}>
-        <Button onClick={() => props.setIsOpen(true)}>
+        <Button onClick={() => dispatch(SongBanner(!banner))}>
           <CardMedia
-            image={currentSong?.img}
+            image={curr?.img}
             component="img"
             sx={{ width: 110, borderRadius: "5px" }}
           />
         </Button>
         <Box>
           <CardContent>
-            <Typography variant="h5">{currentSong?.title}</Typography>
-            <Typography variant="h6">{currentSong?.song_name}</Typography>
+            <Typography variant="h5">{curr?.title}</Typography>
+            <Typography variant="h6">{curr?.song_name}</Typography>
           </CardContent>
         </Box>
-        <audio ref={audioElement} src={currentSong?.song} />
+        <audio ref={audioElement} src={curr?.song} />
         <Box sx={{ marginTop: "20px", marginLeft: "50px", display: "flex" }}>
           <IconButton>
             <SkipPreviousIcon fontSize="large" />

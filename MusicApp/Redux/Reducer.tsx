@@ -5,6 +5,7 @@ import {
   PLAYLIST,
   TIMES_PLAYED,
   CURR_SEARCH,
+  SONG_BANNER,
 } from "./Action";
 import {
   curr_search,
@@ -13,6 +14,7 @@ import {
   lang,
   played,
   currSong,
+  banner,
 } from "./ActionTypes";
 import { details, songsData } from "./ActionTypes";
 
@@ -21,6 +23,7 @@ type instates = {
   searchData: details[] | null;
   language: string;
   currSong: songsData | null;
+  banner: boolean;
 };
 
 const initialState: instates = {
@@ -28,23 +31,46 @@ const initialState: instates = {
   playlists: Data,
   searchData: null,
   language: "",
+  banner: false,
 };
 
 export const songReducer = (
   state = initialState,
-  action: curr_search | playlist | lang | searchType | played | currSong
+  action:
+    | curr_search
+    | playlist
+    | lang
+    | searchType
+    | played
+    | currSong
+    | banner
 ): instates => {
   switch (action.type) {
     case CURR_SEARCH:
       console.log(action.payload);
       return { ...state, searchData: action.payload };
     case CURR_SONG:
+      // const currentSong = JSON.parse(localStorage.getItem("currSong") || "{}");
+      // const data = action.payload;
+      // if (currentSong) {
+      //   console.log(currentSong);
+      //   return { ...state, currSong: currentSong };
+      // } else {
+      //   console.log(data);
+      //   return { ...state, currSong: data };
+      // }
       return { ...state, currSong: action.payload };
     case PLAYLIST:
       return { ...state, playlists: action.payload };
     case TIMES_PLAYED:
       Moviesongs[action.payload].timesPlayed += 1;
       return state;
+    case SONG_BANNER:
+      console.log(action.payload);
+      return {
+        ...state,
+        banner: action.payload,
+      };
     case MUSIC_LANG:
       return {
         ...state,

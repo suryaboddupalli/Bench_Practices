@@ -5,6 +5,7 @@ export const TIMES_PLAYED = "TIMES_PLAYED";
 export const SEARCH_BAR = "SERACH_BAR";
 export const MUSIC_LANG = "MUSIC_LANG";
 export const CURR_SEARCH = "CURR_SEARCH";
+export const SONG_BANNER = "SONG_BANNER";
 
 export const searchData: any = (data: details[]) => {
   console.log(data);
@@ -40,5 +41,12 @@ export const musicLang = (langList: string) => {
   return {
     type: MUSIC_LANG,
     payload: langList,
+  };
+};
+
+export const SongBanner = (data: boolean) => {
+  return {
+    type: SONG_BANNER,
+    payload: data,
   };
 };
