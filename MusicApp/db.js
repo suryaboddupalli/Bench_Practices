@@ -1,11 +1,14 @@
 export const Data = [
     {
+        id: 1,
         title: 'RRR',
         song_name: 'dosthi',
         song: './music/dosti.mp3',
         lang: 'telugu',
         img: 'https://static.toiimg.com/photo/msid-89043434/89043434.jpg?183612'
-    }, {
+    },
+    {
+        id: 2,
         title: 'bahubali',
         song_name: 'mamathala thali',
         song: './music/mamathala.mp3',
@@ -14,6 +17,7 @@ export const Data = [
     },
 
     {
+        id: 3,
         title: 'RRR',
         song_name: 'naatu',
         song: './music/naatu.mp3',
@@ -21,6 +25,7 @@ export const Data = [
         img: 'https://static.toiimg.com/photo/msid-89043434/89043434.jpg?183612'
     },
     {
+        id: 4,
         title: 'KGF',
         song_name: 'yadagara',
         song: './music/yadagara.mp3',
@@ -30,6 +35,7 @@ export const Data = [
 
 
     {
+        id: 5,
         title: 'RRR',
         song_name: 'jenda',
         song: './music/jenda.mp3',
@@ -37,6 +43,7 @@ export const Data = [
         img: 'https://static.toiimg.com/photo/msid-89043434/89043434.jpg?183612'
     },
     {
+        id: 6,
         title: 'KGF',
         song_name: 'toofan',
         song: './music/toofan.mp3',
@@ -44,6 +51,7 @@ export const Data = [
         img: 'https://www.koimoi.com/wp-content/new-galleries/2022/03/the-battleground-looks-set-its-going-to-be-intense-trailer-of-kgf-chapter-2-to-be-launched-on-27th-march-at-6-40-pm-001.jpg'
     },
     {
+        id: 7,
         title: 'RRR',
         song_name: 'janani',
         song: './music/janani.mp3',
@@ -51,6 +59,7 @@ export const Data = [
         img: 'https://static.toiimg.com/photo/msid-89043434/89043434.jpg?183612'
     },
     {
+        id: 8,
         title: 'bahubali',
         song_name: 'dhevera',
         song: './music/dhevera.mp3',
@@ -58,20 +67,15 @@ export const Data = [
         img: 'https://static.toiimg.com/photo/msid-74848427/74848427.jpg?646257'
     },
     {
+        id: 9,
         title: 'bahubali',
-        song_name: 'dhevera',
-        song: './music/dhevera.mp3',
+        song_name: 'Mamathala Thali',
+        song: './music/mamathala.mp3',
         lang: 'telugu',
         img: 'https://static.toiimg.com/photo/msid-74848427/74848427.jpg?646257'
     },
     {
-        title: 'bahubali',
-        song_name: 'dhevera',
-        song: './music/dhevera.mp3',
-        lang: 'telugu',
-        img: 'https://static.toiimg.com/photo/msid-74848427/74848427.jpg?646257'
-    },
-    {
+        id: 10,
         title: 'beast',
         song_name: 'Arabic-kuthu',
         song: './music/arabic.mp3',
@@ -79,6 +83,7 @@ export const Data = [
         img: 'https://static.toiimg.com/photo/90612493.jpeg'
     },
     {
+        id: 11,
         title: 'beast',
         song_name: 'Jolly-o-Gymkhana',
         song: './music/jolly.mp3',
@@ -86,6 +91,7 @@ export const Data = [
         img: 'https://static.toiimg.com/photo/90612493.jpeg'
     },
     {
+        id: 12,
         title: 'natpe thunai',
         song_name: 'Kerala',
         song: './music/kerala.mp3',
@@ -93,6 +99,7 @@ export const Data = [
         img: 'https://sund-images.sunnxt.com/90011/960x540_NatpeThunai_90011_7e6f33d9-84ee-42c2-a2ff-c2462abc542d.jpg'
     },
     {
+        id: 13,
         title: 'natpe thunai',
         song_name: 'Single-Pasanga',
         song: './music/single.mp3',
@@ -100,6 +107,7 @@ export const Data = [
         img: 'https://sund-images.sunnxt.com/90011/960x540_NatpeThunai_90011_7e6f33d9-84ee-42c2-a2ff-c2462abc542d.jpg'
     },
     {
+        id: 14,
         title: 'natpe thunai',
         song_name: 'Vengamavan',
         song: './music/vengamavan.mp3',
@@ -107,25 +115,28 @@ export const Data = [
         img: 'https://sund-images.sunnxt.com/90011/960x540_NatpeThunai_90011_7e6f33d9-84ee-42c2-a2ff-c2462abc542d.jpg'
     },
     {
+        id: 15,
         title: 'RRR',
         song_name: 'Komuram-Beemano',
         song: './music/tkomuram.mp3',
         lang: 'tamil',
-        img: 'https://sund-images.sunnxt.com/90011/960x540_NatpeThunai_90011_7e6f33d9-84ee-42c2-a2ff-c2462abc542d.jpg'
+        img: 'https://i0.wp.com/chennaivision.com/tamil-movies/wp-content/uploads/2021/07/RRR_LYCA_Insta.jpg?resize=756%2C1080&ssl=1'
     },
     {
+        id: 16,
         title: 'RRR',
         song_name: 'Naattu-Koothu',
         song: './music/tnaattu.mp3',
         lang: 'tamil',
-        img: 'https://sund-images.sunnxt.com/90011/960x540_NatpeThunai_90011_7e6f33d9-84ee-42c2-a2ff-c2462abc542d.jpg'
+        img: 'https://i0.wp.com/chennaivision.com/tamil-movies/wp-content/uploads/2021/07/RRR_LYCA_Insta.jpg?resize=756%2C1080&ssl=1'
     },
     {
+        id: 17,
         title: 'RRR',
         song_name: 'Natpu',
         song: './music/naptu.mp3',
         lang: 'tamil',
-        img: 'https://sund-images.sunnxt.com/90011/960x540_NatpeThunai_90011_7e6f33d9-84ee-42c2-a2ff-c2462abc542d.jpg'
+        img: 'https://i0.wp.com/chennaivision.com/tamil-movies/wp-content/uploads/2021/07/RRR_LYCA_Insta.jpg?resize=756%2C1080&ssl=1'
     }
 ]
 export const Moviesongs = [

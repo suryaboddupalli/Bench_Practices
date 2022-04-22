@@ -14,6 +14,7 @@ export type details = {
 };
 
 export type songsData = {
+  id: number;
   title: string;
   song_name: string;
   song: string;
@@ -24,6 +25,16 @@ export type songsData = {
 export type curr_search = {
   type: "CURR_SEARCH";
   payload: details[];
+};
+
+export type curr_playlist = {
+  id: number;
+  Songlist: songsData;
+};
+
+export type currPlist = {
+  type: "CURR_PLAYLIST";
+  payload: curr_playlist[];
 };
 
 export type currSong = {

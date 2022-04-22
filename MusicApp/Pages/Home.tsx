@@ -26,7 +26,15 @@ function Home() {
           <LangSongs lang={"Tamil"} />
         </div>
       )}
-      <FooterPlayer />
+      <footer
+        style={{
+          position: "absolute",
+          bottom: "0",
+          width: "100%",
+        }}
+      >
+        <FooterPlayer />
+      </footer>
     </>
   );
 }

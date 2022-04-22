@@ -8,7 +8,7 @@ import {
   CardMedia,
 } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import { currSong } from "./../Redux/Action";
+import { currPlayList, currSong } from "./../Redux/Action";
 import { useNavigate } from "react-router-dom";
 import { RootState } from "../Redux/Store";
 import FooterPlayer from "../Component/FooterPlayer";
@@ -45,7 +45,7 @@ function LangSongs(props: props) {
                   return song;
                 }
               })
-              .map((song, index) => {
+              .map((song, index: number) => {
                 if (index < 6) {
                   return (
                     <Button
