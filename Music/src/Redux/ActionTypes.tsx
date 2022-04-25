@@ -3,6 +3,11 @@
 //   song: string;
 // };
 
+export type loginData = {
+  userId: string;
+  password: string;
+};
+
 export type details = {
   id: number;
   Name: string;
@@ -65,4 +70,18 @@ export type lang = {
 export type banner = {
   type: "SONG_BANNER";
   payload: boolean;
+};
+
+export type download = {
+  type: "DOWNLOAD";
+  payload: songsData;
+};
+
+export type login = {
+  type: "LOGIN";
+  payload: loginData;
+};
+
+export type logout = {
+  type: "LOGOUT";
 };

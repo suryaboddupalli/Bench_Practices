@@ -33,7 +33,7 @@ function Home() {
           width: "100%",
         }}
       >
-        <FooterPlayer />
+        {/* <FooterPlayer /> */}
       </footer>
     </>
   );

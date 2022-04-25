@@ -7,22 +7,27 @@ import LibraryMusicOutlinedIcon from "@mui/icons-material/LibraryMusicOutlined";
 import Search from "@mui/icons-material/Search";
 import { useNavigate } from "react-router-dom";
 import {
+  Avatar,
   FormControl,
-  InputLabel,
+  Menu,
   MenuItem,
-  Select,
-  SelectChangeEvent,
-  Stack,
   TextField,
+  Tooltip,
+  Button,
 } from "@mui/material";
 import React, { ChangeEvent, useState } from "react";
-import { useDispatch } from "react-redux";
-import { musicLang } from "../Redux/Action";
+import { useDispatch, useSelector } from "react-redux";
+import { musicLang, logout } from "../Redux/Action";
+import DownloadIcon from "@mui/icons-material/Download";
+import LoginIcon from "@mui/icons-material/Login";
+import { RootState } from "../Redux/Store";
 
 export default function Navbar() {
+  const user = useSelector((state: RootState) => state.songReducer.login);
   const dispatch = useDispatch();
   const [lang, setLang] = useState<string>();
   const navigate = useNavigate();
+  const [anchorEl, setAnchorEl] = useState<any>(null);
 
   const langHandler = (e: ChangeEvent<HTMLInputElement>) => {
     setLang(e.target.value);
@@ -56,17 +61,23 @@ export default function Navbar() {
           >
             Music
           </Typography>
-          <IconButton color="secondary" onClick={() => navigate("/search")}>
+          <IconButton
+            color="secondary"
+            onClick={() => navigate("/search")}
+            sx={{ marginRight: "30px" }}
+          >
             <Search />
           </IconButton>
+
           <FormControl
             variant="standard"
             color="secondary"
-            sx={{ m: 1, minWidth: 120 }}
+            sx={{ m: 1, minWidth: 120, marginRight: "30px" }}
           >
             <TextField
               label="Langauge"
               fullWidth
+              color="secondary"
               select
               value={lang}
               onChange={langHandler}
@@ -77,6 +88,45 @@ export default function Navbar() {
               <MenuItem value="Hindi">Hindi</MenuItem>
             </TextField>
           </FormControl>
+          <Tooltip title="Download" sx={{ marginRight: "30px" }}>
+            <IconButton color="secondary" onClick={() => navigate("/download")}>
+              <DownloadIcon />
+            </IconButton>
+          </Tooltip>
+          {user ? (
+            <>
+              <IconButton
+                onClick={(e) => setAnchorEl(e.currentTarget)}
+                color="secondary"
+              >
+                <Avatar
+                  alt="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
+                  src=""
+                />
+                {user.userId}
+              </IconButton>
+              <Menu
+                anchorEl={anchorEl}
+                onClose={() => setAnchorEl(null)}
+                open={Boolean(anchorEl)}
+              >
+                <MenuItem>
+                  <Button onClick={() => dispatch(logout())}>Log Out</Button>
+                </MenuItem>
+              </Menu>
+            </>
+          ) : (
+            <Tooltip
+              title="login"
+              color="secondary"
+              sx={{ marginRight: "30px", fontSize: "15px" }}
+            >
+              <IconButton onClick={() => navigate("/login")}>
+                <LoginIcon />
+                Login
+              </IconButton>
+            </Tooltip>
+          )}
         </Toolbar>
       </AppBar>
     </Box>

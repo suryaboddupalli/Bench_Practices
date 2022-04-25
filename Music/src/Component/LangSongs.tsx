@@ -61,7 +61,7 @@ function LangSongs(props: props) {
                         }}
                       >
                         <CardMedia
-                          height="250"
+                          height="150"
                           component="img"
                           src={song.img}
                           alt="img"

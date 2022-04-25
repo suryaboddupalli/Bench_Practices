@@ -1,4 +1,4 @@
-import { details, songsData, curr_playlist } from "./ActionTypes";
+import { details, songsData, curr_playlist, loginData } from "./ActionTypes";
 export const CURR_SONG = "CURR_SONG";
 export const PLAYLIST = "PLAYLIST";
 export const TIMES_PLAYED = "TIMES_PLAYED";
@@ -7,6 +7,9 @@ export const MUSIC_LANG = "MUSIC_LANG";
 export const CURR_SEARCH = "CURR_SEARCH";
 export const SONG_BANNER = "SONG_BANNER";
 export const CURR_PLAYLIST = "CURR_PLAYLIST";
+export const DOWNLOAD = "DOWNLOAD";
+export const LOGIN = "LOGIN";
+export const LOGOUT = "LOGOUT";
 
 export const searchData: any = (data: details[]) => {
   console.log(data);
@@ -58,5 +61,25 @@ export const currPlayList = (data: curr_playlist) => {
   return {
     type: CURR_PLAYLIST,
     payload: data,
+  };
+};
+
+export const download = (data: songsData) => {
+  return {
+    type: DOWNLOAD,
+    payload: data,
+  };
+};
+
+export const login = (data: loginData) => {
+  return {
+    type: LOGIN,
+    payload: data,
+  };
+};
+
+export const logout = () => {
+  return {
+    type: LOGOUT,
   };
 };

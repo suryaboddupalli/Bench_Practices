@@ -1,7 +1,8 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Navbar from "./Component/NavBar";
+import Downloads from "./Pages/Downloads";
 import Home from "./Pages/Home";
 import Language from "./Pages/Languages";
+import Login from "./Pages/Login";
 import MoreSongs from "./Pages/MoreSong";
 import SearchBar from "./Pages/Search";
 
@@ -13,6 +14,8 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/more" element={<MoreSongs />} />
         <Route path="/lang" element={<Language />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/download" element={<Downloads />} />
       </Routes>
     </BrowserRouter>
   );

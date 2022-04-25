@@ -7,6 +7,9 @@ import {
   CURR_SEARCH,
   SONG_BANNER,
   CURR_PLAYLIST,
+  DOWNLOAD,
+  LOGIN,
+  LOGOUT,
 } from "./Action";
 import {
   curr_search,
@@ -17,8 +20,11 @@ import {
   currSong,
   banner,
   currPlist,
+  download,
+  login,
+  logout,
 } from "./ActionTypes";
-import { details, songsData, curr_playlist } from "./ActionTypes";
+import { details, songsData, curr_playlist, loginData } from "./ActionTypes";
 
 type instates = {
   playlists: songsData[];
@@ -27,6 +33,9 @@ type instates = {
   currSong: songsData | null;
   banner: boolean;
   currPlaylist: curr_playlist[];
+  download: songsData[];
+  downloaded: boolean;
+  login: loginData | null;
 };
 
 const initialState: instates = {
@@ -36,6 +45,9 @@ const initialState: instates = {
   language: "",
   banner: false,
   currPlaylist: [],
+  download: [],
+  downloaded: false,
+  login: null,
 };
 
 export const songReducer = (
@@ -49,6 +61,9 @@ export const songReducer = (
     | currSong
     | banner
     | currPlist
+    | download
+    | login
+    | logout
 ): instates => {
   switch (action.type) {
     case CURR_SEARCH:
@@ -78,6 +93,38 @@ export const songReducer = (
       return {
         ...state,
         currPlaylist: action.payload,
+      };
+    case DOWNLOAD:
+      const playlistSongs = state.playlists.find(
+        (song) => song.id === action.payload.id
+      );
+
+      const downloadData = state.download.find((Dsong) =>
+        Dsong.id === action.payload.id ? true : false
+      );
+
+      return {
+        ...state,
+        download: [...state.download, action.payload],
+        // download: downloadData
+        //   ? state.download.map((song) =>
+        //       song.id === action.payload.id
+        //         ? { ...song, download: true }
+        //         : { song }
+        //     )
+        //   : [...state.download, action.payload],
+      };
+
+    case LOGIN:
+      return {
+        ...state,
+        login: action.payload,
+      };
+
+    case LOGOUT:
+      return {
+        ...state,
+        login: null,
       };
 
     default:

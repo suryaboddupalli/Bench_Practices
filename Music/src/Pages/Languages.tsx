@@ -48,9 +48,7 @@ function Language() {
             </Grid>
           ))}
       </Grid>
-      <div style={{ marginTop: "10px" }}>
-        <FooterPlayer />
-      </div>
+      <div style={{ marginTop: "10px" }}>{/* <FooterPlayer /> */}</div>
     </Stack>
   );
 }
