@@ -4,18 +4,21 @@ import Banner from "../Component/SongBanner";
 import LangSongs from "../Component/LangSongs";
 import Navbar from "../Component/NavBar";
 import FooterPlayer from "../Component/FooterPlayer";
+import RecentPlayed from "../Component/Recentplayed";
 
 function Home() {
   const banner = useSelector((state: RootState) => state.songReducer.banner);
 
   return (
-    <>
+    <div>
       {banner ? (
         <Banner />
       ) : (
         <div>
           <Navbar />
           <br />
+          <br />
+          <RecentPlayed />
           <br />
           <LangSongs lang={""} />
           <br />
@@ -33,9 +36,9 @@ function Home() {
           width: "100%",
         }}
       >
-        {/* <FooterPlayer /> */}
+        <FooterPlayer />
       </footer>
-    </>
+    </div>
   );
 }
 

@@ -8,10 +8,11 @@ import {
   CardMedia,
 } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import { currPlayList, currSong } from "./../Redux/Action";
+import { currPlayList, currSong, RecentPlayList } from "./../Redux/Action";
 import { useNavigate } from "react-router-dom";
 import { RootState } from "../Redux/Store";
 import FooterPlayer from "../Component/FooterPlayer";
+import { useEffect, useState } from "react";
 
 type props = {
   lang: string;
@@ -21,18 +22,26 @@ function LangSongs(props: props) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const data = useSelector((state: RootState) => state.songReducer.playlists);
+  const bg = useSelector((state: RootState) => state.songReducer.bgColor);
+  const [color, setColor] = useState<"white" | "black">("black");
+
+  useEffect(() => {
+    if (color === "black") {
+      setColor("white");
+    } else {
+      setColor("black");
+    }
+  }, [bg]);
 
   return (
     <div>
-      <Card>
+      <Card sx={{ bgcolor: bg }}>
         <Stack direction="row">
-          <Typography variant="h4" color="secondary">
+          <Typography variant="h4" sx={{ color: color }}>
             {props.lang} Songs
           </Typography>
           <CardActions sx={{ marginLeft: "900px" }}>
-            <Button color="secondary" onClick={() => navigate("/more")}>
-              more songs
-            </Button>
+            <Button onClick={() => navigate("/more")}>more songs</Button>
           </CardActions>
         </Stack>
         <CardContent>
@@ -50,14 +59,19 @@ function LangSongs(props: props) {
                   return (
                     <Button
                       key={index}
-                      onClick={() => dispatch(currSong(song))}
+                      onClick={() =>
+                        dispatch(currSong(song)) &&
+                        dispatch(RecentPlayList(song))
+                      }
                     >
                       <Card
+                        color="secondary"
                         sx={{
                           width: 200,
                           height: 200,
                           borderRadius: "10px",
-                          border: "2px solid grey",
+                          bgcolor: bg,
+                          color: color,
                         }}
                       >
                         <CardMedia

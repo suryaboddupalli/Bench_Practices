@@ -10,6 +10,8 @@ export const CURR_PLAYLIST = "CURR_PLAYLIST";
 export const DOWNLOAD = "DOWNLOAD";
 export const LOGIN = "LOGIN";
 export const LOGOUT = "LOGOUT";
+export const BG_COLOR = "BG_COLOR";
+export const RECENT = "RECENT";
 
 export const searchData: any = (data: details[]) => {
   console.log(data);
@@ -65,9 +67,10 @@ export const currPlayList = (data: curr_playlist) => {
 };
 
 export const download = (data: songsData) => {
+  console.log(data);
   return {
     type: DOWNLOAD,
-    payload: data,
+    payload: { ...data, download: true },
   };
 };
 
@@ -81,5 +84,20 @@ export const login = (data: loginData) => {
 export const logout = () => {
   return {
     type: LOGOUT,
+  };
+};
+
+export const bgcolor = (color: string) => {
+  console.log(color);
+  return {
+    type: BG_COLOR,
+    payload: color,
+  };
+};
+
+export const RecentPlayList = (song: songsData) => {
+  return {
+    type: RECENT,
+    payload: song,
   };
 };

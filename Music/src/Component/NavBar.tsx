@@ -15,12 +15,14 @@ import {
   Tooltip,
   Button,
 } from "@mui/material";
-import React, { ChangeEvent, useState } from "react";
+import React, { ChangeEvent, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { musicLang, logout } from "../Redux/Action";
+import { musicLang, logout, bgcolor } from "../Redux/Action";
 import DownloadIcon from "@mui/icons-material/Download";
 import LoginIcon from "@mui/icons-material/Login";
 import { RootState } from "../Redux/Store";
+import LightModeIcon from "@mui/icons-material/LightMode";
+import DarkModeIcon from "@mui/icons-material/DarkMode";
 
 export default function Navbar() {
   const user = useSelector((state: RootState) => state.songReducer.login);
@@ -28,15 +30,21 @@ export default function Navbar() {
   const [lang, setLang] = useState<string>();
   const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = useState<any>(null);
+  const [bg, setBg] = useState<string>("white");
+  const bgColor = useSelector((state: RootState) => state.songReducer.bgColor);
 
   const langHandler = (e: ChangeEvent<HTMLInputElement>) => {
     setLang(e.target.value);
     dispatch(musicLang(e.target.value));
   };
 
+  useEffect(() => {
+    dispatch(bgcolor(bg));
+  });
+
   return (
     <Box sx={{ flexGrow: 1, borderRadius: "5px" }}>
-      <AppBar position="static" color="inherit">
+      <AppBar position="static" sx={{ backgroundColor: bgColor }}>
         <Toolbar>
           <IconButton
             size="large"
@@ -81,6 +89,7 @@ export default function Navbar() {
               select
               value={lang}
               onChange={langHandler}
+              sx={{ bgcolor: "white" }}
             >
               <MenuItem value="">Language</MenuItem>
               <MenuItem value="Telugu">Telugu</MenuItem>
@@ -93,6 +102,15 @@ export default function Navbar() {
               <DownloadIcon />
             </IconButton>
           </Tooltip>
+          {bg === "white" ? (
+            <IconButton color="secondary" onClick={() => setBg("black")}>
+              <DarkModeIcon />
+            </IconButton>
+          ) : (
+            <IconButton color="secondary" onClick={() => setBg("white")}>
+              <LightModeIcon />
+            </IconButton>
+          )}
           {user ? (
             <>
               <IconButton

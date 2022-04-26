@@ -10,6 +10,8 @@ import {
   DOWNLOAD,
   LOGIN,
   LOGOUT,
+  BG_COLOR,
+  RECENT,
 } from "./Action";
 import {
   curr_search,
@@ -23,6 +25,8 @@ import {
   download,
   login,
   logout,
+  bg,
+  recent,
 } from "./ActionTypes";
 import { details, songsData, curr_playlist, loginData } from "./ActionTypes";
 
@@ -34,8 +38,9 @@ type instates = {
   banner: boolean;
   currPlaylist: curr_playlist[];
   download: songsData[];
-  downloaded: boolean;
   login: loginData | null;
+  bgColor: string;
+  recentPlayList: songsData[];
 };
 
 const initialState: instates = {
@@ -46,8 +51,18 @@ const initialState: instates = {
   banner: false,
   currPlaylist: [],
   download: [],
-  downloaded: false,
   login: null,
+  bgColor: "",
+  recentPlayList: [
+    // {
+    //   id: 5,
+    //   img: "https://static.toiimg.com/photo/msid-89043434/89043434.jpg?183612",
+    //   lang: "telugu",
+    //   song: "./music/jenda.mp3",
+    //   song_name: "jenda",
+    //   title: "RRR",
+    // },
+  ],
 };
 
 export const songReducer = (
@@ -64,6 +79,8 @@ export const songReducer = (
     | download
     | login
     | logout
+    | bg
+    | recent
 ): instates => {
   switch (action.type) {
     case CURR_SEARCH:
@@ -95,38 +112,41 @@ export const songReducer = (
         currPlaylist: action.payload,
       };
     case DOWNLOAD:
-      const playlistSongs = state.playlists.find(
+      const song = state.playlists.find(
         (song) => song.id === action.payload.id
       );
-
-      const downloadData = state.download.find((Dsong) =>
-        Dsong.id === action.payload.id ? true : false
-      );
-
+      console.log(action.payload);
       return {
         ...state,
-        download: [...state.download, action.payload],
-        // download: downloadData
-        //   ? state.download.map((song) =>
-        //       song.id === action.payload.id
-        //         ? { ...song, download: true }
-        //         : { song }
-        //     )
-        //   : [...state.download, action.payload],
+        download: song
+          ? [...state.recentPlayList]
+          : [action.payload, ...state.recentPlayList],
       };
-
     case LOGIN:
       return {
         ...state,
         login: action.payload,
       };
-
     case LOGOUT:
       return {
         ...state,
         login: null,
       };
-
+    case BG_COLOR:
+      return {
+        ...state,
+        bgColor: action.payload,
+      };
+    case RECENT:
+      const recent = state.recentPlayList.find(
+        (song) => song.id === action.payload.id
+      );
+      return {
+        ...state,
+        recentPlayList: recent
+          ? [...state.recentPlayList]
+          : [action.payload, ...state.recentPlayList],
+      };
     default:
       return state;
   }

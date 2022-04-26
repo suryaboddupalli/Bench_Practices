@@ -8,20 +8,22 @@ import {
   IconButton,
   Slider,
 } from "@mui/material";
-import SkipPreviousIcon from "@mui/icons-material/SkipPrevious";
 import { Box } from "@mui/system";
-import SkipNextIcon from "@mui/icons-material/SkipNext";
-import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import React, { useEffect, useRef, useState } from "react";
-import PauseIcon from "@mui/icons-material/Pause";
-import VolumeUpIcon from "@mui/icons-material/VolumeUp";
+// import SkipPreviousIcon from "@mui/icons-material/SkipPrevious";
+// import SkipNextIcon from "@mui/icons-material/SkipNext";
+// import PlayArrowIcon from "@mui/icons-material/PlayArrow";
+// import PauseIcon from "@mui/icons-material/Pause";
+// import VolumeUpIcon from "@mui/icons-material/VolumeUp";
+// import VolumeOffIcon from "@mui/icons-material/VolumeOff";
 import { useDispatch, useSelector } from "react-redux";
 import { currSong, SongBanner } from "../Redux/Action";
 import { RootState } from "../Redux/Store";
 import { songsData } from "../Redux/ActionTypes";
 import RepeatIcon from "@mui/icons-material/Repeat";
 import RepeatOnIcon from "@mui/icons-material/RepeatOn";
-import VolumeOffIcon from "@mui/icons-material/VolumeOff";
+import PlayButtons from "./PlayButtons";
+import Volume from "./Volume";
 
 function FooterPlayer() {
   const dispatch = useDispatch();
@@ -31,11 +33,12 @@ function FooterPlayer() {
   const currentSong = useSelector(
     (state: RootState) => state.songReducer.currSong
   );
-  const playlist = useSelector(
-    (state: RootState) => state.songReducer.playlists
-  );
+  // const playlist = useSelector(
+  //   (state: RootState) => state.songReducer.playlists
+  // );
   const [curr, setCurr] = useState<songsData>();
   const [play, setPlay] = useState<boolean>(false);
+  console.log(play);
   const [volume, setVolume] = useState<number>(50);
   const [muted, setMuted] = useState<boolean>(false);
   const [banner, setBanner] = useState<boolean>();
@@ -43,17 +46,14 @@ function FooterPlayer() {
   const [currTime, setCurrTime] = useState<number>(0);
   const [duration, setDuration] = useState<number>(0);
   const audioElement = useRef<HTMLAudioElement | null>(null);
-  const [next, setNext] = useState<boolean>(false);
-  const [prev, setPrev] = useState<boolean>(false);
-  useEffect(() => {
-    console.log(prev);
-  }, [prev]);
+  // const [next, setNext] = useState<boolean>(false);
+  // const [prev, setPrev] = useState<boolean>(false);
 
   const currSongData = JSON.parse(localStorage.getItem("currSong") || "{}");
 
-  const handleAudioChange = (event: Event, newValue: number | number[]) => {
-    setVolume(newValue as number);
-  };
+  // const handleAudioChange = (event: Event, newValue: number | number[]) => {
+  //   setVolume(newValue as number);
+  // };
 
   useEffect(() => {
     setBanner(storeBanner);
@@ -87,29 +87,29 @@ function FooterPlayer() {
         setCurrTime(audioElement.current.currentTime);
     });
     audioElement.current && (audioElement.current.loop = repeat);
-    audioElement.current && (audioElement.current.volume = volume / 100);
-    audioElement.current && (audioElement.current.muted = muted);
+    // audioElement.current && (audioElement.current.volume = volume / 100);
+    // audioElement.current && (audioElement.current.muted = muted);
   });
 
-  useEffect(() => {
-    if (next) {
-      let currId: any = curr?.id;
-      dispatch(currSong(playlist[Math.floor(currId + 1) % playlist.length]));
-      setNext(false);
-    }
-  }, [next]);
+  // useEffect(() => {
+  //   if (next) {
+  //     let currId: any = curr?.id;
+  //     dispatch(currSong(playlist[Math.floor(currId + 1) % playlist.length]));
+  //     setNext(false);
+  //   }
+  // }, [next]);
 
-  useEffect(() => {
-    if (prev) {
-      let currId: any = curr?.id;
-      let currTrack = Math.floor(currId - 1) % playlist.length;
-      if (currId - 1 === 0) {
-        currTrack = playlist.length - 1;
-      }
-      dispatch(currSong(playlist[currTrack - 1]));
-      setPrev(false);
-    }
-  }, [prev]);
+  // useEffect(() => {
+  //   if (prev) {
+  //     let currId: any = curr?.id;
+  //     let currTrack = Math.floor(currId - 1) % playlist.length;
+  //     if (currId - 1 === 0) {
+  //       currTrack = playlist.length - 1;
+  //     }
+  //     dispatch(currSong(playlist[currTrack - 1]));
+  //     setPrev(false);
+  //   }
+  // }, [prev]);
 
   function formatTime(secs: number) {
     return (
@@ -138,7 +138,7 @@ function FooterPlayer() {
           </CardContent>
         </Box>
         <audio ref={audioElement} src={curr?.song} />
-        <Box sx={{ marginTop: "20px", marginLeft: "50px", display: "flex" }}>
+        {/* <Box sx={{ marginTop: "20px", marginLeft: "50px", display: "flex" }}>
           <IconButton onClick={() => setPrev(!prev)}>
             <SkipPreviousIcon fontSize="large" />
           </IconButton>
@@ -152,7 +152,8 @@ function FooterPlayer() {
           <IconButton onClick={() => setNext(!next)}>
             <SkipNextIcon fontSize="large" />
           </IconButton>
-        </Box>
+        </Box> */}
+        <PlayButtons play={play} setPlay={setPlay} currId={curr?.id} />
         <div style={{ marginLeft: "20px", marginTop: "30px" }}>
           <p>
             <span>{formatTime(currTime)}</span>/
@@ -162,14 +163,15 @@ function FooterPlayer() {
             {repeat ? <RepeatOnIcon /> : <RepeatIcon />}
           </IconButton>
         </div>
-        <Box sx={{ width: 200, marginLeft: "20px", marginTop: "30px" }}>
+        {/* <Box sx={{ width: 200, marginLeft: "20px", marginTop: "30px" }}>
           <Stack spacing={2} direction="row" sx={{ mb: 1 }} alignItems="center">
             <IconButton onClick={() => setMuted(!muted)}>
               {muted ? <VolumeOffIcon /> : <VolumeUpIcon />}
             </IconButton>
             <Slider value={volume} onChange={handleAudioChange} />
           </Stack>
-        </Box>
+        </Box> */}
+        <Volume audioElement={audioElement} repeat={repeat} />
       </Card>
     </Stack>
   );

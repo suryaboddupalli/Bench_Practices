@@ -15,16 +15,18 @@ export type details = {
   music: string;
   img: string;
   lang: string;
+
   // song: songData[];
 };
 
 export type songsData = {
-  id: number;
-  title: string;
-  song_name: string;
-  song: string;
-  img: string;
+  id: number | undefined;
+  title: string | undefined;
+  song_name: string | undefined;
+  song: string | undefined;
+  img: string | undefined;
   lang: string;
+  download?: boolean;
 };
 
 export type curr_search = {
@@ -84,4 +86,14 @@ export type login = {
 
 export type logout = {
   type: "LOGOUT";
+};
+
+export type bg = {
+  type: "BG_COLOR";
+  payload: string;
+};
+
+export type recent = {
+  type: "RECENT";
+  payload: songsData;
 };
