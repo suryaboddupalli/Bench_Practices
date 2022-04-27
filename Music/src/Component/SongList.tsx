@@ -12,7 +12,7 @@ import MoreVertOutlinedIcon from "@mui/icons-material/MoreVertOutlined";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../Redux/Store";
 import { songsData } from "../Redux/ActionTypes";
-import { currSong } from "../Redux/Action";
+import { currSong, RemovePlaylist } from "../Redux/Action";
 
 const useStyles = makeStyles({
   card: {
@@ -36,13 +36,26 @@ export default function SongList() {
   const currentSong = useSelector(
     (state: RootState) => state.songReducer.currSong
   );
+  const data = useSelector((state: RootState) => state.songReducer.playlists);
+
   const playlist = useSelector(
-    (state: RootState) => state.songReducer.playlists
+    (state: RootState) => state.songReducer.Add_PlayList
   );
+
+  console.log(playlist);
+
   const [curr, setCurr] = useState<songsData>();
+  const [filterData, setFilterData] = useState<songsData[]>();
   const classes = useStyles();
 
   const currSongs = JSON.parse(localStorage.getItem("currSong") || "{}");
+
+  useEffect(() => {
+    const dataplay = playlist.map((song) => song.id);
+    const songlist = data.filter((song) => song.id !== dataplay[0]);
+    const finalData = playlist.concat(songlist);
+    setFilterData(finalData);
+  }, [playlist]);
 
   useEffect(() => {
     if (currentSong) {
@@ -74,40 +87,44 @@ export default function SongList() {
         </Box>
       </Grid>
       <Grid item xs={8}>
-        {playlist.map((song, index) => (
-          <Card key={index} className={classes.card} sx={{ display: "flex" }}>
-            <Button
-              className={classes.button}
-              onClick={() => dispatch(currSong(song))}
-            >
-              <CardMedia
-                component="img"
-                sx={{ width: 110, borderRadius: "5px" }}
-                image={song.img}
-              />
-            </Button>
-            <Box sx={{ display: "flex", flexDirection: "column" }}>
-              <CardContent sx={{ flex: "1 0 auto" }}>
-                <Typography component="div" variant="h5">
-                  {song.title}
-                </Typography>
-                <Typography
-                  variant="subtitle1"
-                  color="text.secondary"
-                  component="div"
-                >
-                  {song.song_name}
-                </Typography>
-              </CardContent>
-            </Box>
-            <IconButton sx={{ marginLeft: "400px" }}>
-              <DownloadIcon />
-            </IconButton>
-            <IconButton>
-              <MoreVertOutlinedIcon />
-            </IconButton>
-          </Card>
-        ))}
+        {filterData &&
+          filterData.map((song, index) => (
+            <Card key={index} className={classes.card} sx={{ display: "flex" }}>
+              <Button
+                className={classes.button}
+                onClick={() => dispatch(currSong(song))}
+              >
+                <CardMedia
+                  component="img"
+                  sx={{ width: 110, borderRadius: "5px" }}
+                  image={song.img}
+                />
+              </Button>
+              <Box sx={{ display: "flex", flexDirection: "column" }}>
+                <CardContent sx={{ flex: "1 0 auto" }}>
+                  <Typography component="div" variant="h5">
+                    {song.title}
+                  </Typography>
+                  <Typography
+                    variant="subtitle1"
+                    color="text.secondary"
+                    component="div"
+                  >
+                    {song.song_name}
+                  </Typography>
+                </CardContent>
+              </Box>
+              <IconButton sx={{ marginLeft: "400px" }}>
+                <DownloadIcon />
+              </IconButton>
+              <IconButton>
+                <MoreVertOutlinedIcon />
+              </IconButton>
+              <Button onClick={() => dispatch(RemovePlaylist(song.id))}>
+                Remove
+              </Button>
+            </Card>
+          ))}
       </Grid>
     </Grid>
   );

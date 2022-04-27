@@ -12,6 +12,8 @@ export const LOGIN = "LOGIN";
 export const LOGOUT = "LOGOUT";
 export const BG_COLOR = "BG_COLOR";
 export const RECENT = "RECENT";
+export const ADD_PLAYLIST = "ADD_PLAYLIST";
+export const REMOVE_PLAYLIST = "REMOVE_PLAYLIST";
 
 export const searchData: any = (data: details[]) => {
   console.log(data);
@@ -99,5 +101,20 @@ export const RecentPlayList = (song: songsData) => {
   return {
     type: RECENT,
     payload: song,
+  };
+};
+
+export const AddPlaylist = (song: songsData) => {
+  console.log(song);
+  return {
+    type: ADD_PLAYLIST,
+    payload: song,
+  };
+};
+
+export const RemovePlaylist = (id: number | undefined) => {
+  return {
+    type: REMOVE_PLAYLIST,
+    payload: id,
   };
 };

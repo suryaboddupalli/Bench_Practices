@@ -97,3 +97,13 @@ export type recent = {
   type: "RECENT";
   payload: songsData;
 };
+
+export type AddPlaylist = {
+  type: "ADD_PLAYLIST";
+  payload: songsData;
+};
+
+export type removePlaylist = {
+  type: "REMOVE_PLAYLIST";
+  payload: number;
+};

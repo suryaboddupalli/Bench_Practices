@@ -12,6 +12,8 @@ import {
   LOGOUT,
   BG_COLOR,
   RECENT,
+  ADD_PLAYLIST,
+  REMOVE_PLAYLIST,
 } from "./Action";
 import {
   curr_search,
@@ -27,6 +29,8 @@ import {
   logout,
   bg,
   recent,
+  AddPlaylist,
+  removePlaylist,
 } from "./ActionTypes";
 import { details, songsData, curr_playlist, loginData } from "./ActionTypes";
 
@@ -41,6 +45,7 @@ type instates = {
   login: loginData | null;
   bgColor: string;
   recentPlayList: songsData[];
+  Add_PlayList: songsData[];
 };
 
 const initialState: instates = {
@@ -53,16 +58,8 @@ const initialState: instates = {
   download: [],
   login: null,
   bgColor: "",
-  recentPlayList: [
-    // {
-    //   id: 5,
-    //   img: "https://static.toiimg.com/photo/msid-89043434/89043434.jpg?183612",
-    //   lang: "telugu",
-    //   song: "./music/jenda.mp3",
-    //   song_name: "jenda",
-    //   title: "RRR",
-    // },
-  ],
+  Add_PlayList: [],
+  recentPlayList: [],
 };
 
 export const songReducer = (
@@ -81,6 +78,8 @@ export const songReducer = (
     | logout
     | bg
     | recent
+    | AddPlaylist
+    | removePlaylist
 ): instates => {
   switch (action.type) {
     case CURR_SEARCH:
@@ -115,7 +114,7 @@ export const songReducer = (
       const song = state.playlists.find(
         (song) => song.id === action.payload.id
       );
-      console.log(action.payload);
+      console.log(song);
       return {
         ...state,
         download: song
@@ -146,6 +145,24 @@ export const songReducer = (
         recentPlayList: recent
           ? [...state.recentPlayList]
           : [action.payload, ...state.recentPlayList],
+      };
+    case ADD_PLAYLIST:
+      const list = state.playlists.find(
+        (song) => song.id === action.payload.id
+      );
+      return {
+        ...state,
+        Add_PlayList: list
+          ? [...state.Add_PlayList]
+          : [...state.Add_PlayList, action.payload],
+      };
+    case REMOVE_PLAYLIST:
+      const removelist = state.Add_PlayList.filter(
+        (song) => song.id !== action.payload
+      );
+      return {
+        ...state,
+        Add_PlayList: removelist,
       };
     default:
       return state;
