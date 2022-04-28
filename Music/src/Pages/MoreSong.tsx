@@ -103,7 +103,9 @@ function MoreSongs() {
               </Grid>
             ))}
         </Grid>
-        <div style={{ marginTop: "10px" }}>{/* <FooterPlayer /> */}</div>
+        <div style={{ marginTop: "10px" }}>
+          <FooterPlayer />
+        </div>
       </div>
       <Player />
     </Stack>

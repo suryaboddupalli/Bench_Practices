@@ -53,7 +53,7 @@ export default function SongList() {
   useEffect(() => {
     const dataplay = playlist.map((song) => song.id);
     const songlist = data.filter((song) => song.id !== dataplay[0]);
-    const finalData = playlist.concat(songlist);
+    const finalData = [...playlist, ...songlist];
     setFilterData(finalData);
   }, [playlist]);
 

@@ -18,7 +18,6 @@ function Slides() {
   }, [indexData]);
 
   const nextSlide = (e: MouseEvent) => {
-    console.log(Moviesongs.length);
     if (slide !== Moviesongs.length) {
       setSlide(slide + 1);
     } else if (slide === Moviesongs.length) {
@@ -30,12 +29,8 @@ function Slides() {
     console.log(Moviesongs.length);
     console.log(slide);
     if (slide !== 1) {
-      console.log(slide);
-      console.log("true");
       setSlide(slide - 1);
     } else if (slide === 1) {
-      console.log(slide);
-      console.log("false");
       setSlide(Moviesongs.length);
     }
   };

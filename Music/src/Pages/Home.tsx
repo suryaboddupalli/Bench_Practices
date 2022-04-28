@@ -6,6 +6,7 @@ import Navbar from "../Component/NavBar";
 import FooterPlayer from "../Component/FooterPlayer";
 import RecentPlayed from "../Component/Recentplayed";
 import Player from "../Component/Player";
+import Slides from "../Component/Slides";
 
 function Home() {
   const banner = useSelector((state: RootState) => state.songReducer.banner);
@@ -17,6 +18,9 @@ function Home() {
       ) : (
         <div>
           <Navbar />
+          <br />
+          <br />
+          <Slides />
           <br />
           <br />
           <RecentPlayed />
