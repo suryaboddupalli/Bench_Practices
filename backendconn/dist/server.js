@@ -38,12 +38,27 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const hapi_1 = __importDefault(require("@hapi/hapi"));
 const mssql_1 = __importStar(require("mssql"));
 const config_1 = require("./config");
-const Validation_1 = require("./Validation");
+const soap = __importStar(require("soap"));
+function Soapclient() {
+    return __awaiter(this, void 0, void 0, function* () {
+        var url = 'http://www.webservicex.com/globalweather.asmx?wsdl';
+        var args = { name: 'value' };
+        yield soap.createClient(url, function (err, client) {
+            client.MyFunction(args, function (err, result) {
+                if (err) {
+                    console.log(err);
+                }
+                console.log(result);
+            });
+        });
+    });
+}
+Soapclient();
 const server = hapi_1.default.server({
     port: 3000,
     host: 'localhost'
 });
-const pool = new mssql_1.default.ConnectionPool(config_1.config);
+const pool = new mssql_1.default.ConnectionPool(config_1.Config);
 pool.on("error", function (err) {
     if (err) {
         console.log(err.message);
@@ -81,21 +96,83 @@ server.route([{
             return __awaiter(this, void 0, void 0, function* () {
                 try {
                     const person = req.payload;
-                    yield Validation_1.useraddSchema.validateAsync(person)
-                        .then((res) => {
-                        console.log(res);
-                        const name = res.name;
-                        const email = res.email;
-                        const dob = res.dob;
-                        const add = pool.request()
-                            .input('name', (0, mssql_1.VarChar)(30), name)
-                            .input('email', (0, mssql_1.VarChar)(30), email)
-                            .input('dataofbirth', dob)
-                            .execute('addperson');
-                        console.log(add);
-                    }).catch((err) => {
-                        console.log(err);
+                    const server = yield pool.connect();
+                    // await useraddSchema.validateAsync(person).catch(err=>console.log('Validate'+err))
+                    const add = yield server.request()
+                        .input('name', (0, mssql_1.VarChar)(30), person.name)
+                        .input('email', (0, mssql_1.VarChar)(30), person.email)
+                        .input('dataofbirth', person.dob)
+                        .execute('addperson');
+                    const promise = new Promise((resolve, reject) => {
+                        if (add) {
+                            resolve("added successfull");
+                            console.log(add);
+                        }
+                        else {
+                            reject("error");
+                        }
                     });
+                    return promise;
+                }
+                catch (err) {
+                    console.log(err);
+                }
+            });
+        }
+    },
+    {
+        method: 'put',
+        path: '/edit/{id}',
+        handler: function data(req, res) {
+            return __awaiter(this, void 0, void 0, function* () {
+                try {
+                    const id = req.params;
+                    console.log(req.params);
+                    const person = req.payload;
+                    const server = yield pool.connect();
+                    const edit = yield server.request()
+                        .input('id', parseInt(id))
+                        .input('name', (0, mssql_1.VarChar)(30), person.name)
+                        .input('email', (0, mssql_1.VarChar)(30), person.email)
+                        .input('dataofbirth', person.dob)
+                        .execute('editperson');
+                    const promise = new Promise((resolve, reject) => {
+                        if (edit) {
+                            resolve("edited successfull");
+                            console.log(edit);
+                        }
+                        else {
+                            reject("error");
+                        }
+                    });
+                    return promise;
+                }
+                catch (err) {
+                    console.log(err);
+                }
+            });
+        }
+    }, {
+        method: 'delete',
+        path: '/delete/{id}',
+        handler: function data(req, res) {
+            return __awaiter(this, void 0, void 0, function* () {
+                try {
+                    const id = req.params;
+                    console.log(id.id);
+                    const server = yield pool.connect();
+                    const deleteData = yield server.request()
+                        .input('id', id.id)
+                        .execute('deleteperson');
+                    const promise = new Promise((resolve, reject) => {
+                        if (deleteData) {
+                            resolve("Deleted successfull");
+                        }
+                        else {
+                            reject("error");
+                        }
+                    });
+                    return promise;
                 }
                 catch (err) {
                     console.log(err);
