@@ -2,40 +2,16 @@ import Hapi from '@hapi/hapi'
 import sql, { VarChar } from 'mssql'
 import { Config } from './config'
 import { useraddSchema } from './Validation'
-import * as soap from 'soap';
-import fs from 'fs'
-
-function MyFunction(args:any) {
-    return{name: args.name}
-}
 
 
-async function Soapclient() {
-    var url = 'http://www.webservicex.com/globalweather.asmx?wsdl';
-    var args = { name: 'value' };
-    await soap.createClient(url, function (err: any, client) {
-        client.MyFunction(args, function (err: any, result: any) {
-            if (err) {
-                console.log(err)
-            }
-            console.log(result);
-        });
-    });
-}
-
-
-
-
-Soapclient()
-
-const server:Hapi.Server = Hapi.server({
+const server: Hapi.Server = Hapi.server({
     port: 3000,
     host: 'localhost'
 });
 
 const pool = new sql.ConnectionPool(Config)
 
-pool.on("error", function (err) {
+pool.on("error", function (err:any) {
     if (err) {
         console.log(err.message)
     }
@@ -146,15 +122,9 @@ server.route([{
     }
 }
 ])
-var xml = require('fs').readFileSync('myservice.wsdl', 'utf8')
 
-const init = async () => {
-    await server.start();
-    console.log(`Server running at: ${server.info.uri}`);
-    soap.listen(server, "/wsdl", MyFunction, xml, function () {
-        console.log("Soap client")
+server.start()
+    .then((res) => console.log("connected"))
+    .catch((err) => {
+        console.log(err)
     })
-
-};
-
-init();

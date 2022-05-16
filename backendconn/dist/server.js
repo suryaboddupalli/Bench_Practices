@@ -38,27 +38,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const hapi_1 = __importDefault(require("@hapi/hapi"));
 const mssql_1 = __importStar(require("mssql"));
 const config_1 = require("./config");
-const soap = __importStar(require("soap"));
-function Soapclient() {
-    return __awaiter(this, void 0, void 0, function* () {
-        var url = 'http://www.webservicex.com/globalweather.asmx?wsdl';
-        var args = { name: 'value' };
-        yield soap.createClient(url, function (err, client) {
-            client.MyFunction(args, function (err, result) {
-                if (err) {
-                    console.log(err);
-                }
-                console.log(result);
-            });
-        });
-    });
-}
-Soapclient();
+console.log(config_1.Config);
 const server = hapi_1.default.server({
     port: 3000,
     host: 'localhost'
 });
-const pool = new mssql_1.default.ConnectionPool(config_1.Config);
+const pool = new mssql_1.default.ConnectionPool("");
 pool.on("error", function (err) {
     if (err) {
         console.log(err.message);
@@ -181,8 +166,8 @@ server.route([{
         }
     }
 ]);
-const init = () => __awaiter(void 0, void 0, void 0, function* () {
-    yield server.start();
-    console.log(`Server running at: ${server.info.uri}`);
+server.start()
+    .then((res) => console.log("connected"))
+    .catch((err) => {
+    console.log(err);
 });
-init();
