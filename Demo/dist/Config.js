@@ -2,33 +2,32 @@
 // require('dotenv').config()
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Config = void 0;
-// export interface configData {
-//     user?: string;
-//     password?: string;
-//     server?: string;
-//     database?: string;
-//     port?: string;
-//     driver?: string;
+// interface ConfigData {
+//     user: string|undefined;
+//     password: string|undefined;
+//     server: string|undefined;
+//     database: string|undefined;
+//     port: number;
 //     options: {
 //         trustServerCertificate: boolean;
 //     };
 // }
-// export const Config:configData= {
-//     user: process.env.user,
-//     password: process.env.password,
-//     server: process.env.server,
-//     database: process.env.database,
-//     port: process.env.port,
-//     driver: 'tedious',
+// export const Config:ConfigData = {
+//     user: process.env.USERNAME,
+//     password: process.env.PASSWORD,
+//     server: process.env.SERVER,
+//     database: process.env.DATABASE,
+//     port: 1433,
+//     // driver: 'tedious',
 //     options: {
 //         trustServerCertificate: true
 //     }
-// };
+// }
 exports.Config = {
     user: 'sa',
     password: 'Admin@12345',
     server: 'ASPIRENAV567\\SQLEXPRESS',
-    database: 'firstdb',
+    database: 'usersdb',
     port: 1433,
     driver: 'tedious',
     options: {

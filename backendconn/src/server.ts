@@ -21,23 +21,23 @@ pool.on("error", function (err:any) {
 server.route([{
     method: 'get',
     path: '/',
-    handler: async function data(req: Hapi.Request, res: Hapi.ResponseToolkit) {
-        try {
-            const data = await (await pool.connect()).query('select * from person')
-            const promise: any = new Promise((resolve, reject) => {
-                if (data) {
-                    resolve(data)
-                    console.log(data)
-                } else {
-                    reject("error")
-                }
-            });
-            return promise
+        handler: async function data(req: Hapi.Request, res: Hapi.ResponseToolkit) {
+            try {
+                const data = await (await pool.connect()).query('select * from person')
+                const promise: any = new Promise((resolve, reject) => {
+                    if (data) {
+                        resolve(data)
+                        console.log(data)
+                    } else {
+                        reject("error")
+                    }
+                });
+                return promise
+            }
+            catch (err) {
+                console.log(err)
+            }
         }
-        catch (err) {
-            console.log(err)
-        }
-    }
 },
 {
     method: 'post',
@@ -57,7 +57,7 @@ server.route([{
                     resolve("added successfull")
                     console.log(add)
                 } else {
-                    reject("error")
+                    reject({error:"error"})
                 }
             });
             return promise
@@ -124,7 +124,7 @@ server.route([{
 ])
 
 server.start()
-    .then((res) => console.log("connected"))
+    .then((res) => console.log("hapi connected"))
     .catch((err) => {
         console.log(err)
     })

@@ -38,12 +38,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const hapi_1 = __importDefault(require("@hapi/hapi"));
 const mssql_1 = __importStar(require("mssql"));
 const config_1 = require("./config");
-console.log(config_1.Config);
 const server = hapi_1.default.server({
     port: 3000,
     host: 'localhost'
 });
-const pool = new mssql_1.default.ConnectionPool("");
+const pool = new mssql_1.default.ConnectionPool(config_1.Config);
 pool.on("error", function (err) {
     if (err) {
         console.log(err.message);
@@ -94,7 +93,7 @@ server.route([{
                             console.log(add);
                         }
                         else {
-                            reject("error");
+                            reject({ error: "error" });
                         }
                     });
                     return promise;
@@ -167,7 +166,7 @@ server.route([{
     }
 ]);
 server.start()
-    .then((res) => console.log("connected"))
+    .then((res) => console.log("hapi connected"))
     .catch((err) => {
     console.log(err);
 });
