@@ -89,8 +89,6 @@ server.route([{
                                     .input('mobile', res.mobile)
                                     .input('password', hashedPassword)
                                     .execute('register')
-                                    .then((res) =>
-                                        console.log(res))
                                 resolve('User Added')
                                 const user = {
                                     firstname: res.firstname,
