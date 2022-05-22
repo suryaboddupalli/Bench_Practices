@@ -38,7 +38,6 @@ const LoginController = (req, response) => __awaiter(void 0, void 0, void 0, fun
                     const pass = yield bcryptjs_1.default.compare(value.password, emailcheck.recordset[0].password);
                     console.log(pass);
                     if (pass) {
-                        // console.log("hello")
                         const secert = process.env.TOKEN_SECERT;
                         const token = yield jsonwebtoken_1.default.sign(emailcheck.recordset[0].id, secert);
                         console.log(token);

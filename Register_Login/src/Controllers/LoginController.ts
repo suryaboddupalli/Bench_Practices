@@ -25,7 +25,6 @@ export const LoginController = async (req: hapi.Request, response: hapi.Response
                     const pass = await bcrypt.compare(value.password, emailcheck.recordset[0].password)
                     console.log(pass)
                     if (pass) {
-                        // console.log("hello")
                         const secert: any = process.env.TOKEN_SECERT
                         const token = await jwt.sign(emailcheck.recordset[0].id, secert)
                         console.log(token)

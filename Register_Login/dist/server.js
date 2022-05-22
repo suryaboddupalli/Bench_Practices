@@ -8,11 +8,15 @@ const hapi_1 = __importDefault(require("@hapi/hapi"));
 require('dotenv').config();
 const redis = require('ioredis');
 const Routes = require('./Routes');
-exports.Redis = new redis(process.env.REDIS_PORT, process.env.REDIS_HOST);
+const Convict_1 = require("./Config/Convict");
+exports.Redis = new redis(Convict_1.newconfig._instance.Redis.port, Convict_1.newconfig._instance.Redis.port);
 exports.Redis.on('connect', function () {
     console.log("redis server connected");
 });
-exports.Redis.json.set('data', '.', { name: "surya" });
+exports.Redis.JSON.set('noderedis:userData', '.', {
+    name: 'surya',
+    dept: "ece"
+});
 exports.server = hapi_1.default.server({ port: process.env.HAPI_PORT, host: process.env.HAPI_HOST });
 exports.server.start()
     .then((res) => {
