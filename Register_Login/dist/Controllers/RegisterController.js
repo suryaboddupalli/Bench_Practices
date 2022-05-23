@@ -17,6 +17,7 @@ const bcryptjs_1 = __importDefault(require("bcryptjs"));
 const database_1 = require("../database");
 const mssql_1 = require("mssql");
 const ValidationSchema_1 = require("../ValidationSchema");
+const JwtHelpers_1 = require("../Helpers/JwtHelpers");
 const RegisterController = (req, response) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const Data = req.payload;
@@ -33,20 +34,23 @@ const RegisterController = (req, response) => __awaiter(void 0, void 0, void 0, 
                     .execute('email_Check');
                 if (emailcheck.recordset[0]) {
                     console.log(emailcheck.recordset[0]);
-                    resolve("User Already exist");
+                    resolve('User Already exist');
                 }
                 else {
-                    console.log(value);
                     const hashedPassword = yield bcryptjs_1.default.hash(value.password, 10);
-                    console.log(hashedPassword);
-                    yield server.request()
+                    const Data = yield server.request()
                         .input('firstname', (0, mssql_1.VarChar)(30), value.firstname)
                         .input('lastname', (0, mssql_1.VarChar)(30), value.lastname)
                         .input('email', (0, mssql_1.VarChar)(30), value.email)
                         .input('mobile', value.mobile)
                         .input('password', hashedPassword)
                         .execute('register');
-                    resolve("User Added Successfully");
+                    if (Data.recordset) {
+                        const token = yield (0, JwtHelpers_1.signAccessToken)(Data.recordset[0].id);
+                        const refresh = yield (0, JwtHelpers_1.refreshToken)(Data.recordset[0].id);
+                        console.log(token + ' ' + refresh);
+                    }
+                    resolve('user added successfully');
                 }
             }
         }));

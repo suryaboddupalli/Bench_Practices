@@ -3,8 +3,9 @@ import bcrypt from 'bcryptjs'
 import { pool } from '../database'
 import { VarChar } from 'mssql'
 import { loginSchema } from '../ValidationSchema'
-import jwt from 'jsonwebtoken'
 require('dotenv').config()
+import { signAccessToken, refreshToken } from '../Helpers/JwtHelpers'
+
 
 export const LoginController = async (req: hapi.Request, response: hapi.ResponseToolkit) => {
     try {
@@ -25,16 +26,17 @@ export const LoginController = async (req: hapi.Request, response: hapi.Response
                     const pass = await bcrypt.compare(value.password, emailcheck.recordset[0].password)
                     console.log(pass)
                     if (pass) {
-                        const secert: any = process.env.TOKEN_SECERT
-                        const token = await jwt.sign(emailcheck.recordset[0].id, secert)
-                        console.log(token)
+                        const token = await signAccessToken(emailcheck.recordset[0].id)
+                        const refresh = await refreshToken(emailcheck.recordset[0].id)
+                        console.log(token, 'REFRESH' + '' + refresh)
                         if (token) {
-                            resolve(emailcheck.recordset[0])
+                            console.log(emailcheck.recordset[0])
                         }
+                        resolve('login successfull')
                     }
                 }
                 else {
-                    resolve("User Not Found. Please Do Register..")
+                    resolve('User Not Found. Please Do Register..')
                 }
             }
         })

@@ -22,3 +22,13 @@ export interface ConfigData {
         trustServerCertificate: boolean;
     };
 }
+
+export interface user{
+    name:string,
+    iat:number,
+    exp:number
+}
+
+export interface RToken {
+    refreshToken: string
+}

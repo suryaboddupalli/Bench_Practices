@@ -17,8 +17,8 @@ const bcryptjs_1 = __importDefault(require("bcryptjs"));
 const database_1 = require("../database");
 const mssql_1 = require("mssql");
 const ValidationSchema_1 = require("../ValidationSchema");
-const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 require('dotenv').config();
+const JwtHelpers_1 = require("../Helpers/JwtHelpers");
 const LoginController = (req, response) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const Data = req.payload;
@@ -38,16 +38,17 @@ const LoginController = (req, response) => __awaiter(void 0, void 0, void 0, fun
                     const pass = yield bcryptjs_1.default.compare(value.password, emailcheck.recordset[0].password);
                     console.log(pass);
                     if (pass) {
-                        const secert = process.env.TOKEN_SECERT;
-                        const token = yield jsonwebtoken_1.default.sign(emailcheck.recordset[0].id, secert);
-                        console.log(token);
+                        const token = yield (0, JwtHelpers_1.signAccessToken)(emailcheck.recordset[0].id);
+                        const refresh = yield (0, JwtHelpers_1.refreshToken)(emailcheck.recordset[0].id);
+                        console.log(token, 'REFRESH' + '' + refresh);
                         if (token) {
-                            resolve(emailcheck.recordset[0]);
+                            console.log(emailcheck.recordset[0]);
                         }
+                        resolve('login successfull');
                     }
                 }
                 else {
-                    resolve("User Not Found. Please Do Register..");
+                    resolve('User Not Found. Please Do Register..');
                 }
             }
         }));

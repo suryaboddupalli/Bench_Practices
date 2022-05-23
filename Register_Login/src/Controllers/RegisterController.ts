@@ -2,7 +2,8 @@ import hapi from '@hapi/hapi'
 import bcrypt from 'bcryptjs'
 import { pool } from '../database'
 import { VarChar } from 'mssql'
-import { registerSchema } from "../ValidationSchema"
+import { registerSchema } from '../ValidationSchema'
+import { signAccessToken, refreshToken } from '../Helpers/JwtHelpers'
 
 
 export const RegisterController = async (req: hapi.Request, response: hapi.ResponseToolkit) => {
@@ -21,20 +22,23 @@ export const RegisterController = async (req: hapi.Request, response: hapi.Respo
                     .execute('email_Check')
                 if (emailcheck.recordset[0]) {
                     console.log(emailcheck.recordset[0])
-                    resolve("User Already exist")
+                    resolve('User Already exist')
                 }
                 else {
-                    console.log(value)
                     const hashedPassword = await bcrypt.hash(value.password, 10)
-                    console.log(hashedPassword)
-                    await server.request()
+                    const Data = await server.request()
                         .input('firstname', VarChar(30), value.firstname)
                         .input('lastname', VarChar(30), value.lastname)
                         .input('email', VarChar(30), value.email)
                         .input('mobile', value.mobile)
                         .input('password', hashedPassword)
                         .execute('register')
-                    resolve("User Added Successfully")
+                    if (Data.recordset) {
+                        const token = await signAccessToken(Data.recordset[0].id)
+                        const refresh = await refreshToken(Data.recordset[0].id)
+                        console.log(token + ' ' + refresh)
+                    }
+                    resolve('user added successfully')
                 }
             }
         })

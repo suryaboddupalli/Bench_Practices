@@ -11,34 +11,34 @@ exports.newconfig = convict({
     },
     db: {
         server: {
-            doc: "Database host",
+            doc: 'Database host',
             format: '*',
             default: 'localhost',
-            env: "SERVER"
+            env: 'SERVER'
         },
         port: {
             doc: 'DB port',
             format: Number,
             default: 1433,
-            env: "PORT"
+            env: 'PORT'
         },
         database: {
-            doc: "Database name",
+            doc: 'Database name',
             format: String,
             default: 'usersdb',
-            env: "DB_NAME"
+            env: 'DB_NAME'
         },
         user: {
-            doc: " username",
+            doc: ' username',
             format: String,
             default: 'sa',
-            env: "USER"
+            env: 'USER'
         },
         password: {
-            doc: "database password",
+            doc: 'database password',
             format: 'String',
-            default: "A",
-            env: "PASSWORD"
+            default: 'A',
+            env: 'PASSWORD'
         },
         driver: {
             doc: 'Driver',
@@ -47,7 +47,7 @@ exports.newconfig = convict({
         },
         options: {
             trustServerCertificate: {
-                doc: "options",
+                doc: 'options',
                 format: Boolean,
                 default: true
             }
@@ -55,14 +55,38 @@ exports.newconfig = convict({
     },
     Redis: {
         port: {
-            doc: "redis_port",
+            doc: 'redis_port',
             format: Number,
             default: 2001
         },
         host: {
-            doc: "redis_host",
+            doc: 'redis_host',
             format: String,
             default: 'local'
+        }
+    },
+    Jwt: {
+        accessSecret: {
+            doc: 'Secret_data',
+            format: String,
+            default: 'SECRET'
+        },
+        refreshSecret: {
+            doc: ' Refresh_Secrect_data',
+            format: String,
+            default: 'SECRET'
+        }
+    },
+    Hapi: {
+        port: {
+            doc: "Hapi Port",
+            format: Number,
+            default: 9000
+        },
+        host: {
+            doc: "Hapi Host",
+            format: String,
+            default: 'localhost'
         }
     }
 });
