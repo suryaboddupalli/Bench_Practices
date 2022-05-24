@@ -21,7 +21,8 @@ const refreshController = (req, res) => __awaiter(void 0, void 0, void 0, functi
             const access_Token = yield (0, JwtHelpers_1.signAccessToken)(userId);
             const refresh_Token = yield (0, JwtHelpers_1.refreshToken)(userId);
             console.log(access_Token + ' ' + refresh_Token);
-            resolve('Refreshed Successfully');
+            const tokens = res.response({ access_Token, refresh_Token, message: 'Refreshed Successfully' });
+            resolve(tokens);
         }));
         return promise;
     }

@@ -23,15 +23,13 @@ const DataFetchController = (req, res) => __awaiter(void 0, void 0, void 0, func
         const token = bearerToken[1];
         const data = yield (yield database_1.pool.connect()).query('select * from users');
         const promise = new Promise((resolve, reject) => {
-            jsonwebtoken_1.default.verify(token, Convict_1.newconfig._instance.Jwt.refreshSecret, (err, val) => {
+            jsonwebtoken_1.default.verify(token, Convict_1.newconfig._instance.Jwt.accessSecret, (err, val) => {
                 if (err) {
-                    console.log('err' + err);
                     resolve(err);
                 }
                 else {
                     if (data) {
                         resolve(data.recordset);
-                        // console.log(data)
                     }
                     else {
                         reject('error');

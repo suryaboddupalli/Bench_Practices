@@ -4,6 +4,7 @@ import { pool } from '../database'
 import { VarChar } from 'mssql'
 import { registerSchema } from '../ValidationSchema'
 import { signAccessToken, refreshToken } from '../Helpers/JwtHelpers'
+import { client } from '../Redis'
 
 
 export const RegisterController = async (req: hapi.Request, response: hapi.ResponseToolkit) => {
@@ -13,7 +14,6 @@ export const RegisterController = async (req: hapi.Request, response: hapi.Respo
         const registerPromise: any = new Promise(async (resolve, reject) => {
             const { error, value } = registerSchema.validate(Data)
             if (error) {
-                console.log(error.details[0].message)
                 resolve(error.details[0].message)
             }
             else {
@@ -21,7 +21,6 @@ export const RegisterController = async (req: hapi.Request, response: hapi.Respo
                     .input('email', VarChar(30), value.email)
                     .execute('email_Check')
                 if (emailcheck.recordset[0]) {
-                    console.log(emailcheck.recordset[0])
                     resolve('User Already exist')
                 }
                 else {
@@ -36,9 +35,19 @@ export const RegisterController = async (req: hapi.Request, response: hapi.Respo
                     if (Data.recordset) {
                         const token = await signAccessToken(Data.recordset[0].id)
                         const refresh = await refreshToken(Data.recordset[0].id)
-                        console.log(token + ' ' + refresh)
+                        const data = Data.recordset[0]
+                        if (token) {
+                            client.set('currUser', JSON.stringify(data))
+                        }
+                        const res = response.response({
+                            token,
+                            refresh,
+                            message: "user added successfully",
+                            data
+                        })
+                        resolve(res)
                     }
-                    resolve('user added successfully')
+
                 }
             }
         })

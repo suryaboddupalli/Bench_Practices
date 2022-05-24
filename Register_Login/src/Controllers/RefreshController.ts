@@ -12,7 +12,8 @@ export const refreshController = async (req: hapi.Request, res: hapi.ResponseToo
             const access_Token = await signAccessToken(userId as string)
             const refresh_Token = await refreshToken(userId as string)
             console.log(access_Token + ' ' + refresh_Token)
-            resolve('Refreshed Successfully')
+            const tokens = res.response({ access_Token, refresh_Token, message: 'Refreshed Successfully' })
+            resolve(tokens)
         })
         return promise
     }

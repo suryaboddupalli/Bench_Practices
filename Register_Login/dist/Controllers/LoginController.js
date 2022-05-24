@@ -19,6 +19,7 @@ const mssql_1 = require("mssql");
 const ValidationSchema_1 = require("../ValidationSchema");
 require('dotenv').config();
 const JwtHelpers_1 = require("../Helpers/JwtHelpers");
+const Redis_1 = require("../Redis");
 const LoginController = (req, response) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const Data = req.payload;
@@ -26,7 +27,6 @@ const LoginController = (req, response) => __awaiter(void 0, void 0, void 0, fun
         const loginpromise = new Promise((resolve, reject) => __awaiter(void 0, void 0, void 0, function* () {
             const { error, value } = ValidationSchema_1.loginSchema.validate(Data);
             if (error) {
-                console.log(error.details[0].message);
                 resolve(error.details[0].message);
             }
             else {
@@ -34,17 +34,21 @@ const LoginController = (req, response) => __awaiter(void 0, void 0, void 0, fun
                     .input('email', (0, mssql_1.VarChar)(30), value.email)
                     .execute('email_Check');
                 if (emailcheck.recordset[0]) {
-                    console.log(emailcheck.recordset[0]);
                     const pass = yield bcryptjs_1.default.compare(value.password, emailcheck.recordset[0].password);
-                    console.log(pass);
                     if (pass) {
                         const token = yield (0, JwtHelpers_1.signAccessToken)(emailcheck.recordset[0].id);
                         const refresh = yield (0, JwtHelpers_1.refreshToken)(emailcheck.recordset[0].id);
-                        console.log(token, 'REFRESH' + '' + refresh);
+                        const data = emailcheck.recordset[0];
                         if (token) {
-                            console.log(emailcheck.recordset[0]);
+                            Redis_1.client.set('currUser', JSON.stringify(data));
                         }
-                        resolve('login successfull');
+                        const res = response.response({
+                            token,
+                            refresh,
+                            message: "User Logged In Successfully",
+                            data
+                        });
+                        resolve(res);
                     }
                 }
                 else {

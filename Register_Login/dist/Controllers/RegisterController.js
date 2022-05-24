@@ -18,6 +18,7 @@ const database_1 = require("../database");
 const mssql_1 = require("mssql");
 const ValidationSchema_1 = require("../ValidationSchema");
 const JwtHelpers_1 = require("../Helpers/JwtHelpers");
+const Redis_1 = require("../Redis");
 const RegisterController = (req, response) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const Data = req.payload;
@@ -25,7 +26,6 @@ const RegisterController = (req, response) => __awaiter(void 0, void 0, void 0, 
         const registerPromise = new Promise((resolve, reject) => __awaiter(void 0, void 0, void 0, function* () {
             const { error, value } = ValidationSchema_1.registerSchema.validate(Data);
             if (error) {
-                console.log(error.details[0].message);
                 resolve(error.details[0].message);
             }
             else {
@@ -33,7 +33,6 @@ const RegisterController = (req, response) => __awaiter(void 0, void 0, void 0, 
                     .input('email', (0, mssql_1.VarChar)(30), value.email)
                     .execute('email_Check');
                 if (emailcheck.recordset[0]) {
-                    console.log(emailcheck.recordset[0]);
                     resolve('User Already exist');
                 }
                 else {
@@ -48,9 +47,18 @@ const RegisterController = (req, response) => __awaiter(void 0, void 0, void 0, 
                     if (Data.recordset) {
                         const token = yield (0, JwtHelpers_1.signAccessToken)(Data.recordset[0].id);
                         const refresh = yield (0, JwtHelpers_1.refreshToken)(Data.recordset[0].id);
-                        console.log(token + ' ' + refresh);
+                        const data = Data.recordset[0];
+                        if (token) {
+                            Redis_1.client.set('currUser', JSON.stringify(data));
+                        }
+                        const res = response.response({
+                            token,
+                            refresh,
+                            message: "user added successfully",
+                            data
+                        });
+                        resolve(res);
                     }
-                    resolve('user added successfully');
                 }
             }
         }));

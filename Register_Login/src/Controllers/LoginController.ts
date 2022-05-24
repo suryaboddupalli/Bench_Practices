@@ -5,6 +5,7 @@ import { VarChar } from 'mssql'
 import { loginSchema } from '../ValidationSchema'
 require('dotenv').config()
 import { signAccessToken, refreshToken } from '../Helpers/JwtHelpers'
+import { client } from "../Redis"
 
 
 export const LoginController = async (req: hapi.Request, response: hapi.ResponseToolkit) => {
@@ -14,7 +15,6 @@ export const LoginController = async (req: hapi.Request, response: hapi.Response
         const loginpromise: any = new Promise(async (resolve, reject) => {
             const { error, value } = loginSchema.validate(Data)
             if (error) {
-                console.log(error.details[0].message)
                 resolve(error.details[0].message)
             }
             else {
@@ -22,17 +22,21 @@ export const LoginController = async (req: hapi.Request, response: hapi.Response
                     .input('email', VarChar(30), value.email)
                     .execute('email_Check')
                 if (emailcheck.recordset[0]) {
-                    console.log(emailcheck.recordset[0])
                     const pass = await bcrypt.compare(value.password, emailcheck.recordset[0].password)
-                    console.log(pass)
                     if (pass) {
                         const token = await signAccessToken(emailcheck.recordset[0].id)
                         const refresh = await refreshToken(emailcheck.recordset[0].id)
-                        console.log(token, 'REFRESH' + '' + refresh)
+                        const data = emailcheck.recordset[0]
                         if (token) {
-                            console.log(emailcheck.recordset[0])
+                            client.set('currUser', JSON.stringify(data))
                         }
-                        resolve('login successfull')
+                        const res = response.response({
+                            token,
+                            refresh,
+                            message: "User Logged In Successfully",
+                            data
+                        })
+                        resolve(res)
                     }
                 }
                 else {

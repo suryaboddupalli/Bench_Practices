@@ -62,7 +62,7 @@ export var newconfig = convict({
         host: {
             doc: 'redis_host',
             format: String,
-            default: 'local'
+            default: 'localhost'
         }
     },
     Jwt: {
