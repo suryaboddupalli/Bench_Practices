@@ -1,0 +1,18 @@
+{
+  "name": "CalSoap",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon ./src/server.ts",
+    "start": "node ./dist/server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/node": "^17.0.35",
+    "http": "0.0.1-security",
+    "soap": "^0.43.0"
+  }
+}
