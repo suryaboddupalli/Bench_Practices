@@ -7,7 +7,6 @@ require('dotenv').config()
 import { signAccessToken, refreshToken } from '../Helpers/JwtHelpers'
 import { client } from "../Redis"
 
-
 export const LoginController = async (req: hapi.Request, response: hapi.ResponseToolkit) => {
     try {
         const Data = req.payload
@@ -38,6 +37,7 @@ export const LoginController = async (req: hapi.Request, response: hapi.Response
                         })
                         resolve(res)
                     }
+                    else resolve('Incorrect Password')
                 }
                 else {
                     resolve('User Not Found. Please Do Register..')

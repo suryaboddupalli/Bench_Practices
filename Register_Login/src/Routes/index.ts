@@ -7,7 +7,7 @@ module.exports = [{
     method: 'GET',
     path: '/',
     handler: DataFetchController
-}, {
+},{
     method: 'POST',
     path: '/register',
     handler: RegisterController

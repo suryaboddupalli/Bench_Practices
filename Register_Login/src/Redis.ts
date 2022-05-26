@@ -1,5 +1,6 @@
 const redis = require('ioredis')
-export const client: any = new redis(2001, 'localhost')
+import { newconfig } from './Config/Convict'
+export const client: any = new redis(newconfig._instance.Redis.port, newconfig._instance.Redis.host)
 
 client.on('connect', function () {
     console.log("redis server connected")

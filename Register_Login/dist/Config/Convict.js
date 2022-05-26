@@ -57,7 +57,7 @@ exports.newconfig = convict({
         port: {
             doc: 'redis_port',
             format: Number,
-            default: 2001
+            default: 6379
         },
         host: {
             doc: 'redis_host',

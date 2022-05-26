@@ -50,6 +50,8 @@ const LoginController = (req, response) => __awaiter(void 0, void 0, void 0, fun
                         });
                         resolve(res);
                     }
+                    else
+                        resolve('Incorrect Password');
                 }
                 else {
                     resolve('User Not Found. Please Do Register..');

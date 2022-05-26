@@ -7,7 +7,7 @@ import { signAccessToken, refreshToken } from '../Helpers/JwtHelpers'
 import { client } from '../Redis'
 
 
-export const RegisterController = async (req: hapi.Request, response: hapi.ResponseToolkit) => {
+export const RegisterController = async (req: hapi.Request, res: hapi.ResponseToolkit) => {
     try {
         const Data = req.payload
         const server = await pool.connect()
@@ -17,42 +17,39 @@ export const RegisterController = async (req: hapi.Request, response: hapi.Respo
                 resolve(error.details[0].message)
             }
             else {
-                const emailcheck = await server.request()
+                const hashedPassword = await bcrypt.hash(value.password, 10)
+                const user = await server.request()
+                    .input('firstname', VarChar(30), value.firstname)
+                    .input('lastname', VarChar(30), value.lastname)
                     .input('email', VarChar(30), value.email)
-                    .execute('email_Check')
-                if (emailcheck.recordset[0]) {
+                    .input('mobile', value.mobile)
+                    .input('password', hashedPassword)
+                    .output('response', VarChar(500))
+                    .execute('userData')
+                console.log(user)
+                if (user.output.response === "fail") {
                     resolve('User Already exist')
                 }
                 else {
-                    const hashedPassword = await bcrypt.hash(value.password, 10)
-                    const Data = await server.request()
-                        .input('firstname', VarChar(30), value.firstname)
-                        .input('lastname', VarChar(30), value.lastname)
-                        .input('email', VarChar(30), value.email)
-                        .input('mobile', value.mobile)
-                        .input('password', hashedPassword)
-                        .execute('register')
-                    if (Data.recordset) {
-                        const token = await signAccessToken(Data.recordset[0].id)
-                        const refresh = await refreshToken(Data.recordset[0].id)
-                        const data = Data.recordset[0]
-                        if (token) {
-                            client.set('currUser', JSON.stringify(data))
-                        }
-                        const res = response.response({
-                            token,
-                            refresh,
-                            message: "user added successfully",
-                            data
-                        })
-                        resolve(res)
+                    const token = await signAccessToken(user.recordset[0].id)
+                    const refresh = await refreshToken(user.recordset[0].id)
+                    if (token) {
+                        client.set('currUser', JSON.stringify(user))
                     }
-
+                    const userData = user.recordset[0]
+                    const response = res.response({
+                        token,
+                        refresh,
+                        message: "user added successfully",
+                        userData
+                    })
+                    resolve(response)
                 }
             }
         })
         return registerPromise
-    } catch (err) {
+    }
+    catch (err) {
         console.log(err)
     }
 }

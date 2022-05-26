@@ -12,14 +12,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.RegisterController = void 0;
+exports.reg = void 0;
 const bcryptjs_1 = __importDefault(require("bcryptjs"));
 const database_1 = require("../database");
 const mssql_1 = require("mssql");
 const ValidationSchema_1 = require("../ValidationSchema");
 const JwtHelpers_1 = require("../Helpers/JwtHelpers");
 const Redis_1 = require("../Redis");
-const RegisterController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const reg = (req, response) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const Data = req.payload;
         const server = yield database_1.pool.connect();
@@ -29,33 +29,36 @@ const RegisterController = (req, res) => __awaiter(void 0, void 0, void 0, funct
                 resolve(error.details[0].message);
             }
             else {
-                const hashedPassword = yield bcryptjs_1.default.hash(value.password, 10);
-                const user = yield server.request()
-                    .input('firstname', (0, mssql_1.VarChar)(30), value.firstname)
-                    .input('lastname', (0, mssql_1.VarChar)(30), value.lastname)
+                const emailcheck = yield server.request()
                     .input('email', (0, mssql_1.VarChar)(30), value.email)
-                    .input('mobile', value.mobile)
-                    .input('password', hashedPassword)
-                    .output('response', (0, mssql_1.VarChar)(500))
-                    .execute('userData');
-                console.log(user);
-                if (user.output.response === "fail") {
+                    .execute('email_Check');
+                if (emailcheck.recordset[0]) {
                     resolve('User Already exist');
                 }
                 else {
-                    const token = yield (0, JwtHelpers_1.signAccessToken)(user.recordset[0].id);
-                    const refresh = yield (0, JwtHelpers_1.refreshToken)(user.recordset[0].id);
-                    if (token) {
-                        Redis_1.client.set('currUser', JSON.stringify(user));
+                    const hashedPassword = yield bcryptjs_1.default.hash(value.password, 10);
+                    const Data = yield server.request()
+                        .input('firstname', (0, mssql_1.VarChar)(30), value.firstname)
+                        .input('lastname', (0, mssql_1.VarChar)(30), value.lastname)
+                        .input('email', (0, mssql_1.VarChar)(30), value.email)
+                        .input('mobile', value.mobile)
+                        .input('password', hashedPassword)
+                        .execute('register');
+                    if (Data.recordset) {
+                        const token = yield (0, JwtHelpers_1.signAccessToken)(Data.recordset[0].id);
+                        const refresh = yield (0, JwtHelpers_1.refreshToken)(Data.recordset[0].id);
+                        const data = Data.recordset[0];
+                        if (token) {
+                            Redis_1.client.set('currUser', JSON.stringify(data));
+                        }
+                        const res = response.response({
+                            token,
+                            refresh,
+                            message: "user added successfully",
+                            data
+                        });
+                        resolve(res);
                     }
-                    const userData = user.recordset[0];
-                    const response = res.response({
-                        token,
-                        refresh,
-                        message: "user added successfully",
-                        userData
-                    });
-                    resolve(response);
                 }
             }
         }));
@@ -65,4 +68,4 @@ const RegisterController = (req, res) => __awaiter(void 0, void 0, void 0, funct
         console.log(err);
     }
 });
-exports.RegisterController = RegisterController;
+exports.reg = reg;
