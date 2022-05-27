@@ -5,6 +5,7 @@ import { VarChar } from 'mssql'
 import { registerSchema } from '../ValidationSchema'
 import { signAccessToken, refreshToken } from '../Helpers/JwtHelpers'
 import { client } from '../Redis'
+import { SUCCESS, BAD_REQUEST, INTERNAL_SERVER_ERROR } from '../Constants/http'
 
 
 export const RegisterController = async (req: hapi.Request, res: hapi.ResponseToolkit) => {
@@ -14,7 +15,8 @@ export const RegisterController = async (req: hapi.Request, res: hapi.ResponseTo
         const registerPromise: any = new Promise(async (resolve, reject) => {
             const { error, value } = registerSchema.validate(Data)
             if (error) {
-                resolve(error.details[0].message)
+                const response = res.response(error.details[0].message).code(BAD_REQUEST)
+                resolve(response)
             }
             else {
                 const hashedPassword = await bcrypt.hash(value.password, 10)
@@ -26,9 +28,9 @@ export const RegisterController = async (req: hapi.Request, res: hapi.ResponseTo
                     .input('password', hashedPassword)
                     .output('response', VarChar(500))
                     .execute('userData')
-                console.log(user)
                 if (user.output.response === "fail") {
-                    resolve('User Already exist')
+                    const response = res.response('User Already exist').code(BAD_REQUEST)
+                    resolve(response)
                 }
                 else {
                     const token = await signAccessToken(user.recordset[0].id)
@@ -42,7 +44,7 @@ export const RegisterController = async (req: hapi.Request, res: hapi.ResponseTo
                         refresh,
                         message: "user added successfully",
                         userData
-                    })
+                    }).code(SUCCESS)
                     resolve(response)
                 }
             }
@@ -50,6 +52,7 @@ export const RegisterController = async (req: hapi.Request, res: hapi.ResponseTo
         return registerPromise
     }
     catch (err) {
-        console.log(err)
+        res.response({ err }).code(INTERNAL_SERVER_ERROR)
+
     }
 }

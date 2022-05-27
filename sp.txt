@@ -1,0 +1,55 @@
+		login
+.-----------------======-------------------
+create procedure emailCheck 
+(
+@email nvarchar(100)
+)
+as 
+begin
+select * from users where email= @email
+end
+
+
+
+----------------------------------------------
+		Register 
+-------------------------------------------------
+create procedure register
+(@firstname varchar(100),
+@lastname varchar(100),
+@email nvarchar(100),
+@mobile bigint,
+@password varchar(100)
+)
+as
+begin
+insert into users
+Output inserted.id,@firstname as firstname,@lastname as lastname,@email as email,@mobile as mobile,@password as password 
+values(@firstname,@lastname,@email,@mobile,@password)
+end
+
+----------------------------------------------------
+=========================================================
+alter PROCEDURE userData 
+(
+@firstname varchar(50) ,
+@lastname varchar(50),
+@email nvarchar(100),
+@mobile bigint,
+@password varchar(100),
+@response varchar(50) output
+)
+as 
+begin
+  if exists (select * from users where email=@email)
+    begin
+      set @response ='fail'
+    end
+  else
+   begin
+     insert into users 
+     Output Inserted.id, @firstname as firstname,@lastname as lastname,@email as email,@mobile as mobile,@password as password
+     values (@firstname,@lastname,@email,@mobile,@password)
+      set @response='success'
+    end
+ end

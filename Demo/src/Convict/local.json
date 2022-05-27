@@ -1,0 +1,11 @@
+{
+    "env": "local",
+    "db": {
+        "server": "ASPIRENAV567\\SQLEXPRESS",
+        "port": 1433,
+        "database": "usersdb",
+        "user": "sa",
+        "password": "Admin@12345",
+        "driver": "tedious"
+    }
+}

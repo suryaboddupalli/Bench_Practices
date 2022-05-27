@@ -2,6 +2,7 @@ import hapi from '@hapi/hapi'
 import { pool } from '../database'
 import jwt from 'jsonwebtoken'
 import { newconfig } from '../Config/Convict'
+import { SUCCESS, BAD_REQUEST, INTERNAL_SERVER_ERROR } from '../Constants/http'
 
 
 export const DataFetchController = async (req: hapi.Request, res: hapi.ResponseToolkit) => {
@@ -13,13 +14,13 @@ export const DataFetchController = async (req: hapi.Request, res: hapi.ResponseT
         const promise: any = new Promise((resolve, reject) => {
             jwt.verify(token, newconfig._instance.Jwt.accessSecret, (err: any, val: any) => {
                 if (err) {
-                    resolve(err)
+                    const response = res.response("invalid token").code(BAD_REQUEST)
+                    resolve(response)
                 }
                 else {
                     if (data) {
-                        resolve(data.recordset)
-                    } else {
-                        reject('error')
+                        const response = res.response(data.recordset).code(SUCCESS)
+                        resolve(response)
                     }
                 }
             })
@@ -27,6 +28,6 @@ export const DataFetchController = async (req: hapi.Request, res: hapi.ResponseT
         return promise
     }
     catch (err) {
-        console.log(err)
+        res.response({ err }).code(INTERNAL_SERVER_ERROR)
     }
 }

@@ -6,15 +6,18 @@ import { loginSchema } from '../ValidationSchema'
 require('dotenv').config()
 import { signAccessToken, refreshToken } from '../Helpers/JwtHelpers'
 import { client } from "../Redis"
+import { SUCCESS, BAD_REQUEST, INTERNAL_SERVER_ERROR } from '../Constants/http'
 
-export const LoginController = async (req: hapi.Request, response: hapi.ResponseToolkit) => {
+
+export const LoginController = async (req: hapi.Request, res: hapi.ResponseToolkit) => {
     try {
         const Data = req.payload
         const server = await pool.connect()
         const loginpromise: any = new Promise(async (resolve, reject) => {
             const { error, value } = loginSchema.validate(Data)
             if (error) {
-                resolve(error.details[0].message)
+                const response = res.response(error.details[0].message).code(BAD_REQUEST)
+                resolve(response)
             }
             else {
                 const emailcheck = await server.request()
@@ -29,23 +32,27 @@ export const LoginController = async (req: hapi.Request, response: hapi.Response
                         if (token) {
                             client.set('currUser', JSON.stringify(data))
                         }
-                        const res = response.response({
+                        const response = res.response({
                             token,
                             refresh,
                             message: "User Logged In Successfully",
                             data
-                        })
-                        resolve(res)
+                        }).code(SUCCESS)
+                        resolve(response)
                     }
-                    else resolve('Incorrect Password')
+                    else {
+                        const response = res.response('Incorrect Password').code(BAD_REQUEST)
+                        resolve(response)
+                    }
                 }
                 else {
-                    resolve('User Not Found. Please Do Register..')
+                    const response = res.response('User Not Found. Please Do Register..').code(BAD_REQUEST)
+                    resolve(response)
                 }
             }
         })
         return loginpromise
     } catch (err) {
-        console.log(err)
+        res.response({ err }).code(INTERNAL_SERVER_ERROR)
     }
 }

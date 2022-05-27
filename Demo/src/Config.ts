@@ -1,27 +1,38 @@
-require('dotenv').config()
+// require('dotenv').config()
 
-interface ConfigData {
-    user: string|undefined;
-    password: string|undefined;
-    server: string|undefined;
-    database: string|undefined;
-    port: number;
-    options: {
-        trustServerCertificate: boolean;
-    };
-}
+// interface ConfigData {
+//     user: string|undefined;
+//     password: string|undefined;
+//     server: string|undefined;
+//     database: string|undefined;
+//     port: number;
+//     options: {
+//         trustServerCertificate: boolean;
+//     };
+// }
 
-export const Config:ConfigData = {
-    user: process.env.USERNAME,
-    password: process.env.PASSWORD,
-    server: process.env.SERVER,
-    database: process.env.DATABASE,
+// export const Config:ConfigData = {
+//     user: process.env.USERNAME,
+//     password: process.env.PASSWORD,
+//     server: process.env.SERVER,
+//     database: process.env.DATABASE,
+//     port: 1433,
+//     // driver: 'tedious',
+//     options: {
+//         trustServerCertificate: true
+//     }
+// }
+
+export const Config = {
+    user: 'sa',
+    password: 'Admin@12345',
+    server: 'ASPIRENAV567\\SQLEXPRESS',
+    database: 'usersdb',
     port: 1433,
-    // driver: 'tedious',
+    driver: 'tedious',
     options: {
         trustServerCertificate: true
     }
-}
-
+};
 
 

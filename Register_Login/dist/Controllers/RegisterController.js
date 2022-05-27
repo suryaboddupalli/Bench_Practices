@@ -19,6 +19,7 @@ const mssql_1 = require("mssql");
 const ValidationSchema_1 = require("../ValidationSchema");
 const JwtHelpers_1 = require("../Helpers/JwtHelpers");
 const Redis_1 = require("../Redis");
+const http_1 = require("../Constants/http");
 const RegisterController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const Data = req.payload;
@@ -26,7 +27,8 @@ const RegisterController = (req, res) => __awaiter(void 0, void 0, void 0, funct
         const registerPromise = new Promise((resolve, reject) => __awaiter(void 0, void 0, void 0, function* () {
             const { error, value } = ValidationSchema_1.registerSchema.validate(Data);
             if (error) {
-                resolve(error.details[0].message);
+                const response = res.response(error.details[0].message).code(http_1.BAD_REQUEST);
+                resolve(response);
             }
             else {
                 const hashedPassword = yield bcryptjs_1.default.hash(value.password, 10);
@@ -38,9 +40,9 @@ const RegisterController = (req, res) => __awaiter(void 0, void 0, void 0, funct
                     .input('password', hashedPassword)
                     .output('response', (0, mssql_1.VarChar)(500))
                     .execute('userData');
-                console.log(user);
                 if (user.output.response === "fail") {
-                    resolve('User Already exist');
+                    const response = res.response('User Already exist').code(http_1.BAD_REQUEST);
+                    resolve(response);
                 }
                 else {
                     const token = yield (0, JwtHelpers_1.signAccessToken)(user.recordset[0].id);
@@ -54,7 +56,7 @@ const RegisterController = (req, res) => __awaiter(void 0, void 0, void 0, funct
                         refresh,
                         message: "user added successfully",
                         userData
-                    });
+                    }).code(http_1.SUCCESS);
                     resolve(response);
                 }
             }
@@ -62,7 +64,7 @@ const RegisterController = (req, res) => __awaiter(void 0, void 0, void 0, funct
         return registerPromise;
     }
     catch (err) {
-        console.log(err);
+        res.response({ err }).code(http_1.INTERNAL_SERVER_ERROR);
     }
 });
 exports.RegisterController = RegisterController;

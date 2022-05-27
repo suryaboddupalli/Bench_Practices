@@ -20,14 +20,16 @@ const ValidationSchema_1 = require("../ValidationSchema");
 require('dotenv').config();
 const JwtHelpers_1 = require("../Helpers/JwtHelpers");
 const Redis_1 = require("../Redis");
-const LoginController = (req, response) => __awaiter(void 0, void 0, void 0, function* () {
+const http_1 = require("../Constants/http");
+const LoginController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const Data = req.payload;
         const server = yield database_1.pool.connect();
         const loginpromise = new Promise((resolve, reject) => __awaiter(void 0, void 0, void 0, function* () {
             const { error, value } = ValidationSchema_1.loginSchema.validate(Data);
             if (error) {
-                resolve(error.details[0].message);
+                const response = res.response(error.details[0].message).code(http_1.BAD_REQUEST);
+                resolve(response);
             }
             else {
                 const emailcheck = yield server.request()
@@ -42,26 +44,29 @@ const LoginController = (req, response) => __awaiter(void 0, void 0, void 0, fun
                         if (token) {
                             Redis_1.client.set('currUser', JSON.stringify(data));
                         }
-                        const res = response.response({
+                        const response = res.response({
                             token,
                             refresh,
                             message: "User Logged In Successfully",
                             data
-                        });
-                        resolve(res);
+                        }).code(http_1.SUCCESS);
+                        resolve(response);
                     }
-                    else
-                        resolve('Incorrect Password');
+                    else {
+                        const response = res.response('Incorrect Password').code(http_1.BAD_REQUEST);
+                        resolve(response);
+                    }
                 }
                 else {
-                    resolve('User Not Found. Please Do Register..');
+                    const response = res.response('User Not Found. Please Do Register..').code(http_1.BAD_REQUEST);
+                    resolve(response);
                 }
             }
         }));
         return loginpromise;
     }
     catch (err) {
-        console.log(err);
+        res.response({ err }).code(http_1.INTERNAL_SERVER_ERROR);
     }
 });
 exports.LoginController = LoginController;

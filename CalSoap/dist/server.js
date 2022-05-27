@@ -4,13 +4,13 @@ var http = require('http');
 var wsdl_path = "/wsdl";
 var port = 5000;
 var myService = {
-    Calculator: {
-        CalculatorHttpsSoap11Endpoint: {
+    services: {
+        CalculatorService: {
             add: function (args, callback) {
                 console.log(args);
                 callback({
-                    n1: args.n1,
-                    n2: args.n2
+                    a: args.a,
+                    b: args.b
                 });
             }
         }
