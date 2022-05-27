@@ -1,12 +1,10 @@
 import Hapi from '@hapi/hapi'
-require('dotenv').config()
-const Routes = require('./Routes')
-import { newconfig } from './Config/Convict'
+import { Routes } from './Routes/index'
+import { Config } from './Config/Convict'
 
-export const server: Hapi.Server = Hapi.server({
-    port: newconfig._instance.Hapi.port,
-    host: newconfig._instance.Hapi.host
-})
+const HapiConfig = Config.get('Hapi')
+
+export const server: Hapi.Server = Hapi.server(HapiConfig)
 
 server.start()
     .then((res) => {

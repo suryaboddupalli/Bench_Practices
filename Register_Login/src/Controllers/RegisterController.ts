@@ -2,7 +2,7 @@ import hapi from '@hapi/hapi'
 import bcrypt from 'bcryptjs'
 import { pool } from '../database'
 import { VarChar } from 'mssql'
-import { registerSchema } from '../ValidationSchema'
+import { RegisterSchema } from '../ValidationSchema'
 import { signAccessToken, refreshToken } from '../Helpers/JwtHelpers'
 import { client } from '../Redis'
 import { SUCCESS, BAD_REQUEST, INTERNAL_SERVER_ERROR } from '../Constants/http'
@@ -13,7 +13,7 @@ export const RegisterController = async (req: hapi.Request, res: hapi.ResponseTo
         const Data = req.payload
         const server = await pool.connect()
         const registerPromise: any = new Promise(async (resolve, reject) => {
-            const { error, value } = registerSchema.validate(Data)
+            const { error, value } = RegisterSchema.validate(Data)
             if (error) {
                 const response = res.response(error.details[0].message).code(BAD_REQUEST)
                 resolve(response)

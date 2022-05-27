@@ -1,43 +1,31 @@
 import jwt from 'jsonwebtoken'
-import { user } from '../Interfaces/index'
-import { newconfig } from '../Config/Convict'
+import { Config } from '../Config/Convict'
+
+const JwtConfig = Config.get('Jwt')
 
 export const signAccessToken = (userId: string) => {
-    return new Promise((resolve, reject) => {
-        const payload = {
-            name: userId
-        }
-        const options = {
-            expiresIn: '10m'
-        }
-        jwt.sign(payload, newconfig._instance.Jwt.accessSecret, options, (err, val) => {
-            if (err) reject(err)
-            resolve(val)
-        })
-    })
+    const payload = {
+        name: userId
+    }
+    const options = {
+        expiresIn: '10m'
+    }
+    const token = jwt.sign(payload, JwtConfig.accessSecret, options)
+    return token
 }
 
 export const refreshToken = (userId: string) => {
-    return new Promise((resolve, reject) => {
-        const payload = {
-            name: userId
-        }
-        const options = {
-            expiresIn: '1y'
-        }
-        jwt.sign(payload, newconfig._instance.Jwt.refreshSecret, options, (err, val) => {
-            if (err) reject(err)
-            resolve(val)
-        })
-    })
+    const payload = {
+        name: userId
+    }
+    const options = {
+        expiresIn: '1y'
+    }
+    const token = jwt.sign(payload, JwtConfig.refreshSecret, options)
+    return token
 }
 
 export const verifyRefreshToken = (refreshToken: any) => {
-    return new Promise((resolve, reject) => {
-        jwt.verify(refreshToken, newconfig._instance.Jwt.refreshSecret, (err: any, val: any) => {
-            if (err) return resolve('err' + err)
-            const userId: user = val
-            resolve(userId.name)
-        })
-    })
+    const token = jwt.verify(refreshToken, JwtConfig.refreshSecret)
+    return token
 }

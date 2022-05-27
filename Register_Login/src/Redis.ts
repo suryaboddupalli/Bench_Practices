@@ -1,6 +1,9 @@
-const redis = require('ioredis')
-import { newconfig } from './Config/Convict'
-export const client: any = new redis(newconfig._instance.Redis.port, newconfig._instance.Redis.host)
+import redis from 'ioredis'
+import { Config } from './Config/Convict'
+
+const RedisConfig = Config.get('Redis')
+
+export const client: any = new redis(RedisConfig.port, RedisConfig.host)
 
 client.on('connect', function () {
     console.log("redis server connected")

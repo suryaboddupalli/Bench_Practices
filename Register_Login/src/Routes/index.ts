@@ -1,9 +1,11 @@
-import { RegisterController } from '../Controllers/RegisterController'
-import { DataFetchController } from '../Controllers/DataFetchController'
-import { LoginController } from '../Controllers/LoginController'
-import { RefreshController } from '../Controllers/RefreshController'
+import {
+    RegisterController,
+    DataFetchController,
+    LoginController,
+    RefreshController
+} from '../Controllers/UserControllers'
 
-module.exports = [{
+export const Routes = [{
     method: 'GET',
     path: '/',
     handler: DataFetchController

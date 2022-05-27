@@ -26,7 +26,7 @@ const LoginController = (req, res) => __awaiter(void 0, void 0, void 0, function
         const Data = req.payload;
         const server = yield database_1.pool.connect();
         const loginpromise = new Promise((resolve, reject) => __awaiter(void 0, void 0, void 0, function* () {
-            const { error, value } = ValidationSchema_1.loginSchema.validate(Data);
+            const { error, value } = ValidationSchema_1.LoginSchema.validate(Data);
             if (error) {
                 const response = res.response(error.details[0].message).code(http_1.BAD_REQUEST);
                 resolve(response);

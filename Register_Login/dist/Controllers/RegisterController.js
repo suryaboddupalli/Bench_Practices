@@ -25,7 +25,7 @@ const RegisterController = (req, res) => __awaiter(void 0, void 0, void 0, funct
         const Data = req.payload;
         const server = yield database_1.pool.connect();
         const registerPromise = new Promise((resolve, reject) => __awaiter(void 0, void 0, void 0, function* () {
-            const { error, value } = ValidationSchema_1.registerSchema.validate(Data);
+            const { error, value } = ValidationSchema_1.RegisterSchema.validate(Data);
             if (error) {
                 const response = res.response(error.details[0].message).code(http_1.BAD_REQUEST);
                 resolve(response);

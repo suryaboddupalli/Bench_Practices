@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.newconfig = void 0;
+exports.Config = void 0;
 const convict = require('convict');
-exports.newconfig = convict({
+exports.Config = convict({
     env: {
         doc: 'environment',
         format: ['production', 'local', 'test'],
@@ -90,6 +90,6 @@ exports.newconfig = convict({
         }
     }
 });
-var env = exports.newconfig.get('env');
-exports.newconfig.loadFile(`./src/Config/${env}.json`);
-exports.newconfig.validate({ allowed: 'strict' });
+var env = exports.Config.get('env');
+exports.Config.loadFile(`./src/Config/${env}.json`);
+exports.Config.validate({ allowed: 'strict' });

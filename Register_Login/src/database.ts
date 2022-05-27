@@ -1,5 +1,5 @@
 import sql from 'mssql'
-import { newconfig } from "./Config/Convict"
+import { Config } from "./Config/Convict"
 
-export const pool = new sql.ConnectionPool(newconfig._instance.db)
+export const pool = new sql.ConnectionPool(Config.get('db'))
 

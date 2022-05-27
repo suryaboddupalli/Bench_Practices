@@ -1,6 +1,6 @@
 const convict = require('convict')
 
-export var newconfig = convict({
+export const Config = convict({
     env: {
         doc: 'environment',
         format: ['production', 'local', 'test'],
@@ -91,8 +91,8 @@ export var newconfig = convict({
     }
 });
 
-var env = newconfig.get('env')
+var env = Config.get('env')
 
-newconfig.loadFile(`./src/Config/${env}.json`)
+Config.loadFile(`./src/Config/${env}.json`)
 
-newconfig.validate({ allowed: 'strict' })
+Config.validate({ allowed: 'strict' })

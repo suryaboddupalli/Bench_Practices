@@ -2,7 +2,7 @@ import hapi from '@hapi/hapi'
 import bcrypt from 'bcryptjs'
 import { pool } from '../database'
 import { VarChar } from 'mssql'
-import { loginSchema } from '../ValidationSchema'
+import { LoginSchema } from '../ValidationSchema'
 require('dotenv').config()
 import { signAccessToken, refreshToken } from '../Helpers/JwtHelpers'
 import { client } from "../Redis"
@@ -14,7 +14,7 @@ export const LoginController = async (req: hapi.Request, res: hapi.ResponseToolk
         const Data = req.payload
         const server = await pool.connect()
         const loginpromise: any = new Promise(async (resolve, reject) => {
-            const { error, value } = loginSchema.validate(Data)
+            const { error, value } = LoginSchema.validate(Data)
             if (error) {
                 const response = res.response(error.details[0].message).code(BAD_REQUEST)
                 resolve(response)
