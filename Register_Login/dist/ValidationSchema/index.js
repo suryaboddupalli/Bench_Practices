@@ -9,7 +9,7 @@ exports.RegisterSchema = joi_1.default.object({
     firstname: joi_1.default.string().min(3).required(),
     lastname: joi_1.default.string().min(3).required(),
     email: joi_1.default.string().email().required(),
-    mobile: joi_1.default.number().min(10).max(12),
+    mobile: joi_1.default.number().min(10).max(10),
     password: joi_1.default.string().min(6).required(),
     conformPassword: joi_1.default.ref('password')
 });

@@ -1,24 +1,21 @@
-import { LoginController } from '../Controllers/UserControllers/LoginController'
-import { RegisterController } from '../Controllers/UserControllers/RegisterController'
-import { RefreshController } from '../Controllers/UserControllers/RefreshController'
-import { UserDataController } from '../Controllers/UserControllers/UserDataController'
+import {Users} from '../Controllers/UserController'
 
 
 export const Routes = [{
     method: 'GET',
     path: '/',
-    handler: UserDataController
+    handler: Users.GetUser
 }, {
     method: 'POST',
     path: '/register',
-    handler: RegisterController
+    handler: Users.Register
 },
 {
     method: 'POST',
     path: '/login',
-    handler: LoginController
+    handler: Users.Login
 }, {
     method: 'POST',
     path: '/refresh-token',
-    handler: RefreshController
+    handler: Users.Refresh
 }]
