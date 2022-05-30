@@ -1,12 +1,10 @@
 import hapi from '@hapi/hapi'
 import bcrypt from 'bcryptjs'
-import { pool } from '../database'
-import { VarChar } from 'mssql'
-import { LoginSchema } from '../ValidationSchema'
-require('dotenv').config()
-import { signAccessToken, refreshToken } from '../Helpers/JwtHelpers'
-import { client } from "../Redis"
-import { SUCCESS, BAD_REQUEST, INTERNAL_SERVER_ERROR } from '../Constants/http'
+import { pool } from '../../database'
+import { LoginSchema } from '../../ValidationSchema'
+import { signAccessToken, refreshToken } from '../../Helpers/JwtHelpers'
+import { client } from "../../Redis"
+import { SUCCESS, BAD_REQUEST, INTERNAL_SERVER_ERROR } from '../../Constants/http'
 
 
 export const LoginController = async (req: hapi.Request, res: hapi.ResponseToolkit) => {
@@ -20,21 +18,19 @@ export const LoginController = async (req: hapi.Request, res: hapi.ResponseToolk
                 resolve(response)
             }
             else {
-                const emailcheck = await server.request()
-                    .input('email', VarChar(30), value.email)
-                    .execute('email_Check')
+                const emailcheck = await server.query("exec email_Check  @email='" + value.email + "'")
                 if (emailcheck.recordset[0]) {
                     const pass = await bcrypt.compare(value.password, emailcheck.recordset[0].password)
                     if (pass) {
-                        const token = await signAccessToken(emailcheck.recordset[0].id)
-                        const refresh = await refreshToken(emailcheck.recordset[0].id)
+                        const Access_Token = await signAccessToken(emailcheck.recordset[0].id)
+                        const Refresh_Token = await refreshToken(emailcheck.recordset[0].id)
                         const data = emailcheck.recordset[0]
-                        if (token) {
+                        if (Access_Token) {
                             client.set('currUser', JSON.stringify(data))
                         }
                         const response = res.response({
-                            token,
-                            refresh,
+                            Access_Token,
+                            Refresh_Token,
                             message: "User Logged In Successfully",
                             data
                         }).code(SUCCESS)

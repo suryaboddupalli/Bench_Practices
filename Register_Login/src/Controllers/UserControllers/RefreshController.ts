@@ -1,7 +1,7 @@
 import hapi from '@hapi/hapi'
-import { verifyRefreshToken, signAccessToken, refreshToken } from '../Helpers/JwtHelpers'
-import { RToken } from '../Interfaces/index'
-import { SUCCESS, BAD_REQUEST, INTERNAL_SERVER_ERROR } from '../Constants/http'
+import { verifyRefreshToken, signAccessToken, refreshToken } from '../../Helpers/JwtHelpers'
+import { RefreshToken } from '../../Interfaces/index'
+import { SUCCESS, BAD_REQUEST, INTERNAL_SERVER_ERROR } from '../../Constants/http'
 
 
 export const RefreshController = async (req: hapi.Request, res: hapi.ResponseToolkit) => {
@@ -12,15 +12,15 @@ export const RefreshController = async (req: hapi.Request, res: hapi.ResponseToo
                 const response = res.response('Token is Required').code(BAD_REQUEST)
                 resolve(response)
             }
-            const userId = await verifyRefreshToken((Token as RToken).refreshToken)
+            const userId = await verifyRefreshToken((Token as RefreshToken).refreshToken)
             const access_Token = await signAccessToken(userId as string)
             const refresh_Token = await refreshToken(userId as string)
-            const tokens = res.response({
+            const response = res.response({
                 access_Token,
                 refresh_Token,
                 message: 'Refreshed Successfully'
             }).code(SUCCESS)
-            resolve(tokens)
+            resolve(response)
         })
         return promise
     }

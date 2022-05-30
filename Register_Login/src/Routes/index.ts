@@ -1,14 +1,13 @@
-import {
-    RegisterController,
-    DataFetchController,
-    LoginController,
-    RefreshController
-} from '../Controllers/UserControllers'
+import { LoginController } from '../Controllers/UserControllers/LoginController'
+import { RegisterController } from '../Controllers/UserControllers/RegisterController'
+import { RefreshController } from '../Controllers/UserControllers/RefreshController'
+import { UserDataController } from '../Controllers/UserControllers/UserDataController'
+
 
 export const Routes = [{
     method: 'GET',
     path: '/',
-    handler: DataFetchController
+    handler: UserDataController
 }, {
     method: 'POST',
     path: '/register',

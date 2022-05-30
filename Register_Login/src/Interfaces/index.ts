@@ -29,6 +29,6 @@ export interface user{
     exp:number
 }
 
-export interface RToken {
+export interface RefreshToken {
     refreshToken: string
 }

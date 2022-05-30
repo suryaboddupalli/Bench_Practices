@@ -18,18 +18,14 @@ const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const Convict_1 = require("../Config/Convict");
 const http_1 = require("../Constants/http");
 const ValidationSchema_1 = require("../ValidationSchema");
-const bcryptjs_1 = __importDefault(require("bcryptjs"));
 const JwtHelpers_1 = require("../Helpers/JwtHelpers");
-const Redis_1 = require("../Redis");
-const mssql_1 = require("mssql");
-const ValidationSchema_2 = require("../ValidationSchema");
 const JwtConfig = Convict_1.Config.get('Jwt');
 const DataFetchController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const authHeader = req.headers['authorization'];
         const bearerToken = authHeader.split(' ');
         const token = bearerToken[1];
-        const data = yield (yield database_1.pool.connect()).query('select * from users');
+        const data = yield (yield database_1.pool.connect()).request().execute('getData');
         const promise = new Promise((resolve, reject) => {
             jsonwebtoken_1.default.verify(token, JwtConfig.accessSecret, (err, val) => {
                 if (err) {
@@ -62,35 +58,39 @@ const LoginController = (req, res) => __awaiter(void 0, void 0, void 0, function
                 resolve(response);
             }
             else {
-                const emailcheck = yield server.request()
-                    .input('email', value.email)
-                    .execute('email_Check');
-                if (emailcheck.recordset[0]) {
-                    const pass = yield bcryptjs_1.default.compare(value.password, emailcheck.recordset[0].password);
-                    if (pass) {
-                        const token = yield (0, JwtHelpers_1.signAccessToken)(emailcheck.recordset[0].id);
-                        const refresh = yield (0, JwtHelpers_1.refreshToken)(emailcheck.recordset[0].id);
-                        const data = emailcheck.recordset[0];
-                        if (token) {
-                            Redis_1.client.set('currUser', JSON.stringify(data));
-                        }
-                        const response = res.response({
-                            token,
-                            refresh,
-                            message: "User Logged In Successfully",
-                            data
-                        }).code(http_1.SUCCESS);
-                        resolve(response);
+                yield server.query("exec email_Check  @email='" + value.email + "'", (err, recordset) => __awaiter(void 0, void 0, void 0, function* () {
+                    if (err) {
+                        console.log(err.message);
                     }
-                    else {
-                        const response = res.response('Incorrect Password').code(http_1.BAD_REQUEST);
-                        resolve(response);
-                    }
-                }
-                else {
-                    const response = res.response('User Not Found. Please Do Register..').code(http_1.BAD_REQUEST);
-                    resolve(response);
-                }
+                    console.log(recordset);
+                    console.log(recordset[0]);
+                    // if (recordset[0]) {
+                    //     const passwordVerify = await bcrypt.compare(value.password, recordset[0].password)
+                    //     if (passwordVerify) {
+                    //         const accessToken = await signAccessToken(recordset[0].id)
+                    //         const refresh = await refreshToken(recordset[0].id)
+                    //         const data = recordset[0]
+                    //         if (accessToken) {
+                    //             client.set('currUser', JSON.stringify(data))
+                    //         }
+                    //         const response = res.response({
+                    //             accessToken,
+                    //             refresh,
+                    //             message: "User Logged In Successfully",
+                    //             data
+                    //         }).code(SUCCESS)
+                    //         resolve(response)
+                    //     }
+                    //     else {
+                    //         const response = res.response('Incorrect Password').code(BAD_REQUEST)
+                    //         resolve(response)
+                    //     }
+                    // }
+                    // else {
+                    //     const response = res.response('User Not Found. Please Do Register..').code(BAD_REQUEST)
+                    //     resolve(response)
+                    // }
+                }));
             }
         }));
         return loginpromise;
@@ -105,40 +105,45 @@ const RegisterController = (req, res) => __awaiter(void 0, void 0, void 0, funct
         const Data = req.payload;
         const server = yield database_1.pool.connect();
         const registerPromise = new Promise((resolve, reject) => __awaiter(void 0, void 0, void 0, function* () {
-            const { error, value } = ValidationSchema_2.RegisterSchema.validate(Data);
+            const { error, value } = ValidationSchema_1.RegisterSchema.validate(Data);
             if (error) {
-                const response = res.response(error.details[0].message).code(http_1.BAD_REQUEST);
-                resolve(response);
+                resolve(error.details[0].message);
             }
             else {
-                const hashedPassword = yield bcryptjs_1.default.hash(value.password, 10);
-                const user = yield server.request()
-                    .input('firstname', (0, mssql_1.VarChar)(30), value.firstname)
-                    .input('lastname', (0, mssql_1.VarChar)(30), value.lastname)
-                    .input('email', (0, mssql_1.VarChar)(30), value.email)
-                    .input('mobile', value.mobile)
-                    .input('password', hashedPassword)
-                    .output('response', (0, mssql_1.VarChar)(500))
-                    .execute('userData');
-                if (user.output.response === "fail") {
-                    const response = res.response('User Already exist').code(http_1.BAD_REQUEST);
-                    resolve(response);
-                }
-                else {
-                    const token = yield (0, JwtHelpers_1.signAccessToken)(user.recordset[0].id);
-                    const refresh = yield (0, JwtHelpers_1.refreshToken)(user.recordset[0].id);
-                    if (token) {
-                        Redis_1.client.set('currUser', JSON.stringify(user));
+                yield server.query("exec email_Check  @email='" + value.email + "'", (err, recordset) => __awaiter(void 0, void 0, void 0, function* () {
+                    if (err) {
+                        console.log(err.message);
                     }
-                    const userData = user.recordset[0];
-                    const response = res.response({
-                        token,
-                        refresh,
-                        message: "user added successfully",
-                        userData
-                    }).code(http_1.SUCCESS);
-                    resolve(response);
-                }
+                    console.log(recordset[0]);
+                    console.log(recordset);
+                    // if (recordset[0]) {
+                    //     resolve('User Already exist')
+                    // }
+                    // else {
+                    //     const hashedPassword = await bcrypt.hash(value.password, 10)
+                    //     const Data = await server.request()
+                    //         .input('firstname', VarChar(100), value.firstname)
+                    //         .input('lastname', VarChar(100), value.lastname)
+                    //         .input('email', VarChar(100), value.email)
+                    //         .input('mobile', value.mobile)
+                    //         .input('password', hashedPassword)
+                    //         .execute('register')
+                    //     if (Data.recordset) {
+                    //         const token = await signAccessToken(Data.recordset[0].id)
+                    //         const refresh = await refreshToken(Data.recordset[0].id)
+                    //         const data = Data.recordset[0]
+                    //         if (token) {
+                    //             client.set('currUser', JSON.stringify(data))
+                    //         }
+                    //         const response = res.response({
+                    //             token,
+                    //             refresh,
+                    //             message: "user added successfully",
+                    //             data
+                    //         })
+                    //         resolve(response)
+                    //     }
+                }));
             }
         }));
         return registerPromise;
