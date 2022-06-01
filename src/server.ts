@@ -2,6 +2,7 @@ import Hapi from '@hapi/hapi'
 import { routes } from './routes/index'
 import { config } from './convict/config'
 
+
 const hapiConfig = config.get('hapi')
 
 export const server: Hapi.Server = Hapi.server(hapiConfig)
@@ -14,3 +15,4 @@ server.start()
     })
 
 server.route(routes)
+

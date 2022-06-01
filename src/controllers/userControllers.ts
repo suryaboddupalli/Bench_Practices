@@ -5,6 +5,7 @@ import { SUCCESS, BAD_REQUEST, INTERNAL_SERVER_ERROR } from '../constants/index'
 import bcrypt from 'bcryptjs'
 import { accessToken, refreshToken, verifyRefreshToken, verifyAccessToken } from '../plugins/jwtPlugins'
 import { config } from '../convict/config'
+import { cluster } from '../redis'
 
 const salt = config.get('bcrypt')
 
@@ -41,6 +42,9 @@ class userControllers {
                 if (userData.recordset[0]) {
                     const access = accessToken(userData.recordset[0].id)
                     const refresh = refreshToken(userData.recordset[0].id)
+                    if (access) {
+                        cluster.set("currentUser", JSON.stringify(userData.recordset[0]))
+                    }
                     const response = res.response({
                         access,
                         refresh,
@@ -74,6 +78,9 @@ class userControllers {
                     if (passwordCheck) {
                         const access = accessToken(emailCheck.recordset[0].id)
                         const refresh = refreshToken(emailCheck.recordset[0].id)
+                        if (access) {
+                            cluster.set("currentUser", JSON.stringify(emailCheck.recordset[0]))
+                        }
                         const response = res.response({
                             access,
                             refresh,

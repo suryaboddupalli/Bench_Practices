@@ -54,10 +54,22 @@ export const config = convict({
         }
     },
     redis: {
-        port: {
+        port1: {
             doc: 'redis_port',
             format: Number,
-            default: 6379
+            default: 3000
+        },port2: {
+            doc: 'redis_port',
+            format: Number,
+            default: 3001
+        },port3: {
+            doc: 'redis_port',
+            format: Number,
+            default: 3002
+        },port4: {
+            doc: 'redis_port',
+            format: Number,
+            default: 3003
         },
         host: {
             doc: 'redis_host',
