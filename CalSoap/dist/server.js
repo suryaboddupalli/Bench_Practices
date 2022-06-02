@@ -1,17 +1,27 @@
 "use strict";
 var soap = require('soap');
-var http = require('http');
-var wsdl_path = "/wsdl";
-var port = 5000;
+const http = require('http');
+const wsdl_path = "/wsdl";
+const port = 5000;
+const WSSecurity = require('wssecurity-soap');
 var myService = {
-    services: {
-        CalculatorService: {
-            add: function (args, callback) {
-                console.log(args);
-                callback({
-                    a: args.a,
-                    b: args.b
-                });
+    Calculator: {
+        CalculatorSoap: {
+            Add: function (args, callback) {
+                var n = args.a + args.b;
+                callback({ add: n });
+            },
+            Subtract: function (args, callback) {
+                var n = args.a - args.b;
+                callback({ add: n });
+            },
+            Multiply: function (args, callback) {
+                var n = args.a * args.b;
+                callback({ add: n });
+            },
+            Divide: function (args, callback) {
+                var n = args.a / args.b;
+                callback({ add: n });
             }
         }
     }

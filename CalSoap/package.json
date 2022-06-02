@@ -13,6 +13,7 @@
   "dependencies": {
     "@types/node": "^17.0.35",
     "http": "0.0.1-security",
-    "soap": "^0.43.0"
+    "soap": "^0.43.0",
+    "wssecurity-soap": "^1.0.1"
   }
 }
