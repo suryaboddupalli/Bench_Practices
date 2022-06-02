@@ -1,5 +1,6 @@
 import jwt from 'jsonwebtoken'
 import { config } from '../convict/config'
+import { tokenInterface } from '../intefaces/index'
 
 const jwtConfig = config.get('jwt')
 
@@ -32,5 +33,5 @@ export const verifyRefreshToken = (refreshToken: any) => {
 
 export const verifyAccessToken = (token: string) => {
     const payload = jwt.verify(token, jwtConfig.accessSecret)
-    return payload
+    return payload as tokenInterface
 }

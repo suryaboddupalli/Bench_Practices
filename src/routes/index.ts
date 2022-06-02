@@ -1,11 +1,7 @@
 import { registerSchema, loginSchema } from '../validationSchema/index'
 import { controller } from '../controllers/userControllers'
 
-export const routes = [{
-    method: 'GET',
-    path: '/',
-    handler: controller.getUser
-}, {
+export const routes = [ {
     method: 'POST',
     path: '/register',
     handler: controller.register,
@@ -24,8 +20,4 @@ export const routes = [{
             payload: loginSchema
         }
     }
-}, {
-    method: 'POST',
-    path: '/refresh-token',
-    handler: controller.refreshRequest
 }]

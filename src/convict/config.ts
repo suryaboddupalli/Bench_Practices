@@ -54,28 +54,31 @@ export const config = convict({
         }
     },
     redis: {
-        port1: {
-            doc: 'redis_port',
-            format: Number,
-            default: 3000
-        },port2: {
-            doc: 'redis_port',
-            format: Number,
-            default: 3001
-        },port3: {
-            doc: 'redis_port',
-            format: Number,
-            default: 3002
-        },port4: {
-            doc: 'redis_port',
-            format: Number,
-            default: 3003
-        },
-        host: {
-            doc: 'redis_host',
-            format: String,
-            default: 'localhost'
+        server: {
+            ports: [{
+                doc: 'redis_port',
+                format: Number,
+                default: 3000
+            }, {
+                doc: 'redis_port',
+                format: Number,
+                default: 3001
+            }, {
+                doc: 'redis_port',
+                format: Number,
+                default: 3002
+            }, {
+                doc: 'redis_port',
+                format: Number,
+                default: 3003
+            }],
+            host: {
+                doc: 'redis_host',
+                format: String,
+                default: 'localhost'
+            }
         }
+
     },
     jwt: {
         accessSecret: {
@@ -111,10 +114,10 @@ export const config = convict({
             default: 'localhost'
         }
     },
-    bcrypt:{
-        doc:'Bcrypt',
-        format:Number,
-        default:10
+    bcrypt: {
+        doc: 'Bcrypt',
+        format: Number,
+        default: 10
     }
 });
 

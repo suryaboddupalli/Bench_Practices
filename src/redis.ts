@@ -3,24 +3,17 @@ import { config } from './convict/config'
 
 const redisConfig = config.get('redis')
 
-const nodes = [
-    {
-        host: redisConfig.host,
-        port: redisConfig.port1
-    },
-    {
-        host: redisConfig.host,
-        port: redisConfig.port2
-    },
-    {
-        host: redisConfig.host,
-        port: redisConfig.port3
-    },
-    {
-        host: redisConfig.host,
-        port: redisConfig.port4
+const nodes = redisConfig.server.ports.map((port: any) => {
+    console.log(port)
+    const nodes = {
+        host: redisConfig.server.host,
+        port: port
     }
-]
+    return nodes
+})
+
+console.log(nodes)
+
 
 
 export const cluster = new redis.Cluster(nodes);

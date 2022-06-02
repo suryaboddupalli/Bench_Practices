@@ -3,7 +3,7 @@ import { dbServer } from '../database'
 import { registerData, loginData, RefreshToken } from '../intefaces/index'
 import { SUCCESS, BAD_REQUEST, INTERNAL_SERVER_ERROR } from '../constants/index'
 import bcrypt from 'bcryptjs'
-import { accessToken, refreshToken, verifyRefreshToken, verifyAccessToken } from '../plugins/jwtPlugins'
+import { accessToken, refreshToken, verifyRefreshToken, verifyAccessToken } from '../helpers/jwtHelpers'
 import { config } from '../convict/config'
 import { cluster } from '../redis'
 
@@ -16,10 +16,10 @@ class userControllers {
             const bearerToken = authHeader.split(' ')
             const token = bearerToken[1]
             const pool = await dbServer
-            const promise: any = new Promise(async (resolve, reject) => {
+            const promise = new Promise(async (resolve, reject) => {
                 const tokenVerify = verifyAccessToken(token)
                 if (tokenVerify) {
-                    const data = await pool.query('exec getData')
+                    const data = await pool.query("exec getData @id='" + tokenVerify.id + "'")
                     const response = res.response(data.recordset).code(SUCCESS)
                     resolve(response)
                 }
@@ -35,7 +35,7 @@ class userControllers {
         try {
             const userRegisterData = req.payload
             const pool = await dbServer
-            const registerPromise = new Promise(async (resolve: any, reject: any) => {
+            const registerPromise = new Promise(async (resolve, reject) => {
                 const hashedPassword = await bcrypt.hash((userRegisterData as registerData).password, salt)
                 const query = "exec registration @email='" + (userRegisterData as registerData).email + "',@firstname='" + (userRegisterData as registerData).firstname + "',@lastname='" + (userRegisterData as registerData).lastname + "',@password='" + hashedPassword + "';"
                 const userData = await pool.query(query)
@@ -71,7 +71,7 @@ class userControllers {
         try {
             const userLoginData = req.payload
             const pool = await dbServer
-            const loginPromise = new Promise(async (resolve: any, reject) => {
+            const loginPromise = new Promise(async (resolve, reject) => {
                 const emailCheck = await pool.query("exec email_Check  @email='" + (userLoginData as loginData).email + "'")
                 if (emailCheck.recordset[0]) {
                     const passwordCheck = await bcrypt.compare((userLoginData as loginData).password, emailCheck.recordset[0].password)
