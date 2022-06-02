@@ -24,6 +24,6 @@ AS
       (
         SELECT email FROM users WHERE  email = @email
       )
-        SELECT firstname, lastname, email, password FROM   users WHERE  email = @email
-      SET nocount OFF;
-  END 
+      SELECT firstname, lastname, email, password FROM   users WHERE  email = @email
+    SET nocount OFF;
+END 

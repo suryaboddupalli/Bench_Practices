@@ -57,7 +57,6 @@ class userControllers {
                     const response = res.response('User Already exist').code(BAD_REQUEST)
                     resolve(response)
                 }
-
             })
             return registerPromise
         }
