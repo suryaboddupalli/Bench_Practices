@@ -1,6 +1,6 @@
 import Hapi from '@hapi/hapi'
 import { dbServer } from '../database'
-import { registerData, loginData, RefreshToken } from '../intefaces/index'
+import { registerData, loginData, RefreshToken, userInterface } from '../intefaces/index'
 import { SUCCESS, BAD_REQUEST, INTERNAL_SERVER_ERROR } from '../constants/index'
 import bcrypt from 'bcryptjs'
 import { accessToken, refreshToken, verifyRefreshToken, verifyAccessToken } from '../helpers/jwtHelpers'
@@ -33,23 +33,24 @@ class userControllers {
 
     async register(req: Hapi.Request, res: Hapi.ResponseToolkit) {
         try {
-            const userRegisterData = req.payload
+            const userRegisterData = req.payload as registerData
             const pool = await dbServer
             const registerPromise = new Promise(async (resolve, reject) => {
-                const hashedPassword = await bcrypt.hash((userRegisterData as registerData).password, salt)
-                const query = "exec registration @email='" + (userRegisterData as registerData).email + "',@firstname='" + (userRegisterData as registerData).firstname + "',@lastname='" + (userRegisterData as registerData).lastname + "',@password='" + hashedPassword + "';"
+                const hashedPassword = await bcrypt.hash(userRegisterData.password, salt)
+                const query = "exec registration @email='" + userRegisterData.email + "',@firstname='" + userRegisterData.firstname + "',@lastname='" + userRegisterData.lastname + "',@password='" + hashedPassword + "';"
                 const userData = await pool.query(query)
-                if (userData.recordset[0]) {
-                    const access = accessToken(userData.recordset[0].id)
-                    const refresh = refreshToken(userData.recordset[0].id)
+                const user :userInterface = userData.recordset[0]
+                if (user) {
+                    const access = accessToken(user.id)
+                    const refresh = refreshToken(user.id)
                     if (access) {
-                        cluster.set("currentUser", JSON.stringify(userData.recordset[0]))
+                        cluster.set("currentUser", JSON.stringify(user))
                     }
                     const response = res.response({
                         access,
                         refresh,
                         message: "user added successfully",
-                        data: userData.recordset[0]
+                        data: user
                     }).code(SUCCESS)
                     resolve(response)
                 }
@@ -68,23 +69,24 @@ class userControllers {
 
     async login(req: Hapi.Request, res: Hapi.ResponseToolkit) {
         try {
-            const userLoginData = req.payload
+            const userLoginData = req.payload as loginData
             const pool = await dbServer
             const loginPromise = new Promise(async (resolve, reject) => {
-                const emailCheck = await pool.query("exec email_Check  @email='" + (userLoginData as loginData).email + "'")
-                if (emailCheck.recordset[0]) {
-                    const passwordCheck = await bcrypt.compare((userLoginData as loginData).password, emailCheck.recordset[0].password)
+                const emailCheck = await pool.query("exec email_Check  @email='" + userLoginData.email + "'")
+                const user:userInterface = emailCheck.recordset[0]
+                if (user) {
+                    const passwordCheck = await bcrypt.compare(userLoginData.password, user.password)
                     if (passwordCheck) {
-                        const access = accessToken(emailCheck.recordset[0].id)
-                        const refresh = refreshToken(emailCheck.recordset[0].id)
+                        const access = accessToken(user.id)
+                        const refresh = refreshToken(user.id)
                         if (access) {
-                            cluster.set("currentUser", JSON.stringify(emailCheck.recordset[0]))
+                            cluster.set("currentUser", JSON.stringify(user))
                         }
                         const response = res.response({
                             access,
                             refresh,
                             message: "User Logged In Successfully",
-                            data: emailCheck.recordset[0]
+                            data: user
                         }).code(SUCCESS)
                         resolve(response)
                     }
@@ -110,8 +112,8 @@ class userControllers {
                     resolve(response)
                 }
                 const userId = verifyRefreshToken((token as RefreshToken).refreshToken)
-                const access = accessToken(userId as string)
-                const refresh = refreshToken(userId as string)
+                const access = accessToken(userId.id)
+                const refresh = refreshToken(userId.id)
                 const response = res.response({
                     access,
                     refresh,

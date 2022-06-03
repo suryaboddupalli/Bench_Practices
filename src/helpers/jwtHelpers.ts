@@ -4,7 +4,7 @@ import { tokenInterface } from '../intefaces/index'
 
 const jwtConfig = config.get('jwt')
 
-export const accessToken = (userId: string) => {
+export const accessToken = (userId: number) => {
     const payload = {
         id: userId
     }
@@ -15,7 +15,7 @@ export const accessToken = (userId: string) => {
     return token
 }
 
-export const refreshToken = (userId: string) => {
+export const refreshToken = (userId: number) => {
     const payload = {
         id: userId
     }
@@ -26,9 +26,9 @@ export const refreshToken = (userId: string) => {
     return token
 }
 
-export const verifyRefreshToken = (refreshToken: any) => {
+export const verifyRefreshToken = (refreshToken: string) => {
     const token = jwt.verify(refreshToken, jwtConfig.refreshSecret)
-    return token
+    return token as tokenInterface
 }
 
 export const verifyAccessToken = (token: string) => {

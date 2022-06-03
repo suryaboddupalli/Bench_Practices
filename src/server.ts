@@ -4,7 +4,6 @@ import { config } from './convict/config'
 import { refreshTokenPlugin } from './plugins/refreshTokenPlugin'
 import { userDataPlugin } from './plugins/userDataPlugin'
 
-
 const hapiConfig = config.get('hapi')
 
 export const server: Hapi.Server = Hapi.server(hapiConfig)

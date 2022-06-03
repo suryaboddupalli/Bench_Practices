@@ -3,7 +3,7 @@ import { config } from './convict/config'
 
 const redisConfig = config.get('redis')
 
-const nodes = redisConfig.server.ports.map((port: any) => {
+const nodes = redisConfig.server.ports.map((port: number) => {
     const nodes = {
         host: redisConfig.server.host,
         port: port
