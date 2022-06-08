@@ -121,7 +121,7 @@ export const config = convict({
     }
 });
 
-var env = config.get('env')
+let env = config.get('env')
 
 config.loadFile(`./src/convict/${env}.json`)
 

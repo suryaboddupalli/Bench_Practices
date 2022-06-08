@@ -39,7 +39,7 @@ class userControllers {
                 const hashedPassword = await bcrypt.hash(userRegisterData.password, salt)
                 const query = "exec registration @email='" + userRegisterData.email + "',@firstname='" + userRegisterData.firstname + "',@lastname='" + userRegisterData.lastname + "',@password='" + hashedPassword + "';"
                 const userData = await pool.query(query)
-                const user :userInterface = userData.recordset[0]
+                const user: userInterface = userData.recordset[0]
                 if (user) {
                     const access = accessToken(user.id)
                     const refresh = refreshToken(user.id)
@@ -73,7 +73,7 @@ class userControllers {
             const pool = await dbServer
             const loginPromise = new Promise(async (resolve, reject) => {
                 const emailCheck = await pool.query("exec email_Check  @email='" + userLoginData.email + "'")
-                const user:userInterface = emailCheck.recordset[0]
+                const user: userInterface = emailCheck.recordset[0]
                 if (user) {
                     const passwordCheck = await bcrypt.compare(userLoginData.password, user.password)
                     if (passwordCheck) {
