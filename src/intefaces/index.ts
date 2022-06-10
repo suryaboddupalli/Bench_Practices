@@ -1,17 +1,25 @@
-export interface registerData {
-    firstname: string,
-    lastname: string,
-    email: string,
-    password: string,
-    conformPassword: string
+import Hapi from '@hapi/hapi'
+
+export interface registerData extends Hapi.Request {
+    payload: {
+        firstname: string,
+        lastname: string,
+        email: string,
+        password: string,
+        conformPassword: string
+    }
 }
-export interface loginData {
-    email: string,
-    password: string,
+export interface loginData extends Hapi.Request {
+    payload: {
+        email: string,
+        password: string,
+    }
 }
 
-export interface RefreshToken {
-    refreshToken: string
+export interface RefreshToken extends Hapi.Request {
+    payload: {
+        refreshToken: string
+    }
 }
 
 export interface tokenInterface {
@@ -26,4 +34,11 @@ export interface userInterface {
     lastname: string,
     email: string,
     password: string
+}
+
+export interface userData {
+    id: number,
+    firstname: string,
+    lastname: string,
+    email: string,
 }

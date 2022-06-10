@@ -1,4 +1,11 @@
 export const SUCCESS = 200;
 export const BAD_REQUEST = 400;
 export const INTERNAL_SERVER_ERROR = 500;
-
+export const USER_REGISTER_SUCCESS = "User Register Successfully"
+export const USER_REGISTER_FAILURE = "User already Exist"
+export const USER_LOGIN_SUCCESS = "User login Successful"
+export const USER_LOGIN_FAILURE = 'User not found, Please do Register'
+export const USER_PASSWORD_INCORRECT = 'Incorrect Password'
+export const REFERSH_TOKEN_SUCCESS = "Token Refresh Successfully "
+export const REFERSH_TOKEN_FAIL = "Token not found"
+export const ACCESS_TOKEN_VERIFY_FAIL='Token error'

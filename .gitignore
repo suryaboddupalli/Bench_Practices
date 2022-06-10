@@ -1,5 +1,4 @@
 node_modules
 local.json
 dist
-__test__
 test.json
