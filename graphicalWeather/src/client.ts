@@ -1,5 +1,4 @@
 var soap = require('soap')
-const url = 'http://localhost:8000/wsdl?wsdl';
 const args = { zipCodeList: 12345 }
 const subgrid = {
     lowerLeftLatitude: 33.8835,
@@ -45,38 +44,36 @@ const args5 = {
 
 const args6 = {
     listLatLon: "38.99,-77.02 39.70,-104.80",
-    startDate:"2004-04-27",
-    numDays:7,
-    unit:"e",
-    format:"12 hourly"
+    startDate: "2004-04-27",
+    numDays: 7,
+    unit: "e",
+    format: "12 hourly"
 }
+// const security = new soap.WSSecurity('username', 'password')
 
-soap.createClient(url, function (err: any, client: any) {
-    client.LatLonListZipCode(args, function (err: any, result: any) {
-        console.log(result);
-    });
-    client.LatLonListSquare(args1, function (err: any, result: any) {
-        console.log(result.listLatLonOut);
+soap.createClient("http://localhost:8000/wsdl?wsdl", (err: any, client: any) => {
+    console.log(client)
+    // client.setSecurity(security);
 
-    });
-    client.LatLonListCityNames(args2, function (err: any, result: any) {
-        console.log(result.listLatLonOut);
-
-    });
-    client.LatLonListLine(args3, function (err: any, result: any) {
-        console.log(result);
-
-    });
-    client.LatLonListSubgrid(args4, function (err: any, result: any) {
-        console.log(result);
-
-    });
-    client.NDFDgenByDay(args5, function (err: any, result: any) {
-        console.log(result);
-
-    });
-    client.NDFDgenByDayLatLonList(args6, function (err: any, result: any) {
-        console.log(result);
-
-    });
+    // client.LatLonListZipCode(args, function (err: any, result: any) {
+    //     console.log(result);
+    // });
+    // client.LatLonListSquare(args1, function (err: any, result: any) {
+    //     console.log(result.listLatLonOut);
+    // });
+    //     client.LatLonListCityNames(args2, function (err: any, result: any) {
+    //         console.log(result.listLatLonOut);
+    //     });
+    //     client.LatLonListLine(args3, function (err: any, result: any) {
+    //         console.log(result);
+    //     });
+    //     client.LatLonListSubgrid(args4, function (err: any, result: any) {
+    //         console.log(result);
+    //     });
+    //     client.NDFDgenByDay(args5, function (err: any, result: any) {
+    //         console.log(result);
+    //     });
+    //     client.NDFDgenByDayLatLonList(args6, function (err: any, result: any) {
+    //         console.log(result);
+    //     });
 });
