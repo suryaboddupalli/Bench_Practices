@@ -1,21 +1,14 @@
-var soap = require('soap')
+import * as soap from "soap";
 
-class soapClient {
-    async getSoapClient() {
-        const promise: any = new Promise((resolve, reject) => {
-            soap.createClient(__dirname+'/../'+'/src/graphical.wsdl', (err: any, client: any) => {
-                resolve(client)
-            })
-        });
-        return promise
-    }
-}
+// export const soapClient = (func: any) => {
+//     soap.createClient(__dirname + '/../' + '/src/graphical.wsdl', async (err: any, client: any) => {
+//         func(client)
+//     })
+// }
 
-export const globalWeather = new soapClient()
-
-
-
-
-
-
-
+export const soapClient = () => {
+	const client = soap.createClientAsync(
+		__dirname + "/../" + "/src/graphical.wsdl"
+	);
+	return client;
+};
