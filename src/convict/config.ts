@@ -1,4 +1,5 @@
 const convict = require('convict')
+// import * as convict from 'convict'
 
 export const config = convict({
     env: {
