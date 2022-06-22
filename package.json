@@ -1,38 +1,42 @@
 {
-  "name": "api",
-  "version": "1.0.0",
-  "description": "",
-  "main": "./dist/Server.js",
-  "scripts": {
-    "dev": "nodemon ./src/Server.ts",
-    "start": "node ./dist/Server.js",
-    "test": "jest "
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "@hapi/hapi": "^20.2.2",
-    "@node-redis/json": "^1.0.2",
-    "bcryptjs": "^2.4.3",
-    "convict": "^6.2.3",
-    "dotenv": "^16.0.1",
-    "ioredis": "^5.0.5",
-    "joi": "^17.6.0",
-    "jsonwebtoken": "^8.5.1",
-    "mssql": "^8.1.1"
-  },
-  "devDependencies": {
-    "@types/bcryptjs": "^2.4.2",
-    "@types/convict": "^6.1.1",
-    "@types/hapi__hapi": "^20.0.10",
-    "@types/ioredis": "^4.28.10",
-    "@types/jest": "^28.1.1",
-    "@types/jsonwebtoken": "^8.5.8",
-    "@types/mssql": "^8.0.0",
-    "jest": "^28.1.0",
-    "nodemon": "^2.0.16",
-    "ts-jest": "^28.0.4",
-    "typescript": "^4.6.4"
-  }
+	"name": "api",
+	"version": "1.0.0",
+	"description": "",
+	"main": "./dist/Server.js",
+	"scripts": {
+		"dev": "nodemon ./src/Server.ts",
+		"start": "node ./dist/Server.js",
+		"test": "jest ",
+		"lint": "eslint . --ext .ts"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"dependencies": {
+		"@hapi/hapi": "^20.2.2",
+		"@node-redis/json": "^1.0.2",
+		"bcryptjs": "^2.4.3",
+		"dotenv": "^16.0.1",
+		"ioredis": "^5.0.5",
+		"joi": "^17.6.0",
+		"@types/ioredis": "^4.28.10",
+		"convict": "^6.2.3",
+		"jsonwebtoken": "^8.5.1",
+		"mssql": "^8.1.1"
+	},
+	"devDependencies": {
+		"@types/bcryptjs": "^2.4.2",
+		"@types/convict": "^6.1.1",
+		"@types/hapi__hapi": "^20.0.10",
+		"@types/jest": "^28.1.1",
+		"@types/jsonwebtoken": "^8.5.8",
+		"@types/mssql": "^8.0.0",
+		"@typescript-eslint/eslint-plugin": "^5.29.0",
+		"@typescript-eslint/parser": "^5.29.0",
+		"eslint": "^8.18.0",
+		"jest": "^28.1.0",
+		"nodemon": "^2.0.16",
+		"ts-jest": "^28.0.4",
+		"typescript": "^4.6.4"
+	}
 }

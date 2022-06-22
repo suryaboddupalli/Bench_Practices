@@ -1,13 +1,14 @@
-import { controller } from "../controllers/userControllers";
-import Hapi from "@hapi/hapi";
+import Hapi from '@hapi/hapi';
+import { userControllers } from '../controllers/userControllers';
+const controller = new userControllers();
 
 export const refreshTokenPlugin = {
-    name: "refresh-token",
-    register: (server: Hapi.Server, options: any) => {
-        server.route({
-            method: "POST",
-            path: "/refresh-token",
-            handler: controller.refreshRequest,
-        });
-    },
+	name: 'refresh-token',
+	register: (server: Hapi.Server) => {
+		server.route({
+			method: 'POST',
+			path: '/refresh-token',
+			handler: controller.refreshRequest,
+		});
+	},
 };
