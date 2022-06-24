@@ -1,10 +1,11 @@
-import { controller } from "../controller/wheatherController";
-import { zipcodeSchema, cityNamesSchema } from "../validation/index";
+import { graphicalWeatherController } from '../controller/graphicalWeatherController';
+import { zipcodeSchema, cityNamesSchema } from '../validation/index';
+const controller = new graphicalWeatherController();
 
 export const routes = [
 	{
-		method: "POST",
-		path: "/zipcode",
+		method: 'POST',
+		path: '/zipcode',
 		handler: controller.getZipcodeData,
 		options: {
 			validate: {
@@ -13,8 +14,8 @@ export const routes = [
 		},
 	},
 	{
-		method: "POST",
-		path: "/city",
+		method: 'POST',
+		path: '/city',
 		handler: controller.getCityNames,
 		options: {
 			validate: {
