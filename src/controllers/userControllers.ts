@@ -8,7 +8,7 @@ import {
 	SUCCESS,
 	BAD_REQUEST,
 	INTERNAL_SERVER_ERROR,
-} from '../constants/httpConstants';
+} from '../constants/httpCodes';
 import bcrypt from 'bcryptjs';
 import {
 	accessToken,
@@ -28,7 +28,7 @@ import {
 	ACCESS_TOKEN_VERIFY_FAIL,
 	REFERSH_TOKEN_FAIL,
 	INTERNAL_SERVER_ERROR_MESSAGE,
-} from '../constants/index';
+} from '../constants/constants';
 import { userQuries } from '../repository/userQueries';
 
 const salt = config.get('bcrypt');

@@ -1,5 +1,4 @@
-const convict = require('convict');
-// import convict from 'convict';
+import convict from 'convict';
 
 export const config = convict({
 	db: {
@@ -47,11 +46,9 @@ export const config = convict({
 		},
 	},
 	redis: {
-		server: {
-			doc: 'Redis_IP',
-			format: Array,
-			default: '127.0.0.1:3000',
-		},
+		doc: 'Redis_IP',
+		format: Array,
+		default: ['127.0.0.1:9676'],
 	},
 	jwt: {
 		accessSecret: {
