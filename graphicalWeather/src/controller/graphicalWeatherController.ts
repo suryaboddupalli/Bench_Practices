@@ -1,7 +1,7 @@
 import Hapi from '@hapi/hapi';
 import { INTERNAL_SERVER_ERROR_MESSAGE } from '../constants/index';
 import { INTERNAL_SERVER_ERROR } from '../constants/httpConstants';
-import { graphicalWeatherServices } from '../services';
+import { graphicalWeatherServices } from '../services/graphicalWeatherServices';
 import { IZipcode, ICities } from '../interfaces/graphicalWeatherInterfaces';
 import { xmlToJs } from '../xmlToJs';
 

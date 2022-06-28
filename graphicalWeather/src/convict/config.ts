@@ -13,6 +13,11 @@ export const config = convict({
 			default: 'localhost',
 		},
 	},
+	url: {
+		doc: 'End_Point Url',
+		format: String,
+		default: 'https://localhost:9001/xml/SOAP_server/ndfdXMLserver.php',
+	},
 });
 
 config.loadFile(`./src/convict/local.json`);
