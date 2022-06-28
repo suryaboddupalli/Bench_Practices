@@ -1,12 +1,10 @@
 import Hapi from '@hapi/hapi';
-import { routes } from './routes/index';
+import { routes } from './routes/userRoutes';
 import { config } from './convict/config';
 import { refreshTokenPlugin } from './plugins/refreshTokenPlugin';
 import { userDataPlugin } from './plugins/userDataPlugin';
 
-const hapiConfig = config.get('hapi');
-
-export const server: Hapi.Server = Hapi.server(hapiConfig);
+export const server: Hapi.Server = Hapi.server(config.get('hapi'));
 
 const init = async () => {
 	await server.register([refreshTokenPlugin, userDataPlugin]);

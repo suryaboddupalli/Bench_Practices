@@ -1,5 +1,9 @@
-import { registerSchema, loginSchema } from '../validationSchema/index';
+import {
+	registerSchema,
+	loginSchema,
+} from '../validationSchema/userValidationSchema';
 import { userControllers } from '../controllers/userControllers';
+import { joiErrors } from '../validationSchema/joiErrors';
 const controller = new userControllers();
 
 export const routes = [
@@ -10,6 +14,7 @@ export const routes = [
 		options: {
 			validate: {
 				payload: registerSchema,
+				failAction: joiErrors,
 			},
 		},
 	},
@@ -20,6 +25,7 @@ export const routes = [
 		options: {
 			validate: {
 				payload: loginSchema,
+				failAction: joiErrors,
 			},
 		},
 	},

@@ -26,12 +26,10 @@ import {
 	USER_LOGIN_FAILURE,
 	USER_PASSWORD_INCORRECT,
 	ACCESS_TOKEN_VERIFY_FAIL,
-	REFERSH_TOKEN_FAIL,
 	INTERNAL_SERVER_ERROR_MESSAGE,
 } from '../constants/constants';
 import { userQuries } from '../repository/userQueries';
 
-const salt = config.get('bcrypt');
 const query = new userQuries();
 const cluster = new redis();
 
@@ -57,7 +55,7 @@ export class userControllers {
 		try {
 			const hashedPassword = await bcrypt.hash(
 				req.payload.password,
-				salt
+				config.get('bcrypt')
 			);
 			const userRegisterData = await query.registerQuery(
 				req.payload,
@@ -93,11 +91,11 @@ export class userControllers {
 		try {
 			const userLoginData = await query.loginQuery(req.payload.email);
 			if (userLoginData.recordset[0]) {
-				const result = bcrypt.compareSync(
+				const passwordValidate = bcrypt.compareSync(
 					req.payload.password,
 					userLoginData.recordset[0].password
 				);
-				if (result) {
+				if (passwordValidate) {
 					delete userLoginData.recordset[0].password;
 					const access = accessToken(userLoginData.recordset[0].id);
 					const refresh = refreshToken(userLoginData.recordset[0].id);
@@ -133,9 +131,6 @@ export class userControllers {
 
 	async refreshRequest(req: IRefreshToken, res: Hapi.ResponseToolkit) {
 		try {
-			if (!req.payload) {
-				return res.response(REFERSH_TOKEN_FAIL).code(BAD_REQUEST);
-			}
 			const userId = verifyRefreshToken(req.payload.refreshToken);
 			const access = accessToken(userId.id);
 			const refresh = refreshToken(userId.id);
