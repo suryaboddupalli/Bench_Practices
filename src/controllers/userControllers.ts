@@ -38,14 +38,8 @@ export class userControllers {
 		try {
 			const bearerToken = req.headers['authorization'].split(' ');
 			const tokenVerifyResponse = verifyAccessToken(bearerToken[1]);
-			if (tokenVerifyResponse.id) {
-				const data = await query.getUserDataQuery(
-					tokenVerifyResponse.id
-				);
-				return res.response(data.recordset[0]).code(SUCCESS);
-			} else {
-				return res.response(ACCESS_TOKEN_VERIFY_FAIL).code(SUCCESS);
-			}
+			const data = await query.getUserDataQuery(tokenVerifyResponse.id);
+			return res.response(data.recordset[0]).code(SUCCESS);
 		} catch (err) {
 			return res.response({ err }).code(INTERNAL_SERVER_ERROR);
 		}
@@ -90,39 +84,42 @@ export class userControllers {
 	async login(req: ILoginData, res: Hapi.ResponseToolkit) {
 		try {
 			const userLoginData = await query.loginQuery(req.payload.email);
-			if (userLoginData.recordset[0]) {
-				const passwordValidate = bcrypt.compareSync(
-					req.payload.password,
-					userLoginData.recordset[0].password
-				);
-				if (passwordValidate) {
-					delete userLoginData.recordset[0].password;
-					const access = accessToken(userLoginData.recordset[0].id);
-					const refresh = refreshToken(userLoginData.recordset[0].id);
-					if (access) {
-						await cluster.addUserData(
-							userLoginData.recordset[0].id,
-							JSON.stringify(userLoginData.recordset[0])
-						);
-					}
-					return res
-						.response({
-							access,
-							refresh,
-							message: USER_LOGIN_SUCCESS,
-							data: userLoginData.recordset[0],
-						})
-						.code(SUCCESS);
-				} else {
-					return res
-						.response({ message: USER_PASSWORD_INCORRECT })
-						.code(BAD_REQUEST);
-				}
+			if (!userLoginData.recordset) {
+				// return 'Email is not valid, please do Register';
+				return res
+					.response({ message: USER_LOGIN_FAILURE })
+					.code(BAD_REQUEST);
 			}
+			const passwordValidate = bcrypt.compareSync(
+				req.payload.password,
+				userLoginData.recordset[0].password
+			);
+			if (passwordValidate) {
+				delete userLoginData.recordset[0].password;
+				const access = accessToken(userLoginData.recordset[0].id);
+				const refresh = refreshToken(userLoginData.recordset[0].id);
+				if (access) {
+					await cluster.addUserData(
+						userLoginData.recordset[0].id,
+						JSON.stringify(userLoginData.recordset[0])
+					);
+				}
+				// return 'User Loggin Successfully';
+				return res
+					.response({
+						access,
+						refresh,
+						message: USER_LOGIN_SUCCESS,
+						data: userLoginData.recordset[0],
+					})
+					.code(SUCCESS);
+			}
+			// return 'Incorrect password';
 			return res
-				.response({ message: USER_LOGIN_FAILURE })
+				.response({ message: USER_PASSWORD_INCORRECT })
 				.code(BAD_REQUEST);
 		} catch (err) {
+			// return 'internal server Error';
 			return res
 				.response({ message: INTERNAL_SERVER_ERROR_MESSAGE })
 				.code(INTERNAL_SERVER_ERROR);
