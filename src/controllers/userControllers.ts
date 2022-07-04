@@ -25,7 +25,6 @@ import {
 	USER_LOGIN_SUCCESS,
 	USER_LOGIN_FAILURE,
 	USER_PASSWORD_INCORRECT,
-	ACCESS_TOKEN_VERIFY_FAIL,
 	INTERNAL_SERVER_ERROR_MESSAGE,
 } from '../constants/constants';
 import { userQuries } from '../repository/userQueries';
@@ -85,7 +84,6 @@ export class userControllers {
 		try {
 			const userLoginData = await query.loginQuery(req.payload.email);
 			if (!userLoginData.recordset) {
-				// return 'Email is not valid, please do Register';
 				return res
 					.response({ message: USER_LOGIN_FAILURE })
 					.code(BAD_REQUEST);
@@ -104,7 +102,6 @@ export class userControllers {
 						JSON.stringify(userLoginData.recordset[0])
 					);
 				}
-				// return 'User Loggin Successfully';
 				return res
 					.response({
 						access,
@@ -114,12 +111,10 @@ export class userControllers {
 					})
 					.code(SUCCESS);
 			}
-			// return 'Incorrect password';
 			return res
 				.response({ message: USER_PASSWORD_INCORRECT })
 				.code(BAD_REQUEST);
 		} catch (err) {
-			// return 'internal server Error';
 			return res
 				.response({ message: INTERNAL_SERVER_ERROR_MESSAGE })
 				.code(INTERNAL_SERVER_ERROR);

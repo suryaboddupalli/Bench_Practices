@@ -6,7 +6,7 @@
 	"scripts": {
 		"dev": "nodemon ./src/Server.ts",
 		"start": "node ./dist/Server.js",
-		"test": "jest --watch ",
+		"test": "jest --coverage",
 		"lint": "eslint . --ext .ts"
 	},
 	"keywords": [],
