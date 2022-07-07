@@ -1,6 +1,6 @@
 import Hapi from '@hapi/hapi';
 import { INTERNAL_SERVER_ERROR_MESSAGE } from '../constants/index';
-import { INTERNAL_SERVER_ERROR } from '../constants/httpConstants';
+import { INTERNAL_SERVER_ERROR, SUCCESS } from '../constants/httpConstants';
 import { graphicalWeatherServices } from '../services/graphicalWeatherServices';
 import { IZipcode, ICities } from '../interfaces/graphicalWeatherInterfaces';
 import { xmlToJs } from '../xmlToJs';
@@ -8,10 +8,13 @@ import { xmlToJs } from '../xmlToJs';
 const services = new graphicalWeatherServices();
 
 export class graphicalWeatherController {
-	async getZipcodeData(req: Hapi.Request, res: Hapi.ResponseToolkit) {
+	async getZipcodeData(req: IZipcode, res: Hapi.ResponseToolkit) {
 		try {
-			const xmlData = await services.getZipcode(req.payload as IZipcode);
-			return xmlToJs(xmlData[0].listLatLonOut.$value);
+			const xmlData = await services.getZipcode(req.payload);
+			console.log(xmlData);
+			return res
+				.response(xmlToJs(xmlData[0].listLatLonOut.$value))
+				.code(SUCCESS);
 		} catch (err) {
 			return res
 				.response({ message: INTERNAL_SERVER_ERROR_MESSAGE })
@@ -19,10 +22,12 @@ export class graphicalWeatherController {
 		}
 	}
 
-	async getCityNames(req: Hapi.Request, res: Hapi.ResponseToolkit) {
+	async getCityNames(req: ICities, res: Hapi.ResponseToolkit) {
 		try {
-			const xmlData = await services.getcities(req.payload as ICities);
-			return xmlToJs(xmlData[0].listLatLonOut.$value);
+			const xmlData = await services.getcities(req.payload);
+			return res
+				.response(xmlToJs(xmlData[0].listLatLonOut.$value))
+				.code(SUCCESS);
 		} catch (err) {
 			return res
 				.response({ message: INTERNAL_SERVER_ERROR_MESSAGE })
