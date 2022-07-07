@@ -22,6 +22,16 @@ describe('userController', () => {
 		};
 	});
 
+	// test('basic', () => {
+	// 	const user = {
+	// 		email: 'naveen@gmail.com',
+	// 		firstname: 'naveen',
+	// 		id: 2,
+	// 		lastname: 'thummala',
+	// 	};
+	// 	// const getUser = jest.spyOn(controller, 'getUser').mockReturnValue(user);
+	// });
+
 	describe('user login', () => {
 		let req: ILoginData;
 
@@ -32,8 +42,10 @@ describe('userController', () => {
 					password: 'revanth123',
 				},
 			} as ILoginData;
+			const mockfn = jest.spyOn(controller, 'login');
 			await controller.login(req as ILoginData, res as ResponseToolkit);
-			console.log(responseObject.statusCode);
+			expect(mockfn).toHaveBeenCalledWith(req, res);
+			expect(mockfn).toHaveBeenLastCalledWith(req, res);
 			expect(responseObject.message).toBe('User login Successful');
 		});
 
